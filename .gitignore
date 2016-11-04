@@ -70,3 +70,6 @@ buildNumber.properties
 
 .idea
 *.iml
+
+sn-database/sn-db-post-wsdl/target
+sn-database/sn-db-user-wsdl/target

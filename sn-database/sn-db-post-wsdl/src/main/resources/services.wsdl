@@ -1,0 +1,71 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://post.services.network.social.ua/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="PostService" targetNamespace="http://post.services.network.social.ua/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://post.services.network.social.ua/"
+                   attributeFormDefault="unqualified" elementFormDefault="unqualified"
+                   targetNamespace="http://post.services.network.social.ua/">
+
+            <xs:element name="CreatePostRequest" type="tns:CreatePostRequest"/>
+            <xs:element name="CreatePostResponse" type="tns:CreatePostResponse"/>
+
+            <xs:complexType name="Post">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element name="firstName" minOccurs="1" maxOccurs="1" type="xs:string"/>
+                    <xs:element name="lastName" minOccurs="1" maxOccurs="1" type="xs:string"/>
+                    <xs:element name="email" minOccurs="1" maxOccurs="1" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CreatePostRequest">
+                <xs:sequence>
+                    <xs:element name="PostData" minOccurs="1" type="tns:Post"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CreatePostResponse">
+                <xs:sequence>
+                    <xs:element name="id" minOccurs="1" maxOccurs="1" type="tns:Post"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="CreatePostRequest">
+        <wsdl:part name="parameters" element="tns:CreatePostRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CreatePostResponse">
+        <wsdl:part name="parameters" element="tns:CreatePostResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="PostService">
+        <wsdl:operation name="CreatePost">
+            <wsdl:input name="CreatePostRequest" message="tns:CreatePostRequest">
+            </wsdl:input>
+            <wsdl:output name="CreatePostResponse" message="tns:CreatePostResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PostServiceSoapBinding" type="tns:PostService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="CreatePost">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="CreatePostRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="CreatePostResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="PostService">
+        <wsdl:port name="PostServicePort" binding="tns:PostServiceSoapBinding">
+            <!-- embedded deployment -->
+            <soap:address location="http://localhost:9090/PostServicePort"/>
+            <!-- Tomcat deployment, embedded or standalone -->
+            <!--soap:address location="http://localhost:8080/wsdl_first/services/CustomerServicePort"/-->
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

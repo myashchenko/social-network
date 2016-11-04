@@ -6,6 +6,7 @@
 
     <artifactId>sn-database</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <parent>
         <groupId>ua.social.network</groupId>
@@ -15,5 +16,6 @@
 
     <modules>
         <module>sn-db-user-wsdl</module>
+        <module>sn-db-post-wsdl</module>
     </modules>
 </project>

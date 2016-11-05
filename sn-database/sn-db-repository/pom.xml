@@ -2,20 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>sn-database</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
     <parent>
+        <artifactId>sn-database</artifactId>
         <groupId>ua.social.network</groupId>
-        <artifactId>sn-parent-pom</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <modules>
-        <module>sn-db-wsdl</module>
-        <module>sn-db-repository</module>
-    </modules>
+    <artifactId>sn-db-repository</artifactId>
+
 </project>

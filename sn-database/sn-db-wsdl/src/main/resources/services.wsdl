@@ -1,0 +1,233 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://services.network.social.ua/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="UserService" targetNamespace="http://services.network.social.ua/">
+    <wsdl:types>
+
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.network.social.ua/"
+                   attributeFormDefault="unqualified" elementFormDefault="unqualified"
+                   targetNamespace="http://services.network.social.ua/">
+
+            <xs:complexType name="BaseRequest">
+                <xs:sequence>
+                    <xs:element name="requestUser" type="xs:long" minOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="BaseResponse">
+                <xs:sequence>
+                    <xs:element name="status" type="tns:Status" minOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="Status">
+                <xs:sequence>
+                    <xs:element name="code" type="tns:Code" minOccurs="1"/>
+                    <xs:element name="message" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+            </xs:complexType>
+            
+            <xs:simpleType name="Code">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="SUCCESS"/>
+                    <xs:enumeration value="ERROR"/>
+                    <xs:enumeration value="WARNING"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <!--USER-->
+            <xs:complexType name="UserData">
+                <xs:sequence>
+                    <xs:element name="firstName" minOccurs="1" type="xs:string"/>
+                    <xs:element name="lastName" minOccurs="1" type="xs:string"/>
+                    <xs:element name="email" minOccurs="1" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ExpandedUserData">
+                <xs:complexContent>
+                    <xs:extension base="tns:UserData">
+                        <xs:sequence>
+                            <xs:element name="id" minOccurs="1" type="xs:long"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="CreateUserRequest">
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseRequest">
+                        <xs:sequence>
+                            <xs:element name="userData" minOccurs="1" type="tns:UserData"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="CreateUserResponse">
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseResponse">
+                        <xs:sequence>
+                            <xs:element name="id" minOccurs="1" type="xs:long"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="UpdateUserRequest">
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseRequest">
+                        <xs:sequence>
+                            <xs:element name="userData" minOccurs="1" type="tns:ExpandedUserData"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="UpdateUserResponse">
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseResponse"/>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <!--POST-->
+            <xs:complexType name="PostData">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element name="firstName" minOccurs="1" type="xs:string"/>
+                    <xs:element name="lastName" minOccurs="1" type="xs:string"/>
+                    <xs:element name="email" minOccurs="1" type="xs:string"/>
+                    <xs:element name="password" minOccurs="1" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CreatePostRequest">
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseRequest">
+                        <xs:sequence>
+                            <xs:element name="PostData" minOccurs="1" type="tns:PostData"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="CreatePostResponse">
+                <xs:complexContent>
+                    <xs:extension base="tns:BaseRequest">
+                        <xs:sequence>
+                            <xs:element name="id" minOccurs="1" type="tns:PostData"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+
+
+    <wsdl:message name="CreateUserRequest">
+        <wsdl:part name="request" type="tns:CreateUserRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CreateUserResponse">
+        <wsdl:part name="response" type="tns:CreateUserResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="UpdateUserRequest">
+        <wsdl:part name="request" type="tns:UpdateUserRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="UpdateUserResponse">
+        <wsdl:part name="response" type="tns:UpdateUserResponse">
+        </wsdl:part>
+    </wsdl:message>
+
+
+    <wsdl:message name="CreatePostRequest">
+        <wsdl:part name="request" type="tns:CreatePostRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CreatePostResponse">
+        <wsdl:part name="response" type="tns:CreatePostResponse">
+        </wsdl:part>
+    </wsdl:message>
+
+    <wsdl:portType name="UserService">
+        <wsdl:operation name="CreateUser">
+            <wsdl:input name="CreateUserRequest" message="tns:CreateUserRequest">
+            </wsdl:input>
+            <wsdl:output name="CreateUserResponse" message="tns:CreateUserResponse">
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="UpdateUser">
+            <wsdl:input name="UpdateUserRequest" message="tns:UpdateUserRequest">
+            </wsdl:input>
+            <wsdl:output name="UpdateUserResponse" message="tns:UpdateUserResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:portType name="PostService">
+        <wsdl:operation name="CreatePost">
+            <wsdl:input name="CreatePostRequest" message="tns:CreatePostRequest">
+            </wsdl:input>
+            <wsdl:output name="CreatePostResponse" message="tns:CreatePostResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="UserServiceSoapBinding" type="tns:UserService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="CreateUser">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="CreateUserRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="CreateUserResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="UpdateUser">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="UpdateUserRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="UpdateUserResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:binding name="PostServiceSoapBinding" type="tns:PostService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="CreatePost">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="CreatePostRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="CreatePostResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="UserService">
+        <wsdl:port name="UserServicePort" binding="tns:UserServiceSoapBinding">
+            <!-- embedded deployment -->
+            <soap:address location="http://localhost:9090/UserServicePort"/>
+            <!-- Tomcat deployment, embedded or standalone -->
+            <!--soap:address location="http://localhost:8080/wsdl_first/services/CustomerServicePort"/-->
+        </wsdl:port>
+    </wsdl:service>
+
+    <wsdl:service name="PostService">
+        <wsdl:port name="PostServicePort" binding="tns:PostServiceSoapBinding">
+            <!-- embedded deployment -->
+            <soap:address location="http://localhost:9090/PostServicePort"/>
+            <!-- Tomcat deployment, embedded or standalone -->
+            <!--soap:address location="http://localhost:8080/wsdl_first/services/CustomerServicePort"/-->
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

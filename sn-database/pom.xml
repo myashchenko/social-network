@@ -15,7 +15,7 @@
     </parent>
 
     <modules>
-        <module>sn-db-wsdl</module>
         <module>sn-db-repository</module>
+        <module>sn-db-entity</module>
     </modules>
 </project>

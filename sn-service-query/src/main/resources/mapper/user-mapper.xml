@@ -5,8 +5,7 @@
     <sql id="coreUserAttributes">
       users.id,
       users.name,
-      users.last_visit as lastVisit,
-      file.file_path as avatar
+      users.last_visit as lastVisit
     </sql>
 
     <select id="getUser" resultMap="UserRM">
@@ -15,19 +14,18 @@
         f.id as friendId,
         f.name as friendName
         FROM users
-        INNER JOIN file ON users.avatar_id = file.id
         LEFT JOIN user_friends ON users.id = user_friends.user_id
-        LEFT JOIN users f ON users.id = user_friends.friend_id
+        LEFT JOIN users f ON f.id = user_friends.friend_id
         <where>
-            id = #{userId}
+            users.id = #{id}
         </where>
     </select>
 
     <resultMap id="UserRM" type="User">
         <id column="id"/>
-        <association property="friends">
+        <collection property="friends" ofType="User">
             <id column="friendId"/>
             <result column="friendName" property="name"/>
-        </association>
+        </collection>
     </resultMap>
 </mapper>

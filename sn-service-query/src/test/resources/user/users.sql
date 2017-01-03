@@ -1,0 +1,1 @@
+INSERT INTO users (id, name, create_date, email, password) VALUES ('1', 'USER-1', CURRENT_TIMESTAMP, 'USER-1@EMAIL.COM', '11111111');

@@ -11,4 +11,12 @@
 
     <artifactId>sn-service-query</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>ua.social.network</groupId>
+            <artifactId>sn-db-entity</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

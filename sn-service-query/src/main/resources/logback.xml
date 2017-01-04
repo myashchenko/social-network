@@ -17,7 +17,11 @@
         <appender-ref ref="STDOUT" />
     </root>
 
-    <logger name="ua.social.network.query" level="DEBUG">
+    <logger name="ua.social.network.query" level="DEBUG,ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="org.springframework" level="INFO,ERROR">
         <appender-ref ref="STDOUT"/>
     </logger>
 

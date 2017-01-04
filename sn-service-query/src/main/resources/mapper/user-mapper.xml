@@ -3,16 +3,16 @@
 <mapper namespace="ua.social.network.query.UserMapper">
 
     <sql id="coreUserAttributes">
-      users.id,
-      users.name,
+      users.id AS id,
+      users.name AS name,
       users.last_visit as lastVisit
     </sql>
 
     <select id="getUser" resultMap="UserRM">
         SELECT
         <include refid="coreUserAttributes"/>,
-        f.id as friendId,
-        f.name as friendName
+        f.id AS friendId,
+        f.name AS friendName
         FROM users
         LEFT JOIN user_friends ON users.id = user_friends.user_id
         LEFT JOIN users f ON f.id = user_friends.friend_id
@@ -23,6 +23,8 @@
 
     <resultMap id="UserRM" type="User">
         <id column="id"/>
+        <result property="name" column="name"/>
+        <result property="lastVisit" column="lastVisit"/>
         <collection property="friends" ofType="User">
             <id column="friendId"/>
             <result column="friendName" property="name"/>

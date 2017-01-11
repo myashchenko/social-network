@@ -14,6 +14,7 @@
         <module>sn-service</module>
         <module>sn-service-query</module>
         <module>sn-application</module>
+        <module>sn-util</module>
     </modules>
 
     <parent>

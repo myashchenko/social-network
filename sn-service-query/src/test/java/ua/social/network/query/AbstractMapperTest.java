@@ -15,14 +15,4 @@ import java.sql.SQLException;
 @Sql(scripts = "truncate_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public abstract class AbstractMapperTest {
 
-    private Connection connection;
-
-    protected void loadSql(String sqlFileName) {
-        ScriptUtils.executeSqlScript(connection, new FileSystemResource(sqlFileName));
-    }
-
-    @Autowired
-    public void setConnection(DataSource dataSource) throws SQLException {
-        this.connection = dataSource.getConnection();
-    }
 }

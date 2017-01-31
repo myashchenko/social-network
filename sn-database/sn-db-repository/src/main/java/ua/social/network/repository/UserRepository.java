@@ -7,4 +7,5 @@ import ua.social.network.entity.User;
  * @author Mykola Yashchenko
  */
 public interface UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String email);
 }

@@ -1,0 +1,15 @@
+---
+applications:
+- name: sn-auth-service
+  memory: 1024M
+  instances: 1
+  host: sn-auth-service-${random-word}
+  path: target/user-service-1.0-SNAPSHOT.jar
+  env:
+    SPRING_PROFILES_ACTIVE: cloud
+    DEBUG: "true"
+    debug: "true"
+  services:
+   - discovery-service
+   - config-service
+   - user-db

@@ -1,0 +1,8 @@
+//
+//description = ''
+//dependencies {
+//  compile project(':sn-util')
+//    compile group: 'org.mybatis', name: 'mybatis', version:'LATEST'
+//    compile group: 'org.mybatis', name: 'mybatis-spring', version:'LATEST'
+//    compile group: 'hsqldb', name: 'hsqldb', version:'1.8.0.10'
+//}

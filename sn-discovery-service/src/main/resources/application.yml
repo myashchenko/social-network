@@ -1,0 +1,107 @@
+server:
+  port: 8761
+
+security:
+  user:
+    password: ${eureka.password} # Don't use a default password in a real app
+
+info:
+  component: Discovery Server
+
+
+eureka:
+  # Configure standalone mode, see http://cloud.spring.io/spring-cloud-netflix/spring-cloud-netflix.html#_standalone_mode
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  instance:
+    hostname: localhost
+  server:
+    # Disable self-preservation during development, see https://github.com/Netflix/eureka/wiki/Understanding-Eureka-Peer-to-Peer-Communication
+    enableSelfPreservation: false
+    # renewalPercentThreshold: 0.49
+    # renewalThresholdUpdateIntervalMs
+
+    # Set this only for this sample service without which starting the instance will by default wait for the default of 5 mins
+    waitTimeInMsWhenSyncEmpty: 0
+
+    # for the example, set this to zero as we will not have peers to sync up with.
+    # Do not set in a real environment with multi-node eureka clusters.
+    numberRegistrySyncRetries: 0
+
+    response-cache-update-interval-ms: 1000
+  password: ${SECURITY_USER_PASSWORD:password}
+
+logging:
+  level:
+    root: WARN
+
+    # Set INFO to see the allocated port
+    org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer: INFO
+    org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainer: INFO
+
+---
+spring:
+  profiles: peer # not standalone
+eureka:
+  instance:
+    hostname: 127.0.1.1
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://user:${eureka.password}@127.0.0.1:8762/eureka/
+
+---
+spring:
+  profiles: other # not standalone
+server:
+  port: 8762
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    nonSecurePort: ${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://user:${eureka.password}@127.0.1.1:8761/eureka/
+
+---
+spring:
+  profiles: local # connect to remote peer
+eureka:
+  instance:
+    hostname: ${localhost.hostname:${localhost.ngrok}.ngrok.com}
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://user:${eureka.password}@${PREFIX:}eureka.cfapps.io/eureka/
+
+---
+# Eureka instance 1 when used on Docker
+spring:
+  profiles: docker1
+eureka:
+  instance:
+    hostname: discovery
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://user:${eureka.password}@discovery2:8762/eureka/
+
+---
+# Eureka instance 2 when used on Docker
+spring:
+  profiles: docker2
+server:
+  port: 8762
+eureka:
+  instance:
+    hostname: discovery2
+    nonSecurePort: ${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://user:${eureka.password}@discovery:8761/eureka/

@@ -1,10 +1,3 @@
-server:
-  port: 8888
 spring:
   application:
-    name: sn-config-service
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/yashchenkon/social-network.git
+    name: sn-config-server

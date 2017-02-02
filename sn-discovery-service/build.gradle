@@ -1,0 +1,58 @@
+buildscript {
+    ext {
+        springBootVersion = '1.4.0.RELEASE'
+        springCloudVersion = 'Brixton.SR3'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+// TODO: Is this still required?
+springBoot {
+    requiresUnpack = ['com.netflix.eureka:eureka-core','com.netflix.eureka:eureka-client']
+}
+
+jar {
+    baseName = 'sn-discovery-server'
+    version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    compile("org.springframework.boot:spring-boot-starter-undertow")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile('org.springframework.cloud:spring-cloud-starter-eureka-server') {
+        // TODO: Is this still required?
+        exclude(module: 'servlet-api') // Drags in an old 2.5 spec...
+    }
+    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+
+//  compile('org.springframework.boot:spring-boot-starter-security')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

@@ -73,3 +73,8 @@ buildNumber.properties
 
 sn-database/sn-db-post-wsdl/target
 sn-database/sn-db-user-wsdl/target
+
+gradle
+.gradle
+gradlew
+gradlew.bat

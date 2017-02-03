@@ -1,0 +1,6 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+dependencies {
+    compileOnly "org.projectlombok:lombok:1.16.12"
+}

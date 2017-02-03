@@ -36,9 +36,12 @@ public class QueryConfig {
                 .map(Path::getFileName)
                 .map(p -> TABLES_FOLDER_PATH + p.toString())
                 .collect(Collectors.toList());
-        return new EmbeddedDatabaseBuilder()
-                .setType(EmbeddedDatabaseType.HSQL)
-                .addScripts(tables.toArray(new String[tables.size()]))
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.HSQL);
+        for (String tableName : tables) {
+            builder.addScript(tableName);
+        }
+        return ((EmbeddedDatabaseBuilder) builder)
                 .build();
     }
 

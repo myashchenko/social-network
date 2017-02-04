@@ -8,7 +8,7 @@
       users.last_visit as lastVisit
     </sql>
 
-    <select id="getUser" resultMap="UserRM">
+    <select id="getSingle" resultMap="UserRM">
         SELECT
         <include refid="coreUserAttributes"/>,
         f.id AS friendId,
@@ -19,6 +19,18 @@
         <where>
             users.id = #{id}
         </where>
+    </select>
+
+    <select id="getList" resultMap="UserRM">
+        SELECT
+        <include refid="coreUserAttributes"/>
+        FROM users
+    </select>
+
+    <select id="getFriends" resultMap="UserRM">
+        SELECT
+        <include refid="coreUserAttributes"/>
+        FROM users
     </select>
 
     <resultMap id="UserRM" type="User">

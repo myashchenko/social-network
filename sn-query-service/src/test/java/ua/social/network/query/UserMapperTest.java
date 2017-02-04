@@ -15,6 +15,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 import static org.junit.Assert.assertThat;
 
@@ -31,20 +32,27 @@ public class UserMapperTest extends AbstractMapperTest {
 
     @Test
     public void testGetUserWithoutFriends() {
-        UserDto result = userMapper.getUser(singletonMap("id", "1"));
+        UserDto result = userMapper.getSingle(singletonMap("id", "1"));
         assertThat(result, new EntityMatcher<>(expected("USER-1", emptyList())));
     }
 
     @Test
     public void testGetUserWithFriends() {
-        UserDto result = userMapper.getUser(singletonMap("id", "2"));
+        UserDto result = userMapper.getSingle(singletonMap("id", "2"));
         assertThat(result, new EntityMatcher<>(expected("USER-2", asList(expected("USER-3"), expected("USER-4")))));
     }
 
     @Test
     public void testGetUserWhichDoesNotExist() {
-        UserDto user = userMapper.getUser(singletonMap("id", "bad_id"));
+        UserDto user = userMapper.getSingle(singletonMap("id", "bad_id"));
         assertThat(user, Matchers.nullValue());
+    }
+
+    @Test
+    public void testGetList() {
+        List<UserDto> users = userMapper.getList(emptyMap());
+        assertThat(users, new EntityMatcher<>(asList(expected("USER-1", emptyList()), expected("USER-2", emptyList()),
+                expected("USER-3", emptyList()), expected("USER-4", emptyList()))));
     }
 
     private UserDto expected(String name) {

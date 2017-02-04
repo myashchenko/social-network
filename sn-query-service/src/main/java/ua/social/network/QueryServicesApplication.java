@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -19,9 +18,6 @@ public class QueryServicesApplication {
     private static final Logger LOG = LoggerFactory.getLogger(QueryServicesApplication.class);
 
     public static void main(String[] args) {
-
-        ConfigurableApplicationContext ctx = SpringApplication.run(QueryServicesApplication.class, args);
-
-        LOG.info("Connected to RabbitMQ at: {}", ctx.getEnvironment().getProperty("spring.rabbitmq.host"));
+        SpringApplication.run(QueryServicesApplication.class, args);
     }
 }

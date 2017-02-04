@@ -1,18 +1,6 @@
-info:
-  component: Query Services
-
 spring:
   application:
     name: sn-query-service
   cloud:
     config:
-      failFast: true
-      retry:
-        initialInterval: 3000
-        multiplier: 1.3
-        maxInterval: 5000
-        maxAttempts: 20
-      discovery:
-        serviceId: sn-config-server
-        enabled: false
-      uri: http://localhost:8888
+      uri: ${vcap.services.${PREFIX:}configserver.credentials.uri:http://user:password@localhost:8888}

@@ -24,8 +24,9 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = {QueryConfig.class})
-@Sql(scripts = "classpath:user/users.sql")
-public class UserMapperTest extends AbstractMapperTest {
+@Sql(scripts = "classpath:user/users.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "classpath:truncate_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+public class UserMapperTest {
 
     @Autowired
     private UserMapper userMapper;

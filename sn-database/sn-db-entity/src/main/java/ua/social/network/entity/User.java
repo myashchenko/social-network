@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,14 +30,25 @@ public class User extends BaseEntity {
     private LocalDate lastVisit;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
+    @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private Set<User> friends;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "friend_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "friend_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> friendOf;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_id")
     private File avatar;
+
+    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "wall_id", nullable = false, updatable = false)
+    public UserWall wall;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_community", joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "community_id")})
+    private List<Community> communities;
 }

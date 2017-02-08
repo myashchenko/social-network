@@ -1,6 +1,10 @@
 server:
   port: 0
 
+service:
+  defaultMinMs: 100
+  defaultMaxMs: 200
+
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10
@@ -8,3 +12,11 @@ eureka:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
   client:
     registryFetchIntervalSeconds: 5
+
+logging:
+  file: logs/dev_app.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    org.springframework.web: INFO

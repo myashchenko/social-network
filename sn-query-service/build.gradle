@@ -32,22 +32,21 @@ repositories {
     mavenLocal()
     jcenter()
     mavenCentral()
+
+    maven {
+        url 'http://maven.springframework.org/release'
+    }
 }
 
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-            {
-                exclude module: 'spring-boot-starter-tomcat'
-            }
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
     compile("org.springframework.boot:spring-boot-starter-undertow")
     compile("org.springframework.boot:spring-boot-starter-actuator")
-
-    compile("org.springframework.cloud:spring-cloud-starter-eureka")
-    compile("org.springframework.cloud:spring-cloud-starter-hystrix")
-    compile("org.springframework.cloud:spring-cloud-starter-config")
-    compile("org.springframework.cloud:spring-cloud-starter-bus-amqp")
-    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    compile('org.springframework.cloud:spring-cloud-starter-zuul:1.0.0.RELEASE')
+    compile('org.springframework.cloud:spring-cloud-starter-eureka:1.0.0.RELEASE')
 
     compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.1'
     compile group: 'org.mybatis', name: 'mybatis', version: '3.4.2'
@@ -58,9 +57,11 @@ dependencies {
     // todo find workaround
     compile("org.springframework:spring-jdbc")
 
-    compile project(":sn-util")
+    compile project(':sn-util')
+    testCompile project(':sn-util')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
+
 }
 
 dependencyManagement {

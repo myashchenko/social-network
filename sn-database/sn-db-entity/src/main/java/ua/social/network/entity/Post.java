@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @author Mykola Yashchenko
  */
 @Entity
-@Table
+@Table(name = "post")
 @Getter
 @Setter
 public class Post extends BaseEntity {
@@ -17,7 +17,4 @@ public class Post extends BaseEntity {
     @Column(name = "text")
     private String text;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User author;
 }

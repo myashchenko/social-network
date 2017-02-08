@@ -1,6 +1,6 @@
 spring:
   application:
-    name: edgeserver
+    name: sn-edge-server
   cloud:
     config:
       uri: ${vcap.services.${PREFIX:}configserver.credentials.uri:http://user:password@localhost:8888}

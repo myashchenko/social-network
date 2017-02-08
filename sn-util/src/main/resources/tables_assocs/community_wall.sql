@@ -1,0 +1,1 @@
+ALTER TABLE community_wall ADD FOREIGN KEY (community_id) REFERENCES community(id);

@@ -38,6 +38,20 @@ repositories {
     }
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDir '../sn-util/src/main/resources'
+        }
+    }
+
+    test {
+        resources {
+            srcDir '../sn-util/src/main/resources'
+        }
+    }
+}
+
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {

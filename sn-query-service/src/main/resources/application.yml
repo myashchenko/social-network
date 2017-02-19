@@ -1,14 +1,9 @@
 server:
   port: 0
 
-service:
-  defaultMinMs: 100
-  defaultMaxMs: 200
-
 eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 10
-    metadataMap:
-      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
   client:
-    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    preferIpAddress: true

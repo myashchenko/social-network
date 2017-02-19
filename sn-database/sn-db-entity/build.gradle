@@ -28,6 +28,6 @@ repositories {
 
 
 dependencies {
-    compileOnly "org.projectlombok:lombok:1.16.12"
+    compile "org.projectlombok:lombok:1.16.12"
     compile group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.2.6.Final'
 }

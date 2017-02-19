@@ -10,11 +10,10 @@ endpoints:
     sensitive: false
 
 zuul:
-  ignoredServices: "*"
   routes:
-    productcomposite:
-      path: /productcomposite/**
-#      stripPrefix: false
+    sn-query-service:
+      path: /sn-query-service/**
+      serviceId: sn-query-service
 
 server:
   port: 8765

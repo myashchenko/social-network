@@ -46,6 +46,9 @@ dependencies {
     testCompile('org.apache.httpcomponents:httpclient:4.3.6') {
         exclude(module: 'commons-logging')
     }
+
+    compile project(':sn-database:sn-db-repository')
+    testCompile project(':sn-database:sn-db-repository')
 }
 
 dependencyManagement {

@@ -6,7 +6,8 @@ CREATE TABLE users (
   password VARCHAR (255) NOT NULL,
   last_visit TIMESTAMP,
   avatar_id VARCHAR (255),
-  wall_id VARCHAR (255)
+  wall_id VARCHAR (255),
+  role VARCHAR (255) NOT NULL
 );
 
 ALTER TABLE users ADD PRIMARY KEY (id);

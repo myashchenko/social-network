@@ -29,6 +29,10 @@ public class User extends BaseEntity {
     @Column(name = "last_visit", nullable = false)
     private LocalDate lastVisit;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
+
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
     @JoinTable(name = "user_friends", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id"))

@@ -2,6 +2,7 @@ package ua.social.network.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import ua.social.network.listener.IdGeneratorListener;
 
 import javax.persistence.*;

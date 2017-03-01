@@ -2,6 +2,7 @@ package ua.social.network.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -16,5 +17,4 @@ public class Post extends BaseEntity {
 
     @Column(name = "text")
     private String text;
-
 }

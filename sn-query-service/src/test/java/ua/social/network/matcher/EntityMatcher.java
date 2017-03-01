@@ -19,6 +19,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
 
     @Override
     public boolean matches(Object actual) {
+        // todo compare object through reflection
         return Objects.equals(expected, actual);
     }
 

@@ -1,0 +1,1 @@
+INSERT INTO post (id, text, create_date) VALUES ('1', 'TEST', CURRENT_TIMESTAMP);

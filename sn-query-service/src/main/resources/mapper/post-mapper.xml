@@ -18,17 +18,26 @@
 
     <select id="getList" resultMap="PostRM">
         SELECT
-        <include refid="coreAttributes"/>,
-        user_wall.id AS userWallId
-        LEFT JOIN user_wall ON user_wall.id = post.user_wall_id
+        <include refid="coreAttributes"/>
         FROM post
+        <if test="userId != null">
+            LEFT JOIN post_user_assoc ON post_user_assoc.post_id = post.id
+        </if>
+        <if test="communityId != null">
+            LEFT JOIN post_community_assoc ON post_community_assoc.post_id = post.id
+        </if>
         <where>
-            userWallId = #{userWallId}
+            <if test="userId != null">
+                post_user_assoc.user_id = #{userId}
+            </if>
+            <if test="communityId != null">
+                post_community_assoc.community_id = #{communityId}
+            </if>
         </where>
     </select>
 
     <resultMap id="PostRM" type="Post">
-        <id column="id"/>
+        <id column="id" property="id"/>
         <result property="text" column="text"/>
     </resultMap>
 </mapper>

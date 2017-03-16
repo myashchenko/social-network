@@ -47,9 +47,10 @@ public class User extends BaseEntity {
     @JoinColumn(name = "avatar_id")
     private File avatar;
 
-    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "wall_id", nullable = false, updatable = false)
-    public UserWall wall;
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JoinTable(name = "post_user_assoc", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private List<Post> posts;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_community", joinColumns = {@JoinColumn(name = "user_id")},

@@ -1,1 +1,0 @@
-ALTER TABLE user_wall ADD FOREIGN KEY (user_id) REFERENCES users(id);

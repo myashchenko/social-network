@@ -28,7 +28,8 @@ public class Community extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "communities")
     private List<User> followers;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wall_id", unique = true, updatable = false)
-    private CommunityWall wall;
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JoinTable(name = "post_community_assoc", joinColumns = @JoinColumn(name = "community_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private List<Post> posts;
 }

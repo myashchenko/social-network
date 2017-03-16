@@ -1,6 +1,5 @@
 package ua.social.network.matcher;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 

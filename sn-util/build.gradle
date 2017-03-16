@@ -1,4 +1,25 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+
+    maven {
+        url 'http://maven.springframework.org/release'
+    }
+}
+
+dependencies {
+    compile group: 'org.springframework', name: 'spring-test', version: '4.3.7.RELEASE'
+}

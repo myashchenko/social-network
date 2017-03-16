@@ -10,6 +10,9 @@ import ua.social.network.config.QueryConfig;
 import ua.social.network.dto.PostDto;
 import ua.social.network.matcher.EntityMatcher;
 
+import java.util.List;
+
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonMap;
 import static org.junit.Assert.assertThat;
 
@@ -26,13 +29,27 @@ public class PostMapperTest {
     private PostMapper postMapper;
 
     @Test
-    public void testGetUserWithoutFriends() {
+    public void testGetPost() {
         PostDto result = postMapper.getSingle(singletonMap("id", "1"));
-        assertThat(result, new EntityMatcher<>(expected(null, "TEST")));
+        assertThat(result, new EntityMatcher<>(expected("1", null, "TEST1")));
     }
 
-    private PostDto expected(String createdDate, String text) {
+    @Test
+    public void testGetPostListByUserId() {
+        List<PostDto> result = postMapper.getList(singletonMap("userId", "post-user-1"));
+        assertThat(result, new EntityMatcher<>(asList(expected("2", null, "TEST2"))));
+    }
+
+
+    @Test
+    public void testGetPostListByCommunityId() {
+        List<PostDto> result = postMapper.getList(singletonMap("communityId", "post-community-1"));
+        assertThat(result, new EntityMatcher<>(asList(expected("3", null, "TEST3"))));
+    }
+
+    private PostDto expected(String id, String createdDate, String text) {
         PostDto postDto = new PostDto();
+        postDto.setId(id);
         postDto.setCreatedDate(createdDate);
         postDto.setText(text);
         return postDto;

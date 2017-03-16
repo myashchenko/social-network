@@ -39,16 +39,34 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
 
     testCompile("org.springframework.boot:spring-boot-starter-test") {
-        // TODO: Is this still required?
         exclude(module: 'commons-logging')
     }
-    // TODO: Is this still required?
+
     testCompile('org.apache.httpcomponents:httpclient:4.3.6') {
         exclude(module: 'commons-logging')
     }
 
+    compile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.4'
+
     compile project(':sn-database:sn-db-repository')
     testCompile project(':sn-database:sn-db-repository')
+
+    compile project(':sn-util')
+    testCompile project(':sn-util')
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir '../sn-util/src/main/resources'
+        }
+    }
+
+    test {
+        resources {
+            srcDir '../sn-util/src/main/resources'
+        }
+    }
 }
 
 dependencyManagement {

@@ -14,7 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ua.social.network.AuthApplication;
-import ua.social.network.entity.User;
+import ua.social.network.dto.CreateUserRequest;
 import ua.social.network.repository.UserRepository;
 
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -50,7 +50,7 @@ public class UserControllerTest {
     @Test
     public void shouldCreateNewUser() throws Exception {
 
-        final User user = new User();
+        final CreateUserRequest user = new CreateUserRequest();
         user.setEmail("test@test.com");
         user.setPassword("password");
 
@@ -63,7 +63,7 @@ public class UserControllerTest {
     @Test
     public void shouldFailWhenUserIsNotValid() throws Exception {
 
-        final User user = new User();
+        final CreateUserRequest user = new CreateUserRequest();
         user.setEmail("t");
         user.setPassword("p");
 

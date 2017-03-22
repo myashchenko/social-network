@@ -12,14 +12,9 @@ buildscript {
     }
 }
 
-plugins {
-    id "com.jfrog.bintray" version "0.4.1"
-}
-
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-
 
 jar {
     baseName = 'sn-community-service'
@@ -31,26 +26,7 @@ targetCompatibility = 1.8
 
 repositories {
     mavenLocal()
-    jcenter()
     mavenCentral()
-
-    maven {
-        url 'http://maven.springframework.org/release'
-    }
-}
-
-sourceSets {
-    main {
-        resources {
-            srcDir '../sn-util/src/main/resources'
-        }
-    }
-
-    test {
-        resources {
-            srcDir '../sn-util/src/main/resources'
-        }
-    }
 }
 
 dependencies {
@@ -68,11 +44,27 @@ dependencies {
     compile "org.projectlombok:lombok:1.16.12"
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
 
+    compile project(':sn-database:sn-db-repository')
+    testCompile project(':sn-database:sn-db-repository')
+
     compile project(':sn-util')
     testCompile project(':sn-util')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
+}
 
+sourceSets {
+    main {
+        resources {
+            srcDir '../sn-util/src/main/resources'
+        }
+    }
+
+    test {
+        resources {
+            srcDir '../sn-util/src/main/resources'
+        }
+    }
 }
 
 dependencyManagement {

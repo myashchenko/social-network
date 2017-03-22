@@ -44,27 +44,13 @@ dependencies {
     compile "org.projectlombok:lombok:1.16.12"
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
 
-    compile project(':sn-database:sn-db-repository')
-    testCompile project(':sn-database:sn-db-repository')
+    compile project(':sn-database:sn-db-entity')
+    testCompile project(':sn-database:sn-db-entity')
 
     compile project(':sn-util')
     testCompile project(':sn-util')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
-}
-
-sourceSets {
-    main {
-        resources {
-            srcDir '../sn-util/src/main/resources'
-        }
-    }
-
-    test {
-        resources {
-            srcDir '../sn-util/src/main/resources'
-        }
-    }
 }
 
 dependencyManagement {

@@ -22,4 +22,5 @@ repositories {
 
 dependencies {
     compile group: 'org.springframework', name: 'spring-test', version: '4.3.7.RELEASE'
+    compile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
 }

@@ -16,7 +16,6 @@ public class File extends BaseEntity {
     @Column(name = "file_path", nullable = false)
     private String filePath;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", updatable = false)
-    private User user;
+    @Column(name = "user", nullable = false)
+    private String user;
 }

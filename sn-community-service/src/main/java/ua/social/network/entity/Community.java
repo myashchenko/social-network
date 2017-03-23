@@ -21,12 +21,13 @@ public class Community extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User owner;
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "communities")
-    private List<User> followers;
+    @Column(name = "user_id")
+    @ElementCollection
+    @CollectionTable(name = "followers", joinColumns = @JoinColumn(name = "community_id"))
+    private List<String> followers;
 
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinTable(name = "post_community_assoc", joinColumns = @JoinColumn(name = "community_id"),

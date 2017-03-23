@@ -23,17 +23,13 @@ import java.util.stream.Stream;
  * @author Mykola Yashchenko
  */
 @Configuration
-public class JpaConfig {
-
-    private static final String TABLES_FOLDER_PATH = "tables/";
-    private static final String TABLES_ASSOCS_FOLDER_PATH = "tables_assocs/";
+public class JpaConfig extends AbstractDbConfig {
 
     @Bean
     public DataSource dataSource() throws IOException, URISyntaxException {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.HSQL);
-        getFiles(TABLES_FOLDER_PATH).forEach(builder::addScript);
-        getFiles(TABLES_ASSOCS_FOLDER_PATH).forEach(builder::addScript);
+        getScripts().forEach(builder::addScript);
         return builder.build();
     }
 
@@ -57,14 +53,5 @@ public class JpaConfig {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
         return jpaTransactionManager;
-    }
-
-    private Stream<String> getFiles(String rootDirectory) throws IOException {
-        Path table = Paths.get(new ClassPathResource(rootDirectory).getURI());
-        return Files.walk(table)
-                .filter(p -> !p.toFile().isDirectory())
-                .map(Path::getFileName)
-                .map(Path::toString)
-                .map(p -> rootDirectory + p);
     }
 }

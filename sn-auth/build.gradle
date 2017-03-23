@@ -55,20 +55,6 @@ dependencies {
     testCompile project(':sn-util')
 }
 
-sourceSets {
-    main {
-        resources {
-            srcDir '../sn-util/src/main/resources'
-        }
-    }
-
-    test {
-        resources {
-            srcDir '../sn-util/src/main/resources'
-        }
-    }
-}
-
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"

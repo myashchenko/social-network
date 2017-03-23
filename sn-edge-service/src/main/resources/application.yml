@@ -16,9 +16,15 @@ endpoints:
 
 zuul:
   routes:
-    sn-query-service:
-      path: /sn-query-service/**
-      serviceId: sn-query-service
+    sn-community-service:
+      path: /api/**
+      serviceId: sn-community-service
+    sn-community-query-service:
+      path: /api/**
+      serviceId: sn-community-query-service
+    sn-user-query-service:
+      path: /api/**
+      serviceId: sn-user-query-service
 
 server:
   port: 8765

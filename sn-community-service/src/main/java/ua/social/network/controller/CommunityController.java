@@ -30,6 +30,9 @@ public class CommunityController {
         // todo use mapper
         Community community = new Community();
         community.setName(createCommunityRequest.getName());
+        community.setUserId(principal.getName());
+
+        communityRepository.save(community);
     }
 
     @PreAuthorize("#oauth2.hasScope('server')")

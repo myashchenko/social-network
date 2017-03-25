@@ -3,12 +3,11 @@ package ua.social.network.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.social.network.dto.CreateCommunityRequest;
+import ua.social.network.dto.ModifyCommunityRequest;
 import ua.social.network.entity.Community;
+import ua.social.network.exception.EntityNotFoundException;
 import ua.social.network.repository.CommunityRepository;
 
 import javax.validation.Valid;
@@ -36,8 +35,21 @@ public class CommunityController {
     }
 
     @PreAuthorize("#oauth2.hasScope('server')")
-    @PutMapping
-    public void modifyCommunity(Principal principal, @Valid @RequestBody Object communityRequest) {
+    @PutMapping(value = "/{id}")
+    public void modifyCommunity(Principal principal, @PathVariable("id") String id,
+                                @Valid @RequestBody ModifyCommunityRequest communityRequest) {
+        // todo use mapper
+        Community community = communityRepository.findOne(id);
+        if (community == null) {
+            throw new EntityNotFoundException("Community with id=%s not found", id);
+        }
 
+        if (!community.getUserId().equals(principal.getName())) {
+            throw new RuntimeException("Forbidden");
+        }
+
+        community.setName(communityRequest.getName());
+
+        communityRepository.save(community);
     }
 }

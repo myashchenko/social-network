@@ -7,5 +7,4 @@ import ua.social.network.entity.Community;
  * @author Mykola Yashchenko
  */
 public interface CommunityRepository extends JpaRepository<Community, String> {
-    Community findByName(String name);
 }

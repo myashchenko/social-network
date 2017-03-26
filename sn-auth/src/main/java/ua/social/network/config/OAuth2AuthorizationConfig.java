@@ -37,15 +37,17 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         // TODO persist clients details
 
         // @formatter:off
-        clients.inMemory()
-                .withClient("browser")
-                .authorizedGrantTypes("refresh_token", "password")
-                .scopes("ui")
+        clients
+                .inMemory()
+                    .withClient("browser")
+                    .authorizedGrantTypes("refresh_token", "password")
+                    .scopes("ui")
                 .and()
-                .withClient("query-service")
-                .secret(env.getProperty("QUERY_SERVICE_PASSWORD"))
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server");
+                    .withClient("sn-user-query-service")
+//                    .secret(env.getProperty("SN_USER_QUERY_SERVICE_PASSWORD"))
+                    .secret("SN_USER_QUERY_SERVICE_PASSWORD")
+                    .authorizedGrantTypes("client_credentials", "refresh_token")
+                    .scopes("server");
         // @formatter:on
     }
 

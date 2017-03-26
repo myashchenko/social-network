@@ -16,6 +16,10 @@ endpoints:
 
 zuul:
   routes:
+    sn-auth-service:
+      path: /uaa/**
+      url: http://auth-service:9999
+      sensitiveHeaders: Cookie,Set-Cookie
     sn-community-service:
       path: /api/**
       serviceId: sn-community-service

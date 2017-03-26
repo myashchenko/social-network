@@ -10,6 +10,8 @@ include ':sn-discovery-service'
 include ':sn-monitor-dashboard'
 include ':sn-community-service'
 include ':sn-community-query-service'
+include ':sn-user-query-service'
+include ':sn-user-service'
 
 project(':sn-database:sn-db-entity').projectDir = "$rootDir/sn-database/sn-db-entity" as File
 project(':sn-database').projectDir = "$rootDir/sn-database" as File
@@ -22,5 +24,6 @@ project(':sn-discovery-service').projectDir = "$rootDir/sn-discovery-service" as
 project(':sn-monitor-dashboard').projectDir = "$rootDir/sn-monitor-dashboard" as File
 project(':sn-community-service').projectDir = "$rootDir/sn-community-service" as File
 project(':sn-community-query-service').projectDir = "$rootDir/sn-community-query-service" as File
-include 'sn-user-query-service'
+project(':sn-user-service').projectDir = "$rootDir/sn-user-service" as File
+project(':sn-user-query-service').projectDir = "$rootDir/sn-user-query-service" as File
 

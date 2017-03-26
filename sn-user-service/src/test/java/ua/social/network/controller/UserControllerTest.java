@@ -1,6 +1,5 @@
 package ua.social.network.controller;
 
-import com.sun.security.auth.UserPrincipal;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,22 +7,23 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import ua.social.network.AuthApplication;
+import ua.social.network.UserServiceApplication;
+import ua.social.network.dto.CreateUserRequest;
 import ua.social.network.repository.UserRepository;
 
 import static org.mockito.MockitoAnnotations.initMocks;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author Mykola Yashchenko
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AuthApplication.class)
+@SpringBootTest(classes = UserServiceApplication.class)
 public class UserControllerTest {
 
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -43,9 +43,26 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnCurrentUser() throws Exception {
-        mockMvc.perform(get("/users/current").principal(new UserPrincipal("test")))
-                .andExpect(jsonPath("$.name").value("test"))
+    public void shouldCreateNewUser() throws Exception {
+
+        final CreateUserRequest user = new CreateUserRequest();
+        user.setEmail("test@test.com");
+        user.setPassword("password");
+
+        String json = mapper.writeValueAsString(user);
+
+        mockMvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldFailWhenUserIsNotValid() throws Exception {
+
+        final CreateUserRequest user = new CreateUserRequest();
+        user.setEmail("t");
+        user.setPassword("p");
+
+        mockMvc.perform(post("/users"))
+                .andExpect(status().isBadRequest());
     }
 }

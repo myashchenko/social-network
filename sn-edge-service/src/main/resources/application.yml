@@ -26,6 +26,9 @@ zuul:
     sn-community-query-service:
       path: /api/**
       serviceId: sn-community-query-service
+    sn-user-service:
+      path: /api/**
+      serviceId: sn-user-service
     sn-user-query-service:
       path: /api/**
       serviceId: sn-user-query-service

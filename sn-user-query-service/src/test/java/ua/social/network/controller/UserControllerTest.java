@@ -1,6 +1,5 @@
-package ua.social.network.service;
+package ua.social.network.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,10 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(scripts = "classpath:truncate_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UserControllerTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
-
     @Autowired
-    private UserController communityController;
+    private UserController userController;
 
     @Autowired
     private ExceptionHandlerController exceptionHandlerController;
@@ -42,7 +39,7 @@ public class UserControllerTest {
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(communityController)
+        this.mockMvc = MockMvcBuilders.standaloneSetup(userController)
                 .setControllerAdvice(exceptionHandlerController).build();
     }
 

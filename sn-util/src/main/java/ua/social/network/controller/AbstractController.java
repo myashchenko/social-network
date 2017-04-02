@@ -1,4 +1,4 @@
-package ua.social.network.service;
+package ua.social.network.controller;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
@@ -14,15 +14,15 @@ import java.util.Map;
 /**
  * @author Mykola Yashchenko
  */
-public abstract class AbstractService<ENTITY, MAPPER extends Mapper<ENTITY>> {
+public abstract class AbstractController<ENTITY, MAPPER extends Mapper<ENTITY>> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractController.class);
 
     private static final String ID = "id";
 
     private MAPPER mapper;
 
-    public AbstractService(MAPPER mapper) {
+    public AbstractController(MAPPER mapper) {
         this.mapper = mapper;
     }
 

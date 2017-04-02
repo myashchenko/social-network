@@ -1,4 +1,4 @@
-package ua.social.network.service;
+package ua.social.network.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/users")
-public class UserController extends AbstractService<UserDto, UserMapper> {
+public class UserController extends AbstractController<UserDto, UserMapper> {
 
     @Autowired
     public UserController(UserMapper mapper) {

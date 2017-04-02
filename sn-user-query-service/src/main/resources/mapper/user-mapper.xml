@@ -25,12 +25,12 @@
         SELECT
         <include refid="coreUserAttributes"/>
         FROM users
-    </select>
-
-    <select id="getFriends" resultMap="UserRM">
-        SELECT
-        <include refid="coreUserAttributes"/>
-        FROM users
+        <if test="user_id != null">
+            LEFT JOIN user_friends friends ON users.id = friends.friend_id
+            <where>
+                friends.user_id = #{user_id}
+            </where>
+        </if>
     </select>
 
     <resultMap id="UserRM" type="User">

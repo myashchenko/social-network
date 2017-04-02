@@ -5,7 +5,7 @@ package ua.social.network.exception;
  */
 public class EntityNotFoundException extends RuntimeException {
 
-    public EntityNotFoundException(String message, String... params) {
-        super(String.format(message, (Object[]) params));
+    public EntityNotFoundException(String message, String... values) {
+        super(String.format(message, (Object[]) values));
     }
 }

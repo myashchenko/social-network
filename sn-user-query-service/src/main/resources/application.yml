@@ -16,3 +16,8 @@ security:
       accessTokenUri: http://sn-auth-service:9999/uaa/oauth/token
       grant-type: client_credentials
       scope: server
+
+spring:
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true

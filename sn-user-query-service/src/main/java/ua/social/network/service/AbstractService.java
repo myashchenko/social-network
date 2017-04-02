@@ -35,6 +35,10 @@ public abstract class AbstractService<ENTITY, MAPPER extends Mapper<ENTITY>> {
         return mapper.getList(describe);
     }
 
+    public List<ENTITY> getEntityList(Map<String, Object> params) {
+        return mapper.getList(params);
+    }
+
     protected Map<String, String> getProperties(Object object) {
         try {
             return BeanUtils.describe(object);

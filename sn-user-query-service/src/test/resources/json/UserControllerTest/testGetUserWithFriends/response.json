@@ -1,0 +1,11 @@
+{
+  "name": "USER-2",
+  "friends": [
+    {
+      "name": "USER-3"
+    },
+    {
+      "name": "USER-4"
+    }
+  ]
+}

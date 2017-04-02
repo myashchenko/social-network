@@ -1,7 +1,6 @@
 rootProject.name = 'sn-parent-pom'
 include ':sn-database:sn-db-entity'
 include ':sn-database'
-include ':sn-service'
 include ':sn-query-service'
 include ':sn-util'
 include ':sn-auth'
@@ -15,7 +14,6 @@ include ':sn-user-service'
 
 project(':sn-database:sn-db-entity').projectDir = "$rootDir/sn-database/sn-db-entity" as File
 project(':sn-database').projectDir = "$rootDir/sn-database" as File
-project(':sn-service').projectDir = "$rootDir/sn-service" as File
 project(':sn-query-service').projectDir = "$rootDir/sn-query-service" as File
 project(':sn-util').projectDir = "$rootDir/sn-util" as File
 project(':sn-auth').projectDir = "$rootDir/sn-auth" as File

@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        springBootVersion = '1.4.0.RELEASE'
-        springCloudVersion = 'Brixton.SR3'
+        springBootVersion = '1.5.2.RELEASE'
+        springCloudVersion = 'Camden.SR6'
     }
     repositories {
         mavenCentral()
@@ -12,28 +12,19 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 
 jar {
     baseName = 'sn-monitor-dashboard'
     version = '0.0.1-SNAPSHOT'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web") {
+    compile('org.springframework.boot:spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
     }
-    compile("org.springframework.boot:spring-boot-starter-undertow")
-    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile('org.springframework.boot:spring-boot-starter-undertow')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
 
     compile('org.springframework.cloud:spring-cloud-starter-hystrix-dashboard')
 }

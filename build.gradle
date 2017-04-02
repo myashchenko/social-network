@@ -1,2 +1,17 @@
-apply plugin: 'java'
-apply plugin: 'idea'
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+
+        maven {
+            url 'http://maven.springframework.org/release'
+        }
+    }
+}

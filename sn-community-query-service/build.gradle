@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        springBootVersion = '1.4.0.RELEASE'
-        springCloudVersion = 'Brixton.SR3'
+        springBootVersion = '1.5.2.RELEASE'
+        springCloudVersion = 'Camden.SR6'
     }
     repositories {
         mavenCentral()
@@ -16,26 +16,11 @@ plugins {
     id "com.jfrog.bintray" version "0.4.1"
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 
 jar {
     baseName = 'sn-community-query-service'
     version = '0.0.1-SNAPSHOT'
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenLocal()
-    jcenter()
-    mavenCentral()
-
-    maven {
-        url 'http://maven.springframework.org/release'
-    }
 }
 
 dependencies {

@@ -15,8 +15,9 @@ import java.util.Objects;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@ToString(of = {"name", "lastVisit", "avatar", "friends"})
+@ToString(of = {"id", "name", "lastVisit", "avatar", "friends"})
 public class UserDto {
+    private String id;
     private String name;
     private String lastVisit;
     private String avatar;

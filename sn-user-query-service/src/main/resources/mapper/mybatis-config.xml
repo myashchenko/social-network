@@ -7,10 +7,12 @@
 
     <typeAliases>
         <typeAlias alias="User" type="ua.social.network.dto.UserDto"/>
+        <typeAlias alias="Post" type="ua.social.network.dto.PostDto"/>
     </typeAliases>
 
     <mappers>
         <mapper resource="mapper/user-mapper.xml"/>
+        <mapper resource="mapper/post-mapper.xml"/>
     </mappers>
 
 </configuration>

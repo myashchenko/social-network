@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ua.social.UserQueryServiceApplication;
@@ -20,14 +20,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Mykola Yashchenko
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserQueryServiceApplication.class)
-@Sql(scripts = "classpath:user/users.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "classpath:post/posts.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "classpath:truncate_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-public class UserControllerTest {
+public class UserPostControllerTest {
 
     @Autowired
-    private UserController userController;
+    private UserPostController userPostController;
 
     @Autowired
     private ExceptionHandlerController exceptionHandlerController;
@@ -39,13 +39,13 @@ public class UserControllerTest {
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(userController)
+        this.mockMvc = MockMvcBuilders.standaloneSetup(userPostController)
                 .setControllerAdvice(exceptionHandlerController).build();
     }
 
     @Test
-    public void testGetUserWithoutFriends() throws Exception {
-        String responseBody = mockMvc.perform(get("/users/1").contentType(MediaType.APPLICATION_JSON))
+    public void testGetPost() throws Exception {
+        String responseBody = mockMvc.perform(get("/users/posts/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
@@ -53,32 +53,14 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetUserWithFriends() throws Exception {
-        String responseBody = mockMvc.perform(get("/users/2").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse().getContentAsString();
-        jsonContentVerifier.assertJson(responseBody);
-    }
-
-    @Test
-    public void testGetUserWhichDoesNotExist() throws Exception {
-        mockMvc.perform(get("/users/1000").contentType(MediaType.APPLICATION_JSON))
+    public void testGetPostWhichDoesNotExist() throws Exception {
+        mockMvc.perform(get("/users/posts/1000").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void testGetList() throws Exception {
-        String responseBody = mockMvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse().getContentAsString();
-        jsonContentVerifier.assertJson(responseBody);
-    }
-
-    @Test
-    public void testGetFriends() throws Exception {
-        String responseBody = mockMvc.perform(get("/users?user_id=2").contentType(MediaType.APPLICATION_JSON))
+        String responseBody = mockMvc.perform(get("/users/posts").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();

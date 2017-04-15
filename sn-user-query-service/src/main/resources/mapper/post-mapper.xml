@@ -1,0 +1,42 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ua.social.network.query.PostMapper">
+
+    <sql id="corePostAttributes">
+      post.id AS id,
+      post.create_date AS createDate,
+      post.text AS text,
+      sender.id AS senderId,
+      sender.name AS senderName
+    </sql>
+
+    <select id="getSingle" resultMap="PostRM">
+        SELECT
+        <include refid="corePostAttributes"/>
+        FROM post
+        INNER JOIN users sender ON sender.id = post.sender_id
+        <where>
+            post.id = #{id}
+        </where>
+    </select>
+
+    <select id="getList" resultMap="PostRM">
+        SELECT
+        <include refid="corePostAttributes"/>
+        FROM post
+        INNER JOIN users sender ON sender.id = post.sender_id
+        <if test="user_id != null">
+            <where>
+                users.id = #{user_id}
+            </where>
+        </if>
+    </select>
+
+    <resultMap id="PostRM" type="Post">
+        <id column="id"/>
+        <result property="createDate" column="createDate"/>
+        <result property="text" column="text"/>
+        <result property="sender.id" column="senderId"/>
+        <result property="sender.name" column="senderName"/>
+    </resultMap>
+</mapper>

@@ -34,7 +34,7 @@
     </select>
 
     <resultMap id="UserRM" type="User">
-        <id column="id"/>
+        <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="lastVisit" column="lastVisit"/>
         <collection property="friends" ofType="User">

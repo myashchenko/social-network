@@ -3,6 +3,7 @@ package ua.social.network.controller;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.social.network.query.ExpandParamsBuilder;
 import ua.social.network.query.Mapper;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,6 +20,7 @@ public abstract class AbstractController<ENTITY, MAPPER extends Mapper<ENTITY>> 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractController.class);
 
     private static final String ID = "id";
+    private static final String EXPAND = "expand";
 
     private MAPPER mapper;
 
@@ -27,15 +29,19 @@ public abstract class AbstractController<ENTITY, MAPPER extends Mapper<ENTITY>> 
     }
 
     public ENTITY getEntity(String id) {
-        return mapper.getSingle(Collections.singletonMap(ID, id));
+        Map<String, Object> params = Collections.singletonMap(ID, id);
+        addExpandParams(params);
+        return mapper.getSingle(params);
     }
 
     public List<ENTITY> getEntityList(Object key) {
-        Map<String, Object> describe = new HashMap<>(getProperties(key));
-        return mapper.getList(describe);
+        Map<String, Object> params = new HashMap<>(getProperties(key));
+        addExpandParams(params);
+        return mapper.getList(params);
     }
 
     public List<ENTITY> getEntityList(Map<String, Object> params) {
+        addExpandParams(params);
         return mapper.getList(params);
     }
 
@@ -46,5 +52,13 @@ public abstract class AbstractController<ENTITY, MAPPER extends Mapper<ENTITY>> 
             LOGGER.error("Can't get properties of object", e);
         }
         return Collections.emptyMap();
+    }
+
+    private void addExpandParams(Map<String, Object> params) {
+        if (params.get(EXPAND) != null) {
+            params = new HashMap<>(params);
+            Map<String, Object> expandParams = new ExpandParamsBuilder(params.get(EXPAND).toString()).build();
+            params.putAll(expandParams);
+        }
     }
 }

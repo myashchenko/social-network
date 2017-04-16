@@ -6,6 +6,7 @@ import ua.social.network.dto.PostDto;
 import ua.social.network.exception.EntityNotFoundException;
 import ua.social.network.query.PostMapper;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/users/posts")
 public class UserPostController extends AbstractController<PostDto, PostMapper> {
+
+    private static final String USER_NAME = "user_name";
 
     @Autowired
     public UserPostController(PostMapper mapper) {
@@ -31,7 +34,8 @@ public class UserPostController extends AbstractController<PostDto, PostMapper> 
     }
 
     @GetMapping
-    public List<PostDto> getList(@RequestParam Map<String, Object> requestParams) {
+    public List<PostDto> getList(Principal principal, @RequestParam Map<String, Object> requestParams) {
+        requestParams.putIfAbsent(USER_NAME, principal.getName());
         return getEntityList(requestParams);
     }
 }

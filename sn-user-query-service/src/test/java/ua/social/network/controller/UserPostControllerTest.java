@@ -1,5 +1,6 @@
 package ua.social.network.controller;
 
+import com.sun.security.auth.UserPrincipal;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,8 +60,19 @@ public class UserPostControllerTest {
     }
 
     @Test
-    public void testGetList() throws Exception {
-        String responseBody = mockMvc.perform(get("/users/posts").contentType(MediaType.APPLICATION_JSON))
+    public void testGetListByCurrentUser() throws Exception {
+        String responseBody = mockMvc.perform(get("/users/posts").contentType(MediaType.APPLICATION_JSON)
+                .principal(new UserPrincipal("USER-1@EMAIL.COM")))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse().getContentAsString();
+        jsonContentVerifier.assertJson(responseBody);
+    }
+
+    @Test
+    public void testGetListByUserId() throws Exception {
+        String responseBody = mockMvc.perform(get("/users/posts?user_id=2").contentType(MediaType.APPLICATION_JSON)
+                .principal(new UserPrincipal("USER-1@EMAIL.COM")))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();

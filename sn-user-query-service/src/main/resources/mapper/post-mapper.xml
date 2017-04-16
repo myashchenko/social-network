@@ -24,12 +24,16 @@
         SELECT
         <include refid="corePostAttributes"/>
         FROM post
+        INNER JOIN users receiver ON receiver.id = post.receiver_id
         INNER JOIN users sender ON sender.id = post.sender_id
-        <if test="user_id != null">
-            <where>
-                users.id = #{user_id}
-            </where>
-        </if>
+        <where>
+            <if test="user_id != null">
+                receiver.id = #{user_id}
+            </if>
+            <if test="user_id == null and user_name != null">
+                receiver.email = #{user_name}
+            </if>
+        </where>
     </select>
 
     <resultMap id="PostRM" type="Post">

@@ -3,16 +3,16 @@
     "createDate": "2017-04-15 20:19:01.519000",
     "text": "TEXT1",
     "sender": {
-      "id": "1",
-      "name": "USER-1"
+      "id": "2",
+      "name": "USER-2"
     }
   },
   {
     "createDate": "2017-04-15 20:19:01.519000",
     "text": "TEXT2",
     "sender": {
-      "id": "1",
-      "name": "USER-1"
+      "id": "2",
+      "name": "USER-2"
     }
   }
 ]

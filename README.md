@@ -4,4 +4,3 @@
 - sn-auth
 - sn-discovery-service
 - sn-edge-service
-

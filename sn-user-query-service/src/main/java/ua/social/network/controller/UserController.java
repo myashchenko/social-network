@@ -22,8 +22,8 @@ public class UserController extends AbstractController<UserDto, UserMapper> {
     }
 
     @GetMapping("/{id}")
-    public UserDto getUser(@PathVariable("id") String id) {
-        UserDto entity = getEntity(id);
+    public UserDto getUser(@PathVariable("id") String id, @RequestParam Map<String, Object> requestParams) {
+        UserDto entity = getEntity(id, requestParams);
         if (entity == null) {
             throw new EntityNotFoundException("User with id %s doesn't exist", id);
         }

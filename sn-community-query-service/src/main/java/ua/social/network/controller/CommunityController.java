@@ -22,8 +22,8 @@ public class CommunityController extends AbstractController<CommunityDto, Commun
     }
 
     @GetMapping("/{id}")
-    public CommunityDto getCommunity(@PathVariable("id") String id) {
-        CommunityDto entity = getEntity(id);
+    public CommunityDto getCommunity(@PathVariable("id") String id, @RequestParam Map<String, Object> requestParams) {
+        CommunityDto entity = getEntity(id, requestParams);
         if (entity == null) {
             throw new EntityNotFoundException("Community with id %s doesn't exist", id);
         }

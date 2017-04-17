@@ -21,3 +21,7 @@ spring:
   jackson:
     serialization:
       INDENT_OUTPUT: true
+
+logging:
+  level:
+    ua.social.network.query: DEBUG

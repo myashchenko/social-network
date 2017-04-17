@@ -28,20 +28,20 @@ public abstract class AbstractController<ENTITY, MAPPER extends Mapper<ENTITY>> 
         this.mapper = mapper;
     }
 
-    public ENTITY getEntity(String id) {
-        Map<String, Object> params = Collections.singletonMap(ID, id);
-        addExpandParams(params);
+    public ENTITY getEntity(String id, Map<String, Object> params) {
+        params.put(ID, id);
+        params = getWithExpandParams(params);
         return mapper.getSingle(params);
     }
 
     public List<ENTITY> getEntityList(Object key) {
         Map<String, Object> params = new HashMap<>(getProperties(key));
-        addExpandParams(params);
+        params = getWithExpandParams(params);
         return mapper.getList(params);
     }
 
     public List<ENTITY> getEntityList(Map<String, Object> params) {
-        addExpandParams(params);
+        params = getWithExpandParams(params);
         return mapper.getList(params);
     }
 
@@ -54,11 +54,12 @@ public abstract class AbstractController<ENTITY, MAPPER extends Mapper<ENTITY>> 
         return Collections.emptyMap();
     }
 
-    private void addExpandParams(Map<String, Object> params) {
+    private Map<String, Object> getWithExpandParams(Map<String, Object> params) {
         if (params.get(EXPAND) != null) {
             params = new HashMap<>(params);
             Map<String, Object> expandParams = new ExpandParamsBuilder(params.get(EXPAND).toString()).build();
             params.putAll(expandParams);
         }
+        return params;
     }
 }

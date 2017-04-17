@@ -44,7 +44,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetUserWithoutFriends() throws Exception {
+    public void testGetUserWithoutFriendsWithoutExpandParam() throws Exception {
         String responseBody = mockMvc.perform(get("/users/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -53,8 +53,26 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetUserWithFriends() throws Exception {
+    public void testGetUserWithoutFriendsWithExpandParam() throws Exception {
+        String responseBody = mockMvc.perform(get("/users/1?expand=friends").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse().getContentAsString();
+        jsonContentVerifier.assertJson(responseBody);
+    }
+
+    @Test
+    public void testGetUserWithFriendsWithoutExpandParam() throws Exception {
         String responseBody = mockMvc.perform(get("/users/2").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse().getContentAsString();
+        jsonContentVerifier.assertJson(responseBody);
+    }
+
+    @Test
+    public void testGetUserWithFriendsWithExpandParam() throws Exception {
+        String responseBody = mockMvc.perform(get("/users/2?expand=friends").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();

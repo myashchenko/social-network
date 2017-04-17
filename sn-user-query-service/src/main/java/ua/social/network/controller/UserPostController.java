@@ -25,8 +25,8 @@ public class UserPostController extends AbstractController<PostDto, PostMapper> 
     }
 
     @GetMapping("/{id}")
-    public PostDto get(@PathVariable("id") String id) {
-        PostDto entity = getEntity(id);
+    public PostDto get(@PathVariable("id") String id, @RequestParam Map<String, Object> requestParams) {
+        PostDto entity = getEntity(id, requestParams);
         if (entity == null) {
             throw new EntityNotFoundException("User with id %s doesn't exist", id);
         }

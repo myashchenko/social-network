@@ -10,12 +10,17 @@
 
     <select id="getSingle" resultMap="UserRM">
         SELECT
-        <include refid="coreUserAttributes"/>,
-        f.id AS friendId,
-        f.name AS friendName
+        <include refid="coreUserAttributes"/>
+        <if test="expandFriends != null">
+            ,
+            f.id AS friendId,
+            f.name AS friendName
+        </if>
         FROM users
-        LEFT JOIN user_friends ON users.id = user_friends.user_id
-        LEFT JOIN users f ON f.id = user_friends.friend_id
+        <if test="expandFriends != null">
+            LEFT JOIN user_friends ON users.id = user_friends.user_id
+            LEFT JOIN users f ON f.id = user_friends.friend_id
+        </if>
         <where>
             users.id = #{id}
         </where>

@@ -11,12 +11,14 @@ include ':sn-community-query-service'
 include ':sn-user-query-service'
 include ':sn-user-service'
 include ':sn-oauth-config'
+include ':sn-exception-config'
 
 project(':sn-database:sn-db-entity').projectDir = "$rootDir/sn-database/sn-db-entity" as File
 project(':sn-database').projectDir = "$rootDir/sn-database" as File
 project(':sn-util').projectDir = "$rootDir/sn-util" as File
 project(':sn-auth').projectDir = "$rootDir/sn-auth" as File
 project(':sn-oauth-config').projectDir = "$rootDir/sn-oauth-config" as File
+project(':sn-exception-config').projectDir = "$rootDir/sn-exception-config" as File
 project(':sn-edge-service').projectDir = "$rootDir/sn-edge-service" as File
 project(':sn-discovery-service').projectDir = "$rootDir/sn-discovery-service" as File
 project(':sn-monitor-dashboard').projectDir = "$rootDir/sn-monitor-dashboard" as File

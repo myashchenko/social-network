@@ -36,10 +36,12 @@ dependencies {
     compile project(':sn-database:sn-db-entity')
     compile project(':sn-util')
     compile project(':sn-oauth-config')
+    compile project(':sn-exception-config')
 
     testCompile project(':sn-database:sn-db-entity')
     testCompile project(':sn-util')
     testCompile project(':sn-oauth-config')
+    testCompile project(':sn-exception-config')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

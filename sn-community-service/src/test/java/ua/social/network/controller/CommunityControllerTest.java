@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ua.social.network.CommunityServiceApplication;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Mykola Yashchenko
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = CommunityServiceApplication.class)
 public class CommunityControllerTest {
 
@@ -176,7 +176,7 @@ public class CommunityControllerTest {
         mockMvc.perform(put("/" + id).principal(new UserPrincipal("notAdmin"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(modifyCommunityRequest)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
 
         verify(communityRepository, times(1)).findOne(eq(id));
     }

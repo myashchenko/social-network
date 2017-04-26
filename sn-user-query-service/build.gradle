@@ -40,7 +40,9 @@ dependencies {
     compile('org.springframework:spring-jdbc')
 
     compile project(':sn-util')
+    compile project(':sn-exception-config')
     testCompile project(':sn-util')
+    testCompile project(':sn-exception-config')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 

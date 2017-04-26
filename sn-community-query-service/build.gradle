@@ -36,12 +36,13 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis', version: '3.4.2'
     compile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.4'
     compile "org.projectlombok:lombok:1.16.12"
-    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
 
     compile("org.springframework:spring-jdbc")
 
     compile project(':sn-util')
+    compile project(':sn-exception-config')
     testCompile project(':sn-util')
+    testCompile project(':sn-exception-config')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 

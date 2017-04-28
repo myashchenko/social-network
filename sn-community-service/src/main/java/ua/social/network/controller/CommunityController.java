@@ -1,12 +1,12 @@
 package ua.social.network.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.social.network.dto.CreateCommunityRequest;
 import ua.social.network.dto.ModifyCommunityRequest;
 import ua.social.network.entity.Community;
+import ua.social.network.exception.AccessDeniedException;
 import ua.social.network.exception.EntityNotFoundException;
 import ua.social.network.repository.CommunityRepository;
 
@@ -17,7 +17,7 @@ import java.security.Principal;
  * @author Mykola Yashchenko
  */
 @RestController(value = "communities")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor
 public class CommunityController {
 
     private final CommunityRepository communityRepository;
@@ -45,7 +45,7 @@ public class CommunityController {
         }
 
         if (!community.getUserId().equals(principal.getName())) {
-            throw new RuntimeException("Forbidden");
+            throw new AccessDeniedException();
         }
 
         community.setName(communityRequest.getName());

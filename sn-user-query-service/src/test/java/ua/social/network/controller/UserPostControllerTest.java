@@ -36,7 +36,7 @@ public class UserPostControllerTest {
     private MockMvc mockMvc;
 
     @Rule
-    public JsonContentVerifier jsonContentVerifier = new JsonContentVerifier(this.getClass());
+    public JsonContentVerifier jsonContentVerifier = new JsonContentVerifier(getClass());
 
     @Before
     public void setup() {

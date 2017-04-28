@@ -16,7 +16,6 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController extends AbstractController<UserDto, UserMapper> {
 
-    @Autowired
     public UserController(UserMapper mapper) {
         super(mapper);
     }

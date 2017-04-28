@@ -1,7 +1,6 @@
 package ua.social.network.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ua.social.network.dto.CreatePostRequest;
 import ua.social.network.dto.ModifyPostRequest;
@@ -20,7 +19,7 @@ import java.security.Principal;
  */
 @RestController
 @RequestMapping("users/posts")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor
 public class UserPostController {
 
     private final UserPostRepository userPostRepository;

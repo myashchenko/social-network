@@ -1,0 +1,55 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.2.RELEASE'
+        springCloudVersion = 'Camden.SR6'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'sn-auth'
+    version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    compile('org.springframework.boot:spring-boot-starter-undertow')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.cloud:spring-cloud-starter-oauth2')
+    compile('org.springframework.cloud:spring-cloud-starter-security')
+    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+
+    compile('org.hsqldb:hsqldb:2.3.4')
+
+    compile project(':sn-user:sn-user-db-schema')
+    compile project(':sn-common:sn-util')
+    compile project(':sn-common:sn-db-config')
+
+    testCompile project(':sn-user:sn-user-db-schema')
+    testCompile project(':sn-common:sn-util')
+    testCompile project(':sn-common:sn-db-config')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test') {
+        exclude(module: 'commons-logging')
+    }
+
+    testCompile('org.apache.httpcomponents:httpclient:4.3.6') {
+        exclude(module: 'commons-logging')
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

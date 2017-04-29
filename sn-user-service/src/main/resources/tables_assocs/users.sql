@@ -1,1 +1,0 @@
-ALTER TABLE users ADD FOREIGN KEY (avatar_id) REFERENCES file(id);

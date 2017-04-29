@@ -1,0 +1,21 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "0.4.1"
+}
+
+jar {
+    baseName = 'sn-db-config'
+    version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile('org.projectlombok:lombok:1.16.12')
+    compile('org.hibernate:hibernate-entitymanager:4.3.11.Final')
+    compile('org.springframework.data:spring-data-jpa:1.9.2.RELEASE')
+}

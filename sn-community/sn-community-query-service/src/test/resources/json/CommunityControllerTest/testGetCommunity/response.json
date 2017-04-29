@@ -1,0 +1,10 @@
+{
+  "name": "COMMUNITY-1",
+  "description": "COMMUNITY-1-DESC",
+  "posts": [
+    {
+      "createdDate": "2017-04-02 13:30:14.000000",
+      "text": "TEST1"
+    }
+  ]
+}

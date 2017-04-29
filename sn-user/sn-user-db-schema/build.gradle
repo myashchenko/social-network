@@ -1,0 +1,20 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "0.4.1"
+}
+
+jar {
+    baseName = 'sn-user-db-schema'
+    version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile project(':sn-common:sn-db-config')
+    testCompile project(':sn-common:sn-db-config')
+}

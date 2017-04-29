@@ -10,7 +10,7 @@ plugins {
 }
 
 jar {
-    baseName = 'sn-db-config'
+    baseName = 'sn-jpa-config'
     version = '0.0.1-SNAPSHOT'
 }
 

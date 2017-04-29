@@ -15,6 +15,6 @@ jar {
 }
 
 dependencies {
-    compile project(':sn-common:sn-db-config')
-    testCompile project(':sn-common:sn-db-config')
+    compile project(':sn-common:sn-jpa-config')
+    testCompile project(':sn-common:sn-jpa-config')
 }

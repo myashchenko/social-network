@@ -33,11 +33,11 @@ dependencies {
 
     compile project(':sn-user:sn-user-db-schema')
     compile project(':sn-common:sn-util')
-    compile project(':sn-common:sn-db-config')
+    compile project(':sn-common:sn-jpa-config')
 
     testCompile project(':sn-user:sn-user-db-schema')
     testCompile project(':sn-common:sn-util')
-    testCompile project(':sn-common:sn-db-config')
+    testCompile project(':sn-common:sn-jpa-config')
 
     testCompile('org.springframework.boot:spring-boot-starter-test') {
         exclude(module: 'commons-logging')

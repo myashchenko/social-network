@@ -5,7 +5,8 @@ include ':sn-monitor-dashboard'
 include ':sn-community:sn-community-db-schema'
 include ':sn-community:sn-community-service'
 include ':sn-community:sn-community-query-service'
-include ':sn-common:sn-db-config'
+include ':sn-common:sn-jpa-config'
+include ':sn-common:sn-mybatis-config'
 include ':sn-common:sn-oauth-config'
 include ':sn-common:sn-exception-config'
 include ':sn-common:sn-util'
@@ -21,7 +22,8 @@ project(':sn-community:sn-community-db-schema').projectDir = "$rootDir/sn-commun
 project(':sn-community:sn-community-service').projectDir = "$rootDir/sn-community/sn-community-service" as File
 project(':sn-community:sn-community-query-service').projectDir = "$rootDir/sn-community/sn-community-query-service" as File
 project(':sn-common:sn-util').projectDir = "$rootDir/sn-common/sn-util" as File
-project(':sn-common:sn-db-config').projectDir = "$rootDir/sn-common/sn-db-config" as File
+project(':sn-common:sn-jpa-config').projectDir = "$rootDir/sn-common/sn-jpa-config" as File
+project(':sn-common:sn-mybatis-config').projectDir = "$rootDir/sn-common/sn-mybatis-config" as File
 project(':sn-common:sn-oauth-config').projectDir = "$rootDir/sn-common/sn-oauth-config" as File
 project(':sn-common:sn-exception-config').projectDir = "$rootDir/sn-common/sn-exception-config" as File
 project(':sn-user:sn-user-db-schema').projectDir = "$rootDir/sn-user/sn-user-db-schema" as File

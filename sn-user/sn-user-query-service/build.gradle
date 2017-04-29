@@ -32,19 +32,17 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-zuul')
     compile('org.springframework.cloud:spring-cloud-starter-eureka')
 
-    compile('org.mybatis:mybatis-spring:1.3.1')
-    compile('org.mybatis:mybatis:3.4.2')
     compile('org.hsqldb:hsqldb:2.3.4')
-    compile('org.projectlombok:lombok:1.16.12')
-
     compile('org.springframework:spring-jdbc')
 
     compile project(':sn-common:sn-util')
     compile project(':sn-common:sn-exception-config')
+    compile project(':sn-common:sn-mybatis-config')
     compile project(':sn-user:sn-user-db-schema')
 
     testCompile project(':sn-common:sn-util')
     testCompile project(':sn-common:sn-exception-config')
+    testCompile project(':sn-common:sn-mybatis-config')
     testCompile project(':sn-user:sn-user-db-schema')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')

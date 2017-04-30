@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -21,7 +20,6 @@ import ua.social.network.security.CustomUserInfoTokenServices;
 @EnableResourceServer
 @EnableOAuth2Client
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@ComponentScan(basePackageClasses = UserServiceApplication.class)
 public class UserServiceApplication {
 
     @Autowired

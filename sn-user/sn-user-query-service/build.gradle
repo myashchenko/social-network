@@ -46,7 +46,7 @@ dependencies {
     testCompile project(':sn-user:sn-user-db-schema')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
-
+    testCompile('io.github.yashchenkon:json-verifier:1.0.0')
 }
 
 dependencyManagement {

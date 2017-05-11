@@ -1,6 +1,7 @@
 package ua.social.network.controller;
 
 import com.sun.security.auth.UserPrincipal;
+import io.github.yashchenkon.test.JsonContentVerifier;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ua.social.UserQueryServiceApplication;
-import ua.social.network.rule.JsonContentVerifier;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

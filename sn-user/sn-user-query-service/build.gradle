@@ -1,27 +1,8 @@
-buildscript {
-    ext {
-        springBootVersion = '1.5.2.RELEASE'
-        springCloudVersion = 'Camden.SR6'
-    }
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
-
-plugins {
-    id "com.jfrog.bintray" version "0.4.1"
+jar {
+    baseName = 'sn-user-query-service'
 }
 
 apply plugin: 'org.springframework.boot'
-
-jar {
-    baseName = 'sn-user-query-service'
-    version = '0.0.1-SNAPSHOT'
-}
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web') {

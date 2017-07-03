@@ -1,17 +1,5 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-}
-
-plugins {
-    id "com.jfrog.bintray" version "0.4.1"
-}
-
 jar {
     baseName = 'sn-jpa-config'
-    version = '0.0.1-SNAPSHOT'
 }
 
 dependencies {

@@ -69,7 +69,8 @@ public class UserPostControllerTest {
 
         String json = mapper.writeValueAsString(post);
 
-        mockMvc.perform(post("/users/posts").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/users/posts")
+                .contentType(MediaType.APPLICATION_JSON)
                 .principal(new UserPrincipal(senderEmail)).content(json))
                 .andExpect(status().isOk());
 
@@ -111,7 +112,8 @@ public class UserPostControllerTest {
 
         String json = mapper.writeValueAsString(post);
 
-        mockMvc.perform(post("/users/posts").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/users/posts")
+                .contentType(MediaType.APPLICATION_JSON)
                 .principal(new UserPrincipal(senderEmail)).content(json))
                 .andExpect(status().isNotFound());
 
@@ -134,7 +136,8 @@ public class UserPostControllerTest {
 
         String json = mapper.writeValueAsString(post);
 
-        mockMvc.perform(put("/users/posts/" + postId).principal(new UserPrincipal(senderEmail))
+        mockMvc.perform(put("/users/posts/" + postId)
+                .principal(new UserPrincipal(senderEmail))
                 .contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isOk());
 
@@ -151,7 +154,8 @@ public class UserPostControllerTest {
 
         String json = mapper.writeValueAsString(post);
 
-        mockMvc.perform(put("/users/posts/" + postId).contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(put("/users/posts/" + postId)
+                .contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isBadRequest());
     }
 
@@ -166,7 +170,8 @@ public class UserPostControllerTest {
 
         String json = mapper.writeValueAsString(post);
 
-        mockMvc.perform(put("/users/posts/" + postId).contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(put("/users/posts/" + postId)
+                .contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isNotFound());
     }
 
@@ -185,7 +190,8 @@ public class UserPostControllerTest {
 
         String json = mapper.writeValueAsString(post);
 
-        mockMvc.perform(put("/users/posts/" + postId).principal(new UserPrincipal("EMAIL2"))
+        mockMvc.perform(put("/users/posts/" + postId)
+                .principal(new UserPrincipal("EMAIL2"))
                 .contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isForbidden());
     }

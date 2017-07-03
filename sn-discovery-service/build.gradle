@@ -1,26 +1,11 @@
-buildscript {
-    ext {
-        springBootVersion = '1.5.2.RELEASE'
-        springCloudVersion = 'Camden.SR6'
-    }
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
+jar {
+    baseName = 'sn-discovery-server'
 }
 
 apply plugin: 'org.springframework.boot'
 
 springBoot {
     requiresUnpack = ['com.netflix.eureka:eureka-core','com.netflix.eureka:eureka-client']
-}
-
-jar {
-    baseName = 'sn-discovery-server'
-    version = '0.0.1-SNAPSHOT'
 }
 
 dependencies {

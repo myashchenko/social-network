@@ -1,26 +1,11 @@
-buildscript {
-    ext {
-        springBootVersion = '1.5.2.RELEASE'
-        springCloudVersion = 'Camden.SR6'
-    }
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
+jar {
+    baseName = 'sn-oauth-config'
 }
 
 apply plugin: 'org.springframework.boot'
 
 bootRepackage {
     enabled = false
-}
-
-jar {
-    baseName = 'sn-oauth-config'
-    version = '0.0.1-SNAPSHOT'
 }
 
 dependencies {

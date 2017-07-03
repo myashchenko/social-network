@@ -1,3 +1,25 @@
+
+buildscript {
+
+    ext {
+        springBootVersion = '1.5.2.RELEASE'
+        springCloudVersion = 'Camden.SR6'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+allprojects {
+    version "0.0.1-SNAPSHOT"
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'

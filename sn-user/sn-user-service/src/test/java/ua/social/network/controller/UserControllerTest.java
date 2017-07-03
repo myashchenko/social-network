@@ -39,19 +39,21 @@ public class UserControllerTest {
     @Before
     public void setup() {
         initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
     }
 
     @Test
     public void shouldCreateNewUser() throws Exception {
 
-        final CreateUserRequest user = new CreateUserRequest();
+        CreateUserRequest user = new CreateUserRequest();
         user.setEmail("test@test.com");
         user.setPassword("password");
 
         String json = mapper.writeValueAsString(user);
 
-        mockMvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
                 .andExpect(status().isOk());
     }
 
@@ -62,7 +64,6 @@ public class UserControllerTest {
         user.setEmail("t");
         user.setPassword("p");
 
-        mockMvc.perform(post("/users"))
-                .andExpect(status().isBadRequest());
+        mockMvc.perform(post("/users")).andExpect(status().isBadRequest());
     }
 }

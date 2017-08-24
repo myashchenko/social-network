@@ -8,10 +8,10 @@ import javax.persistence.*;
 /**
  * @author Mykola Yashchenko
  */
-@Entity
-@Table(name = "post")
 @Getter
 @Setter
+@Entity
+@Table(name = "post")
 public class Post extends BaseEntity {
 
     @Column(name = "text")

@@ -1,8 +1,9 @@
 package ua.social.network.dto;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author Mykola Yashchenko

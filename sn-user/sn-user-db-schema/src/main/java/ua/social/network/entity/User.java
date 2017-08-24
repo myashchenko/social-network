@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -45,4 +46,20 @@ public class User extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_id")
     private File avatar;
+
+    public void addFriend(User user) {
+        if (friends == null) {
+            friends = new HashSet<>();
+        }
+
+        friends.add(user);
+    }
+
+    public void addFriendOf(User user) {
+        if (friendOf == null) {
+            friendOf = new HashSet<>();
+        }
+
+        friendOf.add(user);
+    }
 }

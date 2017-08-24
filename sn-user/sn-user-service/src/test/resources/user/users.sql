@@ -1,0 +1,2 @@
+INSERT INTO users (id, name, create_date, email, password, role) VALUES ('1', 'USER-1', TIMESTAMP '2017-04-02 13:30:14', 'USER-1@EMAIL.COM', '11111111', 'USER');
+INSERT INTO users (id, name, create_date, email, password, role) VALUES ('2', 'USER-2', TIMESTAMP '2017-04-02 13:30:14', 'USER-2@EMAIL.COM', '11111111', 'USER');

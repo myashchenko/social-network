@@ -1,7 +1,7 @@
 package ua.social.network.controller;
 
 import com.sun.security.auth.UserPrincipal;
-import io.github.yashchenkon.test.JsonContentVerifier;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,6 +13,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import io.github.yashchenkon.test.JsonContentVerifier;
 import ua.social.UserQueryServiceApplication;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,16 +29,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(scripts = "classpath:truncate_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UserPostControllerTest {
 
-    @Autowired
-    private UserPostController userPostController;
-
-    @Autowired
-    private ExceptionHandlerController exceptionHandlerController;
-
-    private MockMvc mockMvc;
-
     @Rule
     public JsonContentVerifier jsonContentVerifier = new JsonContentVerifier();
+    @Autowired
+    private UserPostController userPostController;
+    @Autowired
+    private ExceptionHandlerController exceptionHandlerController;
+    private MockMvc mockMvc;
 
     @Before
     public void setup() {

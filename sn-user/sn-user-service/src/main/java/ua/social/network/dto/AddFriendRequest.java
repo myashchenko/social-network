@@ -1,6 +1,6 @@
 package ua.social.network.dto;
 
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class ModifyPostRequest {
-    @NotBlank
-    private String text;
+public class AddFriendRequest {
+    @NotEmpty
+    private String userId;
 }

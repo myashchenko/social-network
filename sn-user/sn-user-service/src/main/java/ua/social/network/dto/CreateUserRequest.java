@@ -1,11 +1,12 @@
 package ua.social.network.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Email;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Mykola Yashchenko
@@ -20,4 +21,8 @@ public class CreateUserRequest {
     @NotNull
     @Size(min = 5)
     private String password;
+
+    @NotNull
+    @Size(min = 5)
+    private String name;
 }

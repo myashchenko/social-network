@@ -1,4 +1,5 @@
 {
-  "id":"1",
-  "name": "USER-1"
+  "id": "1",
+  "name": "USER-1",
+  "friendRequestsCount": 0
 }

@@ -1,6 +1,7 @@
 {
   "id": "2",
   "name": "USER-2",
+  "friendRequestsCount": 0,
   "friends": [
     {
       "name": "USER-3"

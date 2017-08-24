@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = UserServiceApplication.class)
 public class UserPostControllerTest {
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Autowired
     private ExceptionHandlerController exceptionHandlerController;
@@ -67,7 +67,7 @@ public class UserPostControllerTest {
         post.setText("TEXT");
         post.setReceiverId(receiverId);
 
-        String json = mapper.writeValueAsString(post);
+        String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(post("/users/posts")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -110,7 +110,7 @@ public class UserPostControllerTest {
         post.setText("TEXT");
         post.setReceiverId(receiverId);
 
-        String json = mapper.writeValueAsString(post);
+        String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(post("/users/posts")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -134,7 +134,7 @@ public class UserPostControllerTest {
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("TEXT");
 
-        String json = mapper.writeValueAsString(post);
+        String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(put("/users/posts/" + postId)
                 .principal(new UserPrincipal(senderEmail))
@@ -152,7 +152,7 @@ public class UserPostControllerTest {
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("");
 
-        String json = mapper.writeValueAsString(post);
+        String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(put("/users/posts/" + postId)
                 .contentType(MediaType.APPLICATION_JSON).content(json))
@@ -168,7 +168,7 @@ public class UserPostControllerTest {
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("TEXT");
 
-        String json = mapper.writeValueAsString(post);
+        String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(put("/users/posts/" + postId)
                 .contentType(MediaType.APPLICATION_JSON).content(json))
@@ -188,7 +188,7 @@ public class UserPostControllerTest {
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("TEXT");
 
-        String json = mapper.writeValueAsString(post);
+        String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(put("/users/posts/" + postId)
                 .principal(new UserPrincipal("EMAIL2"))

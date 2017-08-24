@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+
 import ua.social.network.service.SnUserDetailsService;
 
 /**
@@ -39,15 +40,15 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         // @formatter:off
         clients
                 .inMemory()
-                    .withClient("browser")
-                    .authorizedGrantTypes("refresh_token", "password")
-                    .scopes("ui")
+                .withClient("browser")
+                .authorizedGrantTypes("refresh_token", "password")
+                .scopes("ui")
                 .and()
-                    .withClient("sn-user-query-service")
+                .withClient("sn-user-query-service")
 //                    .secret(env.getProperty("SN_USER_QUERY_SERVICE_PASSWORD"))
-                    .secret("SN_USER_QUERY_SERVICE_PASSWORD")
-                    .authorizedGrantTypes("client_credentials", "refresh_token")
-                    .scopes("server");
+                .secret("SN_USER_QUERY_SERVICE_PASSWORD")
+                .authorizedGrantTypes("client_credentials", "refresh_token")
+                .scopes("server");
         // @formatter:on
     }
 

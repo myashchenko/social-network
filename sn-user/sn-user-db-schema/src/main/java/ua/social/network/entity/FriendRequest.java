@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "friend_request")
+@Table(name = "friend_request", uniqueConstraints = {
+        @UniqueConstraint(name = "from_to", columnNames = { "from_id", "to_id" }),
+        @UniqueConstraint(name = "to_from", columnNames = { "to_id", "from_id" })
+})
 public class FriendRequest extends BaseEntity {
 
     @OneToOne(optional = false)

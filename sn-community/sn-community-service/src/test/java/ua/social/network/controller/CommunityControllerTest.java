@@ -38,7 +38,7 @@ public class CommunityControllerTest {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
-    private ExceptionHandlerController exceptionHandlerController;
+    private CommonExceptionHandlerController exceptionHandlerController;
 
     @InjectMocks
     private CommunityController communityController;

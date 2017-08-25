@@ -36,7 +36,7 @@ public class UserPostControllerTest {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Autowired
-    private ExceptionHandlerController exceptionHandlerController;
+    private CommonExceptionHandlerController exceptionHandlerController;
 
     @InjectMocks
     private UserPostController userPostController;

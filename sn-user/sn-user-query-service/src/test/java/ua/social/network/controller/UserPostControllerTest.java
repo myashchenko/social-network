@@ -34,7 +34,7 @@ public class UserPostControllerTest {
     @Autowired
     private UserPostController userPostController;
     @Autowired
-    private ExceptionHandlerController exceptionHandlerController;
+    private CommonExceptionHandlerController exceptionHandlerController;
     private MockMvc mockMvc;
 
     @Before

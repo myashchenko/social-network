@@ -1,7 +1,5 @@
 package ua.social.network.transaction;
 
-import java.util.concurrent.Callable;
-
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,11 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransactionHelper {
 
     @Transactional
-    public <T> T doInTransaction(Callable<T> function) {
-        try {
-            return function.call();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+    public <T> T doInTransaction(Func<T> function) {
+        return function.execute();
+    }
+
+    @FunctionalInterface
+    public interface Func<T> {
+        T execute();
     }
 }

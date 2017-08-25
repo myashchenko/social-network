@@ -18,6 +18,7 @@ import ua.social.network.entity.FriendRequest;
 import ua.social.network.entity.Role;
 import ua.social.network.entity.User;
 import ua.social.network.exception.AccessDeniedException;
+import ua.social.network.exception.EntityNotFoundException;
 import ua.social.network.repository.FriendRequestRepository;
 import ua.social.network.repository.UserRepository;
 import ua.social.network.transaction.TransactionHelper;
@@ -63,19 +64,29 @@ public class UserController {
             throw new AccessDeniedException("Only authorized user can add an another user to the friend list");
         }
 
-        User newFriend = userRepository.getOne(addFriendRequest.getUserId());
-        User currentUser = userRepository.findByEmail(principal.getName());
+        transactionHelper.doInTransaction(() -> {
+            User newFriend = userRepository.findOne(addFriendRequest.getUserId());
+            if (newFriend == null) {
+                throw new EntityNotFoundException("User with id %s does not exist", addFriendRequest.getUserId());
+            }
+            User currentUser = userRepository.findByEmail(principal.getName());
 
-        FriendRequest friendRequest = friendRequestRepository.findRequestByUsers(newFriend, currentUser);
-        if (friendRequest != null) {
-            throw new AccessDeniedException("You have this friend request already");
-        }
+            if (currentUser.friendOf(newFriend)) {
+                throw new AccessDeniedException("You are friends already");
+            }
 
-        friendRequest = new FriendRequest();
-        friendRequest.setTo(newFriend);
-        friendRequest.setFrom(currentUser);
+            //FriendRequest friendRequest = friendRequestRepository.findRequestByUsers(newFriend, currentUser);
+            //if (friendRequest != null) {
+                //throw new AccessDeniedException("You have this friend request already");
+            //}
 
-        friendRequestRepository.save(friendRequest);
+            FriendRequest friendRequest = new FriendRequest();
+            friendRequest.setTo(newFriend);
+            friendRequest.setFrom(currentUser);
+
+            friendRequestRepository.save(friendRequest);
+            return null;
+        });
     }
 
     //@PreAuthorize("#oauth2.hasScope('ui')")

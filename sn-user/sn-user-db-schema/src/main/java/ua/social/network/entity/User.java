@@ -62,4 +62,8 @@ public class User extends BaseEntity {
 
         friendOf.add(user);
     }
+
+    public boolean friendOf(User user) {
+        return friends.contains(user);
+    }
 }

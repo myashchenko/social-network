@@ -31,7 +31,7 @@ public class UserControllerTest {
     @Autowired
     private UserController userController;
     @Autowired
-    private ExceptionHandlerController exceptionHandlerController;
+    private CommonExceptionHandlerController exceptionHandlerController;
     private MockMvc mockMvc;
 
     @Before

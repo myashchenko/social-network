@@ -30,7 +30,7 @@ public class CommunityControllerTest {
     private CommunityController communityController;
 
     @Autowired
-    private ExceptionHandlerController exceptionHandlerController;
+    private CommonExceptionHandlerController exceptionHandlerController;
 
     private MockMvc mockMvc;
 

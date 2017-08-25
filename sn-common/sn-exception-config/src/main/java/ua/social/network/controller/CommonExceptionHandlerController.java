@@ -1,5 +1,7 @@
 package ua.social.network.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,21 +14,25 @@ import ua.social.network.exception.EntityNotFoundException;
  * @author Mykola Yashchenko
  */
 @ControllerAdvice
-public class ExceptionHandlerController {
+public class CommonExceptionHandlerController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonExceptionHandlerController.class);
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
-    public void handleEntityNotFoundException() {
+    public void handleEntityNotFoundException(EntityNotFoundException ex) {
+        LOGGER.error(ex.getMessage(), ex);
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
-    public void handleAccessDeniedException() {
+    public void handleAccessDeniedException(AccessDeniedException ex) {
+        LOGGER.error(ex.getMessage(), ex);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(Exception.class)
-    public void handleAllExceptions() {
-
+    public void handleAllExceptions(Exception ex) {
+        LOGGER.error(ex.getMessage(), ex);
     }
 }

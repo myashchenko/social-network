@@ -4,6 +4,7 @@ import com.sun.security.auth.UserPrincipal;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserServiceApplication.class)
 @Sql(scripts = "classpath:user/users.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = "classpath:truncate_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(scripts = "classpath:truncate_tables.sql", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 public class UserControllerTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -51,11 +52,15 @@ public class UserControllerTest {
     @Autowired
     private FriendRequestRepository friendRequestRepository;
 
+    @Autowired
+    private CommonExceptionHandlerController commonExceptionHandler;
+
     private MockMvc mockMvc;
 
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(accountController)
+                .setControllerAdvice(commonExceptionHandler).build();
     }
 
     @Test
@@ -120,5 +125,60 @@ public class UserControllerTest {
         assertThat(req, notNullValue());
         assertThat(req.getFrom().getId(), equalTo(from.getId()));
         assertThat(req.getTo().getId(), equalTo(to.getId()));
+    }
+
+    @Test
+    public void shouldNotSendIncorrectFriendRequest() throws Exception {
+        AddFriendRequest addFriendRequest = new AddFriendRequest();
+        addFriendRequest.setUserId("");
+
+        String json = MAPPER.writeValueAsString(addFriendRequest);
+
+        mockMvc.perform(post("/users/add_friend")
+                .contentType(MediaType.APPLICATION_JSON)
+                .principal(new UserPrincipal("USER-1@EMAIL.COM"))
+                .content(json))
+                .andExpect(status().isBadRequest());
+    }
+
+
+    @Test
+    @Ignore("Ignore since there is no handler for DataIntegrityViolationException")
+    public void shouldReturnErrorIfRequestHasAlreadySent() throws Exception {
+        AddFriendRequest addFriendRequest = new AddFriendRequest();
+        addFriendRequest.setUserId("4");
+
+        String json = MAPPER.writeValueAsString(addFriendRequest);
+
+        mockMvc.perform(post("/users/add_friend")
+                .contentType(MediaType.APPLICATION_JSON)
+                .principal(new UserPrincipal("USER-3@EMAIL.COM"))
+                .content(json))
+                .andExpect(status().isForbidden());
+
+        addFriendRequest = new AddFriendRequest();
+        addFriendRequest.setUserId("3");
+
+        json = MAPPER.writeValueAsString(addFriendRequest);
+
+        mockMvc.perform(post("/users/add_friend")
+                .contentType(MediaType.APPLICATION_JSON)
+                .principal(new UserPrincipal("USER-4@EMAIL.COM"))
+                .content(json))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void shouldReturnErrorIfUsersAreFriendsAlready() throws Exception {
+        AddFriendRequest addFriendRequest = new AddFriendRequest();
+        addFriendRequest.setUserId("4");
+
+        String json = MAPPER.writeValueAsString(addFriendRequest);
+
+        mockMvc.perform(post("/users/add_friend")
+                .contentType(MediaType.APPLICATION_JSON)
+                .principal(new UserPrincipal("USER-2@EMAIL.COM"))
+                .content(json))
+                .andExpect(status().isForbidden());
     }
 }

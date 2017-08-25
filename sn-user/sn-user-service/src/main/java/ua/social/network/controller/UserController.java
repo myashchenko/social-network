@@ -91,8 +91,7 @@ public class UserController {
 
     //@PreAuthorize("#oauth2.hasScope('ui')")
     @PostMapping("/accept_friend_request")
-    public void acceptFriendRequest(@Valid @RequestBody AcceptFriendRequest acceptFriendRequest,
-                                    Principal principal) {
+    public void acceptFriendRequest(@Valid @RequestBody AcceptFriendRequest req, Principal principal) {
         if (principal == null) {
             throw new AccessDeniedException("Only authorized user can accept a friend request");
         }
@@ -100,17 +99,19 @@ public class UserController {
         transactionHelper.doInTransaction(() -> {
             User currentUser = userRepository.findByEmail(principal.getName());
 
-            FriendRequest friendRequest = friendRequestRepository.findByIdAndTo(
-                    acceptFriendRequest.getFriendRequestId(), currentUser);
+            FriendRequest friendRequest = friendRequestRepository.findByIdAndTo(req.getFriendRequestId(),
+                    currentUser);
+
+            if (friendRequest == null) {
+                throw new EntityNotFoundException("Friend request with id = %s does not exist",
+                        req.getFriendRequestId());
+            }
 
             User to = friendRequest.getTo();
             User from = friendRequest.getFrom();
 
             to.addFriend(from);
-            to.addFriendOf(from);
-
             from.addFriend(to);
-            from.addFriendOf(to);
 
             friendRequestRepository.delete(friendRequest);
             return null;

@@ -1,5 +1,13 @@
 package ua.social.network.security;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.FixedAuthoritiesExtractor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,15 +23,13 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 
-import java.util.*;
-
 /**
  * @author Mykola Yashchenko
  */
 public class CustomUserInfoTokenServices implements ResourceServerTokenServices {
 
-    private static final String[] PRINCIPAL_KEYS = new String[] {
-        "user", "username", "userid", "user_id", "login", "id", "name"
+    private static final String[] PRINCIPAL_KEYS = new String[]{
+            "user", "username", "userid", "user_id", "login", "id", "name"
     };
 
     private final String userInfoEndpointUrl;

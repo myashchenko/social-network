@@ -1,17 +1,22 @@
 package ua.social.network.controller;
 
-import lombok.AllArgsConstructor;
+import java.security.Principal;
+import javax.validation.Valid;
+
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.AllArgsConstructor;
 import ua.social.network.dto.CreateCommunityRequest;
 import ua.social.network.dto.ModifyCommunityRequest;
 import ua.social.network.entity.Community;
 import ua.social.network.exception.AccessDeniedException;
 import ua.social.network.exception.EntityNotFoundException;
 import ua.social.network.repository.CommunityRepository;
-
-import javax.validation.Valid;
-import java.security.Principal;
 
 /**
  * @author Mykola Yashchenko

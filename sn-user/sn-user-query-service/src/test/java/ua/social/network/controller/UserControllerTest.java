@@ -26,12 +26,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(scripts = "classpath:truncate_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UserControllerTest {
 
-    @Rule
-    public JsonContentVerifier jsonContentVerifier = new JsonContentVerifier();
     @Autowired
     private UserController userController;
+
     @Autowired
     private CommonExceptionHandlerController exceptionHandlerController;
+
+    @Rule
+    public JsonContentVerifier jsonContentVerifier = new JsonContentVerifier();
+
     private MockMvc mockMvc;
 
     @Before

@@ -1,0 +1,36 @@
+jar {
+    baseName = 'sn-file-service'
+}
+
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    compile('org.springframework.boot:spring-boot-starter-undertow')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.cloud:spring-cloud-starter-zuul')
+    compile('org.springframework.cloud:spring-cloud-starter-eureka')
+    compile('org.springframework.cloud:spring-cloud-starter-oauth2')
+    compile('org.springframework.cloud:spring-cloud-starter-security')
+
+    compile('org.hsqldb:hsqldb:2.3.4')
+    compile('org.projectlombok:lombok:1.16.12')
+
+    compile project(':sn-common:sn-util')
+    compile project(':sn-common:sn-oauth-config')
+    compile project(':sn-common:sn-exception-config')
+
+    testCompile project(':sn-common:sn-util')
+    testCompile project(':sn-common:sn-oauth-config')
+    testCompile project(':sn-common:sn-exception-config')
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

@@ -32,6 +32,9 @@ zuul:
     sn-user-query-service:
       path: /api/**
       serviceId: sn-user-query-service
+    sn-file-service:
+      path: /api/**
+      serviceId: sn-file-service
 
 server:
   port: 8765

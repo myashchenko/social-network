@@ -1,5 +1,10 @@
 package ua.social.network.config;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Properties;
+import javax.sql.DataSource;
+
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,11 +16,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Properties;
 
 /**
  * @author Mykola Yashchenko

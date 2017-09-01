@@ -1,19 +1,26 @@
 package ua.social.network.controller;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import com.sun.security.auth.UserPrincipal;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -24,6 +31,7 @@ import ua.social.network.entity.Role;
 import ua.social.network.entity.User;
 import ua.social.network.repository.FileRepository;
 import ua.social.network.repository.UserRepository;
+import ua.social.network.service.StorageService;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -35,6 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Mykola Yashchenko
  */
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserServiceApplication.class)
 @Sql(scripts = "classpath:user/users.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -55,15 +64,27 @@ public class UserControllerTest {
     @Autowired
     private CommonExceptionHandlerController commonExceptionHandler;
 
-    @Value("${filesRootPath}")
-    private String filesRootPath;
+    @Autowired
+    private StorageService storageService;
+
+    @ClassRule
+    public static TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+    private static Path filesPath;
 
     private MockMvc mockMvc;
+
+    @BeforeClass
+    public static void prepareFolder() throws IOException {
+        filesPath = temporaryFolder.newFolder().toPath();
+    }
 
     @Before
     public void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(accountController)
                 .setControllerAdvice(commonExceptionHandler).build();
+
+        ReflectionTestUtils.setField(storageService, "filesRootPath", filesPath);
     }
 
     @Test
@@ -115,7 +136,7 @@ public class UserControllerTest {
                 .principal(new UserPrincipal("USER-1")))
                 .andExpect(status().isOk());
 
-        File actualFile = fileRepository.findByFilePath(filesRootPath + "test.txt");
+        File actualFile = fileRepository.findByFilePath(filesPath.toString() + "/test.txt");
         assertThat(actualFile, notNullValue());
         assertThat(actualFile.getUser(), equalTo("USER-1"));
     }

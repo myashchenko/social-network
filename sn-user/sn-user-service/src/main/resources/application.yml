@@ -21,3 +21,5 @@ logging:
         type: trace
         tool:
           hbm2ddl: debug
+
+filesRootPath: /Users/kolyan/

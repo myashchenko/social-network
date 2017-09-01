@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import ua.social.network.exception.AccessDeniedException;
 import ua.social.network.exception.EntityNotFoundException;
+import ua.social.network.exception.StorageException;
 
 /**
  * @author Mykola Yashchenko
@@ -27,6 +28,12 @@ public class CommonExceptionHandlerController {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
     public void handleAccessDeniedException(AccessDeniedException ex) {
+        LOGGER.error(ex.getMessage(), ex);
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(StorageException.class)
+    public void handleStorageException(StorageException ex) {
         LOGGER.error(ex.getMessage(), ex);
     }
 

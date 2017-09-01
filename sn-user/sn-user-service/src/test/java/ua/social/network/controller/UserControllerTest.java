@@ -1,12 +1,16 @@
 package ua.social.network.controller;
 
+import com.sun.security.auth.UserPrincipal;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,13 +19,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import ua.social.network.UserServiceApplication;
 import ua.social.network.dto.CreateUserRequest;
+import ua.social.network.entity.File;
 import ua.social.network.entity.Role;
 import ua.social.network.entity.User;
+import ua.social.network.repository.FileRepository;
 import ua.social.network.repository.UserRepository;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,7 +50,13 @@ public class UserControllerTest {
     private UserRepository userRepository;
 
     @Autowired
+    private FileRepository fileRepository;
+
+    @Autowired
     private CommonExceptionHandlerController commonExceptionHandler;
+
+    @Value("${filesRootPath}")
+    private String filesRootPath;
 
     private MockMvc mockMvc;
 
@@ -90,5 +103,20 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldUploadAvatar() throws Exception {
+        MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
+                "text/plain", "Fake".getBytes());
+
+        mockMvc.perform(fileUpload("/users/1/avatar")
+                .file(multipartFile)
+                .principal(new UserPrincipal("USER-1")))
+                .andExpect(status().isOk());
+
+        File actualFile = fileRepository.findByFilePath(filesRootPath + "test.txt");
+        assertThat(actualFile, notNullValue());
+        assertThat(actualFile.getUser(), equalTo("USER-1"));
     }
 }

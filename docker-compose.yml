@@ -1,0 +1,40 @@
+version: '2.1'
+
+services:
+  sn-discovery-service:
+    image: social-network/sn-discovery-service:0.0.1-SNAPSHOT
+    restart: always
+    ports:
+      - "8761:8761"
+
+  sn-edge-service:
+    image: social-network/sn-edge-service:0.0.1-SNAPSHOT
+    restart: always
+    ports:
+      - "8765:8765"
+    depends_on:
+      - sn-discovery-service
+
+  sn-monitor-dashboard:
+    image: social-network/sn-monitor-dashboard:0.0.1-SNAPSHOT
+    restart: always
+    depends_on:
+      - sn-discovery-service
+
+  sn-auth-service:
+    image: social-network/sn-auth:0.0.1-SNAPSHOT
+    restart: always
+    depends_on:
+      - sn-edge-service
+
+  sn-user-service:
+    image: social-network/sn-user-service:0.0.1-SNAPSHOT
+    restart: always
+    depends_on:
+      - sn-edge-service
+
+  sn-user-query-service:
+    image: social-network/sn-user-query-service:0.0.1-SNAPSHOT
+    restart: always
+    depends_on:
+      - sn-edge-service

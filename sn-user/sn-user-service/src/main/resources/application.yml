@@ -22,4 +22,4 @@ logging:
         tool:
           hbm2ddl: debug
 
-filesRootPath: /Users/kolyan/
+filesRootPath: /tmp

@@ -1,5 +1,5 @@
 FROM java:8
 VOLUME /tmp
-ADD sn-user-query-service.jar app.jar
+ADD sn-monitor-dashboard-0.0.1-SNAPSHOT.jar app.jar
 RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

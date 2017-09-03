@@ -35,3 +35,16 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
+
+task buildDocker(type: Docker, dependsOn: build) {
+    def projectName = "social-network"
+    def jarName = jar.baseName
+    tag = "$projectName/$jarName"
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}

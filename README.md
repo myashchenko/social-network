@@ -8,6 +8,6 @@
 ### Docker
 
 ```
-gradle clean dockerBuild
+gradle clean buildDocker
 docker-compose up
 ```

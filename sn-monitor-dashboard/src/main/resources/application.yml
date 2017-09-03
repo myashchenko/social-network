@@ -24,47 +24,7 @@ logging:
 
 eureka:
   client:
-    #Region where eureka is deployed -For AWS specify one of the AWS regions, for other datacenters specify a arbitrary string
-    #indicating the region.This is normally specified as a -D option (eg) -Deureka.region=us-east-1
-    region: default
-
-
-    #For eureka clients running in eureka server, it needs to connect to servers in other zones
-    preferSameZone: false
-
-    #Change this if you want to use a DNS based lookup for determining other eureka servers. For example
-    #of specifying the DNS entries, check the eureka-client-test.properties, eureka-client-prod.properties
-    #shouldUseDns: false
-
-    us-east-1:
-      availabilityZones: default
-
-  instance:
-    #Virtual host name by which the clients identifies this service
-    virtualHostName: ${spring.application.name}
-
-
----
-# For deployment in Docker containers
-spring:
-  profiles: docker
-
-eureka:
-  instance:
-    hostname: monitor
-  client:
     serviceUrl:
-      defaultZone: http://discovery:8761/eureka/
-
----
-# For deployment in Cloud Foundry
-spring:
-  profiles: cloud
-
-eureka:
+      defaultZone: http://sn-discovery-service:8761/eureka/
   instance:
-    hostname: ${vcap.application.uris[0]:localhost}
-    nonSecurePort: 80
-  client:
-    serviceUrl:
-      defaultZone: http://ml-public-ds-1.cfapps.io/eureka/
+    preferIpAddress: true

@@ -4,7 +4,14 @@ info:
 spring:
   oauth2:
     resource:
-      userInfoUri: http://localhost:9999/uaa/user
+      userInfoUri: http://sn-auth-service:9999/uaa/user
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://sn-discovery-service:8761/eureka/
+  instance:
+    preferIpAddress: true
 
 endpoints:
   restart:
@@ -18,7 +25,7 @@ zuul:
   routes:
     sn-auth-service:
       path: /uaa/**
-      url: http://auth-service:9999
+      url: http://sn-auth-service:9999
       sensitiveHeaders: Cookie,Set-Cookie
     sn-community-service:
       path: /api/**
@@ -32,9 +39,6 @@ zuul:
     sn-user-query-service:
       path: /api/**
       serviceId: sn-user-query-service
-    sn-file-service:
-      path: /api/**
-      serviceId: sn-file-service
 
 server:
   port: 8765

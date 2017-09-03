@@ -18,12 +18,16 @@ services:
   sn-monitor-dashboard:
     image: social-network/sn-monitor-dashboard:0.0.1-SNAPSHOT
     restart: always
+    ports:
+      - "7979:7979"
     depends_on:
       - sn-discovery-service
 
   sn-auth-service:
     image: social-network/sn-auth:0.0.1-SNAPSHOT
     restart: always
+    ports:
+      - "9999:9999"
     depends_on:
       - sn-edge-service
 

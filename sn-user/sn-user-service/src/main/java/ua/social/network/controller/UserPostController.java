@@ -1,6 +1,7 @@
 package ua.social.network.controller;
 
 import java.security.Principal;
+import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,11 +36,11 @@ public class UserPostController {
     public void create(Principal principal, @Valid @RequestBody CreatePostRequest createPostRequest) {
         Post post = new Post();
         post.setText(createPostRequest.getText());
-        User receiver = userRepository.findOne(createPostRequest.getReceiverId());
-        if (receiver == null) {
+        Optional<User> receiver = userRepository.findById(createPostRequest.getReceiverId());
+        if (!receiver.isPresent()) {
             throw new EntityNotFoundException("User with id %s does not exist", createPostRequest.getReceiverId());
         }
-        post.setReceiver(receiver);
+        receiver.ifPresent(post::setReceiver);
         post.setSender(userRepository.findByEmail(principal.getName()));
 
         userPostRepository.save(post);
@@ -48,11 +49,12 @@ public class UserPostController {
     @PutMapping("/{id}")
     public void modify(@PathVariable("id") String id, Principal principal,
                        @Valid @RequestBody ModifyPostRequest modifyPostRequest) {
-        Post post = userPostRepository.findOne(id);
-        if (post == null) {
+        Optional<Post> postOpt = userPostRepository.findById(id);
+        if (!postOpt.isPresent()) {
             throw new EntityNotFoundException("Post with id %s does not exist", id);
         }
 
+        Post post = postOpt.get();
         User sender = post.getSender();
         if (!sender.getEmail().equals(principal.getName())) {
             throw new AccessDeniedException();

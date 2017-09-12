@@ -1,6 +1,7 @@
 package ua.social.network.controller;
 
 import java.security.Principal;
+import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,17 +45,20 @@ public class CommunityController {
     public void modifyCommunity(Principal principal, @PathVariable("id") String id,
                                 @Valid @RequestBody ModifyCommunityRequest communityRequest) {
         // todo use mapper
-        Community community = communityRepository.findOne(id);
-        if (community == null) {
+        Optional<Community> community = communityRepository.findById(id);
+        if (!community.isPresent()) {
             throw new EntityNotFoundException("Community with id=%s not found", id);
         }
 
-        if (!community.getUserId().equals(principal.getName())) {
+        community = community.filter(c -> c.getUserId().equals(principal.getName()));
+        if (!community.isPresent()) {
             throw new AccessDeniedException();
         }
-
-        community.setName(communityRequest.getName());
-
-        communityRepository.save(community);
+        community
+                .map(c -> {
+                    c.setName(communityRequest.getName());
+                    return c;
+                })
+                .map(communityRepository::save);
     }
 }

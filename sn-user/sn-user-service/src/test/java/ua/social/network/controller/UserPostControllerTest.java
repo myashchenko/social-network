@@ -1,6 +1,9 @@
 package ua.social.network.controller;
 
+import java.util.Optional;
+
 import com.sun.security.auth.UserPrincipal;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import ua.social.network.UserServiceApplication;
 import ua.social.network.dto.CreatePostRequest;
 import ua.social.network.dto.ModifyPostRequest;
@@ -60,7 +64,7 @@ public class UserPostControllerTest {
         String receiverId = "RECEIVER_ID";
         String senderEmail = "SENDER@EMAIL.COM";
 
-        Mockito.when(userRepository.findOne(Mockito.eq(receiverId))).thenReturn(new User());
+        Mockito.when(userRepository.findById(Mockito.eq(receiverId))).thenReturn(Optional.of(new User()));
         Mockito.when(userRepository.findByEmail(Mockito.eq(senderEmail))).thenReturn(new User());
 
         final CreatePostRequest post = new CreatePostRequest();
@@ -74,7 +78,7 @@ public class UserPostControllerTest {
                 .principal(new UserPrincipal(senderEmail)).content(json))
                 .andExpect(status().isOk());
 
-        Mockito.verify(userRepository).findOne(Mockito.eq(receiverId));
+        Mockito.verify(userRepository).findById(Mockito.eq(receiverId));
         Mockito.verify(userRepository).findByEmail(Mockito.eq(senderEmail));
         Mockito.verify(userPostRepository).save(Mockito.any(Post.class));
     }
@@ -117,7 +121,7 @@ public class UserPostControllerTest {
                 .principal(new UserPrincipal(senderEmail)).content(json))
                 .andExpect(status().isNotFound());
 
-        Mockito.verify(userRepository).findOne(Mockito.eq(receiverId));
+        Mockito.verify(userRepository).findById(Mockito.eq(receiverId));
     }
 
     @Test
@@ -129,7 +133,7 @@ public class UserPostControllerTest {
         User sender = new User();
         sender.setEmail(senderEmail);
         postToModify.setSender(sender);
-        Mockito.when(userPostRepository.findOne(Mockito.eq(postId))).thenReturn(postToModify);
+        Mockito.when(userPostRepository.findById(Mockito.eq(postId))).thenReturn(Optional.of(postToModify));
 
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("TEXT");
@@ -141,7 +145,7 @@ public class UserPostControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isOk());
 
-        Mockito.verify(userPostRepository).findOne(Mockito.eq(postId));
+        Mockito.verify(userPostRepository).findById(Mockito.eq(postId));
         Mockito.verify(userPostRepository).save(Mockito.any(Post.class));
     }
 
@@ -163,7 +167,7 @@ public class UserPostControllerTest {
     public void shouldErrorWhenPostDoesNotExist() throws Exception {
         String postId = "POST_ID";
 
-        Mockito.when(userPostRepository.findOne(Mockito.eq(postId))).thenReturn(null);
+        Mockito.when(userPostRepository.findById(Mockito.eq(postId))).thenReturn(Optional.empty());
 
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("TEXT");
@@ -183,7 +187,7 @@ public class UserPostControllerTest {
         User sender = new User();
         sender.setEmail("EMAIL1");
         postToModify.setSender(sender);
-        Mockito.when(userPostRepository.findOne(Mockito.eq(postId))).thenReturn(postToModify);
+        Mockito.when(userPostRepository.findById(Mockito.eq(postId))).thenReturn(Optional.of(postToModify));
 
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("TEXT");

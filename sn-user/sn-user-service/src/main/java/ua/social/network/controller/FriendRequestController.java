@@ -1,6 +1,7 @@
 package ua.social.network.controller;
 
 import java.security.Principal;
+import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,10 +45,11 @@ public class FriendRequestController {
         }
 
         transactionHelper.doInTransaction(() -> {
-            User newFriend = userRepository.findOne(addFriendRequest.getUserId());
-            if (newFriend == null) {
+            Optional<User> newFriendOpt = userRepository.findById(addFriendRequest.getUserId());
+            if (!newFriendOpt.isPresent()) {
                 throw new EntityNotFoundException("User with id %s does not exist", addFriendRequest.getUserId());
             }
+            User newFriend = newFriendOpt.get();
             User currentUser = userRepository.findByEmail(principal.getName());
 
             if (currentUser.friendOf(newFriend)) {

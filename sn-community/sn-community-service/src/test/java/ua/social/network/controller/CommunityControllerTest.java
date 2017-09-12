@@ -1,6 +1,9 @@
 package ua.social.network.controller;
 
+import java.util.Optional;
+
 import com.sun.security.auth.UserPrincipal;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import ua.social.network.CommunityServiceApplication;
 import ua.social.network.dto.CreateCommunityRequest;
 import ua.social.network.dto.ModifyCommunityRequest;
@@ -23,7 +27,10 @@ import ua.social.network.repository.CommunityRepository;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -100,7 +107,7 @@ public class CommunityControllerTest {
         community.setName("Some name");
         community.setUserId("testUser");
 
-        when(communityRepository.findOne(eq(id))).thenReturn(community);
+        when(communityRepository.findById(eq(id))).thenReturn(Optional.of(community));
 
         String communityName = "testCommunity";
 
@@ -134,7 +141,7 @@ public class CommunityControllerTest {
                 .content(mapper.writeValueAsString(modifyCommunityRequest)))
                 .andExpect(status().isBadRequest());
 
-        verify(communityRepository, times(0)).findOne(eq(id));
+        verify(communityRepository, times(0)).findById(eq(id));
     }
 
     @Test
@@ -146,7 +153,7 @@ public class CommunityControllerTest {
         community.setName("Some name");
         community.setUserId("testUser");
 
-        when(communityRepository.findOne(eq(id))).thenReturn(community);
+        when(communityRepository.findById(eq(id))).thenReturn(Optional.of(community));
 
         String communityName = "testName";
 
@@ -158,7 +165,7 @@ public class CommunityControllerTest {
                 .content(mapper.writeValueAsString(modifyCommunityRequest)))
                 .andExpect(status().isForbidden());
 
-        verify(communityRepository, times(1)).findOne(eq(id));
+        verify(communityRepository, times(1)).findById(eq(id));
     }
 
 
@@ -166,7 +173,7 @@ public class CommunityControllerTest {
     public void shouldReturnErrorIfCommunityDoesNotExist() throws Exception {
         String id = "123";
 
-        when(communityRepository.findOne(eq(id))).thenReturn(null);
+        when(communityRepository.findById(eq(id))).thenReturn(Optional.empty());
 
         String communityName = "testName";
 
@@ -178,6 +185,6 @@ public class CommunityControllerTest {
                 .content(mapper.writeValueAsString(modifyCommunityRequest)))
                 .andExpect(status().isNotFound());
 
-        verify(communityRepository, times(1)).findOne(eq(id));
+        verify(communityRepository, times(1)).findById(eq(id));
     }
 }

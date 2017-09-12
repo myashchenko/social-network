@@ -5,5 +5,5 @@ jar {
 dependencies {
     compile('org.projectlombok:lombok:1.16.12')
     compile('org.hibernate:hibernate-entitymanager:4.3.11.Final')
-    compile('org.springframework.data:spring-data-jpa:1.9.2.RELEASE')
+    compile("org.springframework.data:spring-data-jpa:${springBootVersion}")
 }

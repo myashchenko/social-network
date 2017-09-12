@@ -1,5 +1,7 @@
 package ua.social.network.controller;
 
+import java.util.Optional;
+
 import com.sun.security.auth.UserPrincipal;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -27,7 +29,6 @@ import ua.social.network.repository.UserRepository;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -152,11 +153,11 @@ public class FriendRequestControllerTest {
                 .principal(new UserPrincipal("USER-4@EMAIL.COM")))
                 .andExpect(status().isOk());
 
-        FriendRequest friendRequest = friendRequestRepository.findOne("2");
-        assertThat(friendRequest, nullValue());
+        Optional<FriendRequest> friendRequest = friendRequestRepository.findById("2");
+        assertThat(friendRequest.isPresent(), is(false));
 
-        User user1 = userRepository.findOne("4");
-        User user2 = userRepository.findOne("1");
+        User user1 = userRepository.findById("4").get();
+        User user2 = userRepository.findById("1").get();
 
         assertThat(user1.friendOf(user2), is(true));
         assertThat(user2.friendOf(user1), is(true));

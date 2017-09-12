@@ -2,19 +2,7 @@ jar {
     baseName = 'sn-oauth-config'
 }
 
-apply plugin: 'org.springframework.boot'
-
-bootRepackage {
-    enabled = false
-}
-
 dependencies {
-    compile('org.springframework.cloud:spring-cloud-starter-oauth2')
-    compile('org.springframework.cloud:spring-cloud-starter-security')
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
+    compile("org.springframework.cloud:spring-cloud-starter-oauth2:2.0.0.M1")
+    compile("org.springframework.cloud:spring-cloud-starter-security:2.0.0.M1")
 }

@@ -3,6 +3,13 @@ jar {
 }
 
 apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web') {
@@ -30,12 +37,6 @@ dependencies {
 
     testCompile('org.apache.httpcomponents:httpclient:4.3.6') {
         exclude(module: 'commons-logging')
-    }
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${rootProject.springCloudVersion}"
     }
 }
 

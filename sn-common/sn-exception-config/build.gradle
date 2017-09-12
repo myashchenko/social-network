@@ -2,21 +2,7 @@ jar {
     baseName = 'sn-exception-config'
 }
 
-apply plugin: 'org.springframework.boot'
-
-bootRepackage {
-    enabled = false
-}
-
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web') {
-        exclude module: 'spring-boot-starter-tomcat'
-    }
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile('org.projectlombok:lombok:1.16.12')
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
 }

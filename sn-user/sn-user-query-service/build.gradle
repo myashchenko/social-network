@@ -3,6 +3,13 @@ jar {
 }
 
 apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web') {
@@ -28,12 +35,6 @@ dependencies {
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.github.yashchenkon:json-verifier:1.0.0')
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
 }
 
 task buildDocker(type: Docker, dependsOn: build) {

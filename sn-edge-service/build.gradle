@@ -3,6 +3,13 @@ jar {
 }
 
 apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web') {
@@ -20,12 +27,6 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-security')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
 }
 
 task buildDocker(type: Docker, dependsOn: build) {

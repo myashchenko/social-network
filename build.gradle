@@ -2,12 +2,15 @@
 buildscript {
 
     ext {
-        springBootVersion = '1.5.2.RELEASE'
-        springCloudVersion = 'Camden.SR6'
+        springBootVersion = '2.0.0.M3'
+        springCloudVersion = 'Finchley.M2'
     }
 
     repositories {
         mavenCentral()
+        maven {
+            url 'https://repo.spring.io/libs-milestone'
+        }
     }
 
     dependencies {
@@ -29,12 +32,10 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
-        mavenLocal()
-        jcenter()
         mavenCentral()
-
         maven {
-            url 'http://maven.springframework.org/release'
+//            url 'http://maven.springframework.org/release'
+            url 'https://repo.spring.io/libs-milestone'
         }
     }
 }

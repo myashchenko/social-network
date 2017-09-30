@@ -50,16 +50,11 @@ public class FriendRequestController {
                 throw new EntityNotFoundException("User with id %s does not exist", addFriendRequest.getUserId());
             }
             User newFriend = newFriendOpt.get();
-            User currentUser = userRepository.findByEmail(principal.getName());
+            User currentUser = userRepository.findByEmail(principal.getName()).get();
 
             if (currentUser.friendOf(newFriend)) {
                 throw new AccessDeniedException("You are friends already");
             }
-
-            //FriendRequest friendRequest = friendRequestRepository.findRequestByUsers(newFriend, currentUser);
-            //if (friendRequest != null) {
-            //throw new AccessDeniedException("You have this friend request already");
-            //}
 
             FriendRequest friendRequest = new FriendRequest();
             friendRequest.setTo(newFriend);
@@ -78,7 +73,7 @@ public class FriendRequestController {
         }
 
         transactionHelper.doInTransaction(() -> {
-            User currentUser = userRepository.findByEmail(principal.getName());
+            User currentUser = userRepository.findByEmail(principal.getName()).get();
 
             FriendRequest friendRequest = friendRequestRepository.findByIdAndTo(id, currentUser);
 

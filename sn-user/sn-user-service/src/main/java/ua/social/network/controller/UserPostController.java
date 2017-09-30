@@ -41,7 +41,7 @@ public class UserPostController {
             throw new EntityNotFoundException("User with id %s does not exist", createPostRequest.getReceiverId());
         }
         receiver.ifPresent(post::setReceiver);
-        post.setSender(userRepository.findByEmail(principal.getName()));
+        post.setSender(userRepository.findByEmail(principal.getName()).get());
 
         userPostRepository.save(post);
     }

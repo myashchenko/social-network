@@ -36,7 +36,7 @@ import ua.social.network.service.StorageService;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -102,7 +102,7 @@ public class UserControllerTest {
                 .content(json))
                 .andExpect(status().isOk());
 
-        User actualUser = userRepository.findByEmail(user.getEmail());
+        User actualUser = userRepository.findByEmail(user.getEmail()).get();
         assertThat(actualUser, notNullValue());
         assertThat(actualUser.getEmail(), equalTo(user.getEmail()));
         assertThat(actualUser.getName(), equalTo(user.getName()));
@@ -131,7 +131,7 @@ public class UserControllerTest {
         MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
                 "text/plain", "Fake".getBytes());
 
-        mockMvc.perform(fileUpload("/users/1/avatar")
+        mockMvc.perform(multipart("/users/1/avatar")
                 .file(multipartFile)
                 .principal(new UserPrincipal("USER-1")))
                 .andExpect(status().isOk());

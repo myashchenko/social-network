@@ -2,6 +2,7 @@ package ua.social.network.service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,10 +30,12 @@ public class SnUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("User with email " + email + " doesn't exist");
-        }
+        return userRepository.findByEmail(email)
+                .map(this::toUser)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " doesn't exist"));
+    }
+
+    private org.springframework.security.core.userdetails.User toUser(User user) {
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 getGrantedAuthority(user));
     }

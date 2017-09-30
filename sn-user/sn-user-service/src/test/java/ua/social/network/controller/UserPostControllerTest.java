@@ -65,7 +65,7 @@ public class UserPostControllerTest {
         String senderEmail = "SENDER@EMAIL.COM";
 
         Mockito.when(userRepository.findById(Mockito.eq(receiverId))).thenReturn(Optional.of(new User()));
-        Mockito.when(userRepository.findByEmail(Mockito.eq(senderEmail))).thenReturn(new User());
+        Mockito.when(userRepository.findByEmail(Mockito.eq(senderEmail))).thenReturn(Optional.of(new User()));
 
         final CreatePostRequest post = new CreatePostRequest();
         post.setText("TEXT");

@@ -3,7 +3,7 @@ jar {
 }
 
 dependencies {
-    compile('org.projectlombok:lombok:1.16.12')
-    compile('org.hibernate:hibernate-entitymanager:4.3.11.Final')
+    compile("org.projectlombok:lombok:${lombokVersion}")
+    compile("org.hibernate:hibernate-entitymanager:${hibernateVersion}")
     compile("org.springframework.data:spring-data-jpa:${springBootVersion}")
 }

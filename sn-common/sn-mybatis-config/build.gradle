@@ -4,8 +4,8 @@ jar {
 
 dependencies {
     compile("org.springframework.boot:spring-boot:${springBootVersion}")
-    compile('org.mybatis:mybatis-spring:1.3.1')
-    compile('org.mybatis:mybatis:3.4.2')
+    compile("org.mybatis:mybatis-spring:${myBatisSpringVersion}")
+    compile("org.mybatis:mybatis:${myBatisVersion}")
 
     compile project(':sn-common:sn-util')
 }

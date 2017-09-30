@@ -22,8 +22,8 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-oauth2')
     compile('org.springframework.cloud:spring-cloud-starter-security')
 
-    compile('org.hsqldb:hsqldb:2.3.4')
-    compile('org.projectlombok:lombok:1.16.12')
+    compile("org.hsqldb:hsqldb:${hsqldbVersion}")
+    compile("org.projectlombok:lombok:${lombokVersion}")
 
     compile project(':sn-community:sn-community-db-schema')
     compile project(':sn-common:sn-util')

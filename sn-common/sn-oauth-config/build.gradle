@@ -3,6 +3,6 @@ jar {
 }
 
 dependencies {
-    compile("org.springframework.cloud:spring-cloud-starter-oauth2:2.0.0.M1")
-    compile("org.springframework.cloud:spring-cloud-starter-security:2.0.0.M1")
+    compile("org.springframework.cloud:spring-cloud-starter-oauth2:${springCloudSecurityVersion}")
+    compile("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
 }

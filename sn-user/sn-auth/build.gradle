@@ -21,7 +21,7 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-security')
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
 
-    compile('org.hsqldb:hsqldb:2.3.4')
+    compile("org.hsqldb:hsqldb:${hsqldbVersion}")
 
     compile project(':sn-user:sn-user-db-schema')
     compile project(':sn-common:sn-util')

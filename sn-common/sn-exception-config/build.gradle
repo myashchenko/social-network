@@ -4,5 +4,5 @@ jar {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    compile('org.projectlombok:lombok:1.16.12')
+    compile("org.projectlombok:lombok:${lombokVersion}")
 }

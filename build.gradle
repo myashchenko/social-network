@@ -4,12 +4,24 @@ buildscript {
     ext {
         springBootVersion = '2.0.0.M3'
         springCloudVersion = 'Finchley.M2'
+        springCloudSecurityVersion = '2.0.0.M1'
+        lombokVersion = '1.16.18'
+        hibernateVersion = '5.2.11.Final'
+        myBatisVersion = '3.4.5'
+        myBatisSpringVersion = '1.3.1'
+        hsqldbVersion = '2.3.4'
+
+        hamcrestVersion = '1.3'
+        junitVersion = '4.12'
     }
 
     repositories {
         mavenCentral()
         maven {
             url 'https://repo.spring.io/libs-milestone'
+        }
+        maven {
+            url 'http://maven.springframework.org/release'
         }
     }
 
@@ -34,8 +46,10 @@ subprojects {
     repositories {
         mavenCentral()
         maven {
-//            url 'http://maven.springframework.org/release'
             url 'https://repo.spring.io/libs-milestone'
+        }
+        maven {
+            url 'http://maven.springframework.org/release'
         }
     }
 }

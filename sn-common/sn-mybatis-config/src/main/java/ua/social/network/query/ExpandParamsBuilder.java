@@ -11,7 +11,7 @@ public class ExpandParamsBuilder {
 
     private static final String EXPAND = "expand";
 
-    private String[] params;
+    private final String[] params;
 
     public ExpandParamsBuilder(String params) {
         Objects.requireNonNull(params);

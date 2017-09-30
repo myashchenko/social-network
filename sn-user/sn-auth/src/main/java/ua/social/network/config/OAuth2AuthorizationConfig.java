@@ -21,7 +21,7 @@ import ua.social.network.service.SnUserDetailsService;
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
-    private TokenStore tokenStore = new InMemoryTokenStore();
+    private final TokenStore tokenStore = new InMemoryTokenStore();
 
     @Autowired
     private AuthenticationManager authenticationManager;

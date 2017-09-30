@@ -22,7 +22,7 @@ public abstract class AbstractController<ENTITY, MAPPER extends Mapper<ENTITY>> 
     private static final String ID = "id";
     private static final String EXPAND = "expand";
 
-    private MAPPER mapper;
+    private final MAPPER mapper;
 
     public AbstractController(MAPPER mapper) {
         this.mapper = mapper;
@@ -32,12 +32,6 @@ public abstract class AbstractController<ENTITY, MAPPER extends Mapper<ENTITY>> 
         params.put(ID, id);
         params = getWithExpandParams(params);
         return mapper.getSingle(params);
-    }
-
-    public List<ENTITY> getEntityList(Object key) {
-        Map<String, Object> params = new HashMap<>(getProperties(key));
-        params = getWithExpandParams(params);
-        return mapper.getList(params);
     }
 
     public List<ENTITY> getEntityList(Map<String, Object> params) {

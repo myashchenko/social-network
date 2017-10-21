@@ -6,6 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Immutable;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +21,7 @@ import lombok.Setter;
         @UniqueConstraint(name = "from_to", columnNames = { "from_id", "to_id" }),
         @UniqueConstraint(name = "to_from", columnNames = { "to_id", "from_id" })
 })
+@Immutable
 public class FriendRequest extends BaseEntity {
 
     @ManyToOne(optional = false)

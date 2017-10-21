@@ -1,0 +1,18 @@
+server:
+  port: 0
+
+dataSource:
+  dialect: org.hibernate.dialect.HSQLDialect
+  hbm2ddl: update
+  dbName: user
+
+logging:
+  level:
+    ua.social.network.query: DEBUG
+    org:
+      hibernate:
+        type: trace
+        tool:
+          hbm2ddl: debug
+
+filesRootPath: /tmp

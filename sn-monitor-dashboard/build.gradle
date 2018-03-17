@@ -19,6 +19,11 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-actuator')
 
     compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard')
+
+    runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
+    runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"
+    runtime "com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}"
+    runtime "javax.activation:activation:${activationVersion}"
 }
 
 task buildDocker(type: Docker, dependsOn: build) {

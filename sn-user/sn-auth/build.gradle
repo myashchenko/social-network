@@ -23,6 +23,11 @@ dependencies {
 
     compile("org.hsqldb:hsqldb:${hsqldbVersion}")
 
+    runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
+    runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"
+    runtime "com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}"
+    runtime "javax.activation:activation:${activationVersion}"
+
     compile project(':sn-user:sn-user-db-schema')
     compile project(':sn-common:sn-util')
     compile project(':sn-common:sn-jpa-config')

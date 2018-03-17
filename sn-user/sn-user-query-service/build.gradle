@@ -30,6 +30,11 @@ dependencies {
     compile project(':sn-common:sn-mybatis-config')
     compile project(':sn-user:sn-user-db-schema')
 
+    runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
+    runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"
+    runtime "com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}"
+    runtime "javax.activation:activation:${activationVersion}"
+
     testCompile project(':sn-common:sn-util')
     testCompile project(':sn-common:sn-exception-config')
     testCompile project(':sn-common:sn-mybatis-config')

@@ -1,5 +1,5 @@
 jar {
-    baseName = 'sn-edge-service'
+    baseName = 'sn-gateway-service'
 }
 
 apply plugin: 'org.springframework.boot'

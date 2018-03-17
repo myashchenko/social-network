@@ -7,8 +7,8 @@ services:
     ports:
       - "8761:8761"
 
-  sn-edge-service:
-    image: social-network/sn-edge-service:0.0.1-SNAPSHOT
+  sn-gateway-service:
+    image: social-network/sn-gateway-service:0.0.1-SNAPSHOT
     restart: always
     ports:
       - "8765:8765"
@@ -29,16 +29,16 @@ services:
     ports:
       - "9999:9999"
     depends_on:
-      - sn-edge-service
+      - sn-gateway-service
 
   sn-user-service:
     image: social-network/sn-user-service:0.0.1-SNAPSHOT
     restart: always
     depends_on:
-      - sn-edge-service
+      - sn-gateway-service
 
   sn-user-query-service:
     image: social-network/sn-user-query-service:0.0.1-SNAPSHOT
     restart: always
     depends_on:
-      - sn-edge-service
+      - sn-gateway-service

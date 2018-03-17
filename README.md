@@ -3,7 +3,7 @@
 ### Start order
 - sn-auth
 - sn-discovery-service
-- sn-edge-service
+- sn-gateway-service
 
 ### Docker
 

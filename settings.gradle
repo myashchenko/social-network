@@ -1,5 +1,5 @@
 rootProject.name = 'sn-parent-pom'
-include ':sn-edge-service'
+include ':sn-gateway-service'
 include ':sn-discovery-service'
 include ':sn-monitor-dashboard'
 include ':sn-community:sn-community-db-schema'
@@ -14,7 +14,7 @@ include ':sn-user:sn-user-query-service'
 include ':sn-user:sn-user-service'
 include ':sn-user:sn-auth'
 
-project(':sn-edge-service').projectDir = "$rootDir/sn-edge-service" as File
+project(':sn-gateway-service').projectDir = "$rootDir/sn-gateway-service" as File
 project(':sn-discovery-service').projectDir = "$rootDir/sn-discovery-service" as File
 project(':sn-monitor-dashboard').projectDir = "$rootDir/sn-monitor-dashboard" as File
 project(':sn-community:sn-community-db-schema').projectDir = "$rootDir/sn-community/sn-community-db-schema" as File

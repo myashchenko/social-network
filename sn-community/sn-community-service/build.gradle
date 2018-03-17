@@ -17,8 +17,8 @@ dependencies {
     }
     compile('org.springframework.boot:spring-boot-starter-undertow')
     compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile('org.springframework.cloud:spring-cloud-starter-zuul')
-    compile('org.springframework.cloud:spring-cloud-starter-eureka')
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-zuul')
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     compile('org.springframework.cloud:spring-cloud-starter-oauth2')
     compile('org.springframework.cloud:spring-cloud-starter-security')
 
@@ -27,12 +27,10 @@ dependencies {
 
     compile project(':sn-community:sn-community-db-schema')
     compile project(':sn-common:sn-util')
-    compile project(':sn-common:sn-oauth-config')
     compile project(':sn-common:sn-exception-config')
 
     testCompile project(':sn-community:sn-community-db-schema')
     testCompile project(':sn-common:sn-util')
-    testCompile project(':sn-common:sn-oauth-config')
     testCompile project(':sn-common:sn-exception-config')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')

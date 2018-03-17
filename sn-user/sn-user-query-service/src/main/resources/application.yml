@@ -8,15 +8,6 @@ eureka:
   instance:
     preferIpAddress: true
 
-security:
-  oauth2:
-    client:
-      clientId: sn-user-query-service
-      clientSecret: SN_USER_QUERY_SERVICE
-      accessTokenUri: http://sn-auth-service:9999/uaa/oauth/token
-      grant-type: client_credentials
-      scope: server
-
 spring:
   jackson:
     serialization:

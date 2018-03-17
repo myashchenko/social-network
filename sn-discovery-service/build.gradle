@@ -5,10 +5,6 @@ jar {
 apply plugin: 'org.springframework.boot'
 apply plugin: "io.spring.dependency-management"
 
-//springBoot {
-//    requiresUnpack = ['com.netflix.eureka:eureka-core','com.netflix.eureka:eureka-client']
-//}
-
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
@@ -22,8 +18,9 @@ dependencies {
     }
     compile('org.springframework.boot:spring-boot-starter-undertow')
     compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    compile('org.springframework.cloud:spring-cloud-context')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

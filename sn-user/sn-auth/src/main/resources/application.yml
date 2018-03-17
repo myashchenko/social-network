@@ -3,8 +3,6 @@ server:
   contextPath: /uaa
 
 security:
-  user:
-    password: password
   oauth2:
     client:
       clientId: acme

@@ -1,8 +1,0 @@
-jar {
-    baseName = 'sn-oauth-config'
-}
-
-dependencies {
-    compile("org.springframework.cloud:spring-cloud-starter-oauth2:${springCloudSecurityVersion}")
-    compile("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
-}

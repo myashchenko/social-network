@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+
+    <changeSet author="myashchenko" id="initial-schema">
+        <createTable tableName="communities">
+            <column name="id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_communities" />
+            </column>
+            <column name="created" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="user_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="followers">
+            <column name="community_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <sql>CREATE UNIQUE INDEX ui_followers_community_user on followers (community_id, user_id); </sql>
+
+        <addForeignKeyConstraint baseColumnNames="community_id" baseTableName="followers"
+                                 baseTableSchemaName="public" constraintName="fk_followers_community_id" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="communities"
+                                 referencedTableSchemaName="public" referencesUniqueColumn="true" />
+
+        <createTable tableName="posts">
+            <column name="id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_posts" />
+            </column>
+            <column name="created" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="text" type="varchar(10000)">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="community_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="community_id" baseTableName="posts"
+                                 baseTableSchemaName="public" constraintName="fk_posts_community_id" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="communities"
+                                 referencedTableSchemaName="public" referencesUniqueColumn="true" />
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,37 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ua.social.network.query.PostMapper">
+
+    <sql id="coreAttributes">
+      posts.id AS id,
+      posts.text AS text
+    </sql>
+
+    <select id="getSingle" resultMap="PostRM">
+        SELECT
+        <include refid="coreAttributes"/>
+        FROM posts
+        <where>
+            posts.id = #{id}
+        </where>
+    </select>
+
+    <select id="getList" resultMap="PostRM">
+        SELECT
+        <include refid="coreAttributes"/>
+        FROM posts
+        <where>
+            <if test="userId != null">
+                posts.user_id = #{userId}
+            </if>
+            <if test="communityId != null">
+                posts.community_id = #{communityId}
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="PostRM" type="Post">
+        <id column="id" property="id"/>
+        <result property="text" column="text"/>
+    </resultMap>
+</mapper>

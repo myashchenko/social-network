@@ -13,11 +13,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "file")
+@Table(name = "files")
 public class File extends BaseEntity {
+
     @Column(name = "file_path", nullable = false, unique = true)
     private String filePath;
 
-    @Column(name = "user", nullable = false)
-    private String user;
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 }

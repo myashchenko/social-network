@@ -60,7 +60,7 @@ public class UserController {
         String fullPath = storageService.store(multipartFile);
 
         File file = new File();
-        file.setUser(principal.getName());
+        file.setUserId(principal.getName());
         file.setFilePath(fullPath);
 
         fileRepository.save(file);

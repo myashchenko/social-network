@@ -12,6 +12,6 @@ public class CreatedDateGeneratorListener {
 
     @PrePersist
     public void setCreatedDate(BaseEntity baseEntity) {
-        baseEntity.setCreateDate(LocalDateTime.now());
+        baseEntity.setCreated(LocalDateTime.now());
     }
 }

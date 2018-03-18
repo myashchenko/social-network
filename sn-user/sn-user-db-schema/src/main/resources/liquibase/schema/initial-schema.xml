@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+
+    <changeSet author="myashchenko" id="initial-schema">
+        <createTable tableName="users">
+            <column name="id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_users" />
+            </column>
+            <column name="created" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_visit" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+            <column name="role" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="avatar_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+
+        <sql>CREATE UNIQUE INDEX ui_users_email on users (email); </sql>
+        <addUniqueConstraint tableName="users" columnNames="email" constraintName="uc_users__unique_email" />
+
+        <createTable tableName="user_friends">
+            <column name="user_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="friend_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_friends"
+                                 baseTableSchemaName="public" constraintName="fk_user_friends_user_id" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public" referencesUniqueColumn="true" />
+
+        <addForeignKeyConstraint baseColumnNames="friend_id" baseTableName="user_friends"
+                                 baseTableSchemaName="public" constraintName="fk_user_friends_friend_id" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public" referencesUniqueColumn="true" />
+
+        <createTable tableName="friend_requests">
+            <column name="id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_friend_requests" />
+            </column>
+            <column name="created" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="from_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="to_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <sql>CREATE UNIQUE INDEX ui_friend_requests_from_to on friend_requests (from_id, to_id); </sql>
+        <sql>CREATE UNIQUE INDEX ui_friend_requests_to_from on friend_requests (to_id, from_id); </sql>
+
+        <addForeignKeyConstraint baseColumnNames="from_id" baseTableName="friend_requests"
+                                 baseTableSchemaName="public" constraintName="fk_friend_requests_from_id" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public" referencesUniqueColumn="true" />
+
+        <addForeignKeyConstraint baseColumnNames="to_id" baseTableName="friend_requests"
+                                 baseTableSchemaName="public" constraintName="fk_friend_requests_to_id" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public" referencesUniqueColumn="true" />
+
+        <createTable tableName="posts">
+            <column name="id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_posts" />
+            </column>
+            <column name="created" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="text" type="varchar(10000)">
+                <constraints nullable="false" />
+            </column>
+            <column name="from_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="to_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="from_id" baseTableName="posts"
+                                 baseTableSchemaName="public" constraintName="fk_posts_from_id" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public" referencesUniqueColumn="true" />
+
+        <addForeignKeyConstraint baseColumnNames="to_id" baseTableName="posts"
+                                 baseTableSchemaName="public" constraintName="fk_posts_to_id" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"
+                                 referencedTableSchemaName="public" referencesUniqueColumn="true" />
+
+        <createTable tableName="files">
+            <column name="id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_files" />
+            </column>
+            <column name="created" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="file_path" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

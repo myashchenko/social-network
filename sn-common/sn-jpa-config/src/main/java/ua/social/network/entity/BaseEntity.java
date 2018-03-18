@@ -25,8 +25,8 @@ public class BaseEntity {
     @Id
     private String id;
 
-    @Column(name = "create_date", nullable = false)
-    private LocalDateTime createDate;
+    @Column(name = "created", nullable = false)
+    private LocalDateTime created;
 
     @Override
     public boolean equals(Object o) {

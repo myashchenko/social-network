@@ -11,8 +11,8 @@
     </typeAliases>
 
     <mappers>
-        <mapper resource="mapper/post-mapper.xml"/>
-        <mapper resource="mapper/community-mapper.xml"/>
+        <mapper resource="mapper/posts-mapper.xml"/>
+        <mapper resource="mapper/communities-mapper.xml"/>
     </mappers>
 
 </configuration>

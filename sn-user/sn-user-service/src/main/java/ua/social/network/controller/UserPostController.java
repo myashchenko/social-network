@@ -40,8 +40,8 @@ public class UserPostController {
         if (!receiver.isPresent()) {
             throw new EntityNotFoundException("User with id %s does not exist", createPostRequest.getReceiverId());
         }
-        receiver.ifPresent(post::setReceiver);
-        post.setSender(userRepository.findByEmail(principal.getName()).get());
+        receiver.ifPresent(post::setTo);
+        post.setFrom(userRepository.findByEmail(principal.getName()).get());
 
         userPostRepository.save(post);
     }
@@ -55,7 +55,7 @@ public class UserPostController {
         }
 
         Post post = postOpt.get();
-        User sender = post.getSender();
+        User sender = post.getFrom();
         if (!sender.getEmail().equals(principal.getName())) {
             throw new AccessDeniedException();
         }

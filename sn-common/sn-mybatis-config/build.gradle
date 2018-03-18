@@ -7,5 +7,11 @@ dependencies {
     compile("org.mybatis:mybatis-spring:${myBatisSpringVersion}")
     compile("org.mybatis:mybatis:${myBatisVersion}")
 
-    compile project(':sn-common:sn-util')
+    compile group: 'org.hamcrest', name: 'hamcrest-all', version: "${hamcrestVersion}"
+    compile group: 'junit', name: 'junit', version: "${junitVersion}"
+    compile group: 'com.flipkart.zjsonpatch', name: 'zjsonpatch', version: '0.3.1'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 }

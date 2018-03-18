@@ -19,8 +19,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.cloud:spring-cloud-starter-netflix-zuul')
     compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
-    compile('org.springframework.cloud:spring-cloud-starter-oauth2')
-    compile('org.springframework.cloud:spring-cloud-starter-security')
+    compile("org.springframework.cloud:spring-cloud-starter-oauth2:${springCloudSecurityVersion}")
+    compile("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
 
     compile("org.hsqldb:hsqldb:${hsqldbVersion}")
     compile("org.projectlombok:lombok:${lombokVersion}")
@@ -31,12 +31,12 @@ dependencies {
     runtime "javax.activation:activation:${activationVersion}"
 
     compile project(':sn-community:sn-community-db-schema')
-    compile project(':sn-common:sn-util')
     compile project(':sn-common:sn-exception-config')
+    compile project(':sn-common:sn-jpa-config')
 
     testCompile project(':sn-community:sn-community-db-schema')
-    testCompile project(':sn-common:sn-util')
     testCompile project(':sn-common:sn-exception-config')
+    testCompile project(':sn-common:sn-jpa-config')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

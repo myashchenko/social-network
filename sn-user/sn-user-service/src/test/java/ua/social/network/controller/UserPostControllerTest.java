@@ -132,7 +132,7 @@ public class UserPostControllerTest {
         Post postToModify = new Post();
         User sender = new User();
         sender.setEmail(senderEmail);
-        postToModify.setSender(sender);
+        postToModify.setFrom(sender);
         Mockito.when(userPostRepository.findById(Mockito.eq(postId))).thenReturn(Optional.of(postToModify));
 
         final ModifyPostRequest post = new ModifyPostRequest();
@@ -186,7 +186,7 @@ public class UserPostControllerTest {
         Post postToModify = new Post();
         User sender = new User();
         sender.setEmail("EMAIL1");
-        postToModify.setSender(sender);
+        postToModify.setFrom(sender);
         Mockito.when(userPostRepository.findById(Mockito.eq(postId))).thenReturn(Optional.of(postToModify));
 
         final ModifyPostRequest post = new ModifyPostRequest();

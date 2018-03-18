@@ -1,0 +1,40 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ua.social.network.query.CommunityMapper">
+
+    <sql id="coreAttributes">
+      communities.id AS id,
+      communities.name AS name,
+      communities.description AS description
+    </sql>
+
+    <select id="getSingle" resultMap="CommunityRM">
+        SELECT
+        <include refid="coreAttributes"/>,
+        posts.id AS postId,
+        posts.created AS postDate,
+        posts.text AS postText
+        FROM communities
+        LEFT JOIN posts ON posts.community_id = communities.id
+        <where>
+            communities.id = #{id}
+        </where>
+    </select>
+
+    <select id="getList" resultMap="CommunityRM">
+        SELECT
+        <include refid="coreAttributes"/>
+        FROM communities
+    </select>
+
+    <resultMap id="CommunityRM" type="Community">
+        <id column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <collection property="posts" ofType="Post">
+            <id column="postId"/>
+            <result column="postDate" property="createdDate"/>
+            <result column="postText" property="text"/>
+        </collection>
+    </resultMap>
+</mapper>

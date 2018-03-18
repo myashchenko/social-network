@@ -12,9 +12,9 @@
     </typeAliases>
 
     <mappers>
-        <mapper resource="mapper/user-mapper.xml"/>
-        <mapper resource="mapper/post-mapper.xml"/>
-        <mapper resource="mapper/friend-request-mapper.xml"/>
+        <mapper resource="mapper/users-mapper.xml"/>
+        <mapper resource="mapper/posts-mapper.xml"/>
+        <mapper resource="mapper/friend-requests-mapper.xml"/>
     </mappers>
 
 </configuration>

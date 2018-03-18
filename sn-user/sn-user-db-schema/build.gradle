@@ -3,6 +3,6 @@ jar {
 }
 
 dependencies {
-    compile project(':sn-common:sn-jpa-config')
-    testCompile project(':sn-common:sn-jpa-config')
+    compile 'org.liquibase:liquibase-core:3.5.5'
+    testCompile 'org.liquibase:liquibase-core:3.5.5'
 }

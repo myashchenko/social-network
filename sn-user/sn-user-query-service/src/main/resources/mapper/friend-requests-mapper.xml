@@ -1,0 +1,29 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ua.social.network.query.FriendRequestMapper">
+
+    <sql id="coreAttributes">
+      friend_requests.id AS id,
+      friend_requests.created AS created,
+      from_user.id AS userId,
+      from_user.name AS userName
+    </sql>
+
+    <select id="getList" resultMap="FriendRequestRM">
+        SELECT
+        <include refid="coreAttributes"/>
+        FROM friend_requests
+        INNER JOIN users from_user ON from_user.id = friend_requests.from_id
+        INNER JOIN users to_user ON to_user.id = friend_requests.to_id
+        <where>
+            to_user.email = #{current_user}
+        </where>
+    </select>
+
+    <resultMap id="FriendRequestRM" type="FriendRequest">
+        <id property="id" column="id"/>
+        <result property="date" column="created"/>
+        <result property="from.id" column="userId"/>
+        <result property="from.name" column="userName"/>
+    </resultMap>
+</mapper>

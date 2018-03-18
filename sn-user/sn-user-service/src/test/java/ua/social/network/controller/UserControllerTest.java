@@ -138,6 +138,6 @@ public class UserControllerTest {
 
         File actualFile = fileRepository.findByFilePath(filesPath.toString() + "/test.txt");
         assertThat(actualFile, notNullValue());
-        assertThat(actualFile.getUser(), equalTo("USER-1"));
+        assertThat(actualFile.getUserId(), equalTo("USER-1"));
     }
 }

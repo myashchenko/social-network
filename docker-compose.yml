@@ -2,13 +2,13 @@ version: '2.1'
 
 services:
   sn-discovery-service:
-    image: social-network/sn-discovery-service:0.0.1-SNAPSHOT
+    image: social-network/sn-discovery-service:latest
     restart: always
     ports:
       - "8761:8761"
 
   sn-gateway-service:
-    image: social-network/sn-gateway-service:0.0.1-SNAPSHOT
+    image: social-network/sn-gateway-service:latest
     restart: always
     ports:
       - "8765:8765"
@@ -16,7 +16,7 @@ services:
       - sn-discovery-service
 
   sn-monitor-dashboard:
-    image: social-network/sn-monitor-dashboard:0.0.1-SNAPSHOT
+    image: social-network/sn-monitor-dashboard:latest
     restart: always
     ports:
       - "7979:7979"
@@ -24,7 +24,7 @@ services:
       - sn-discovery-service
 
   sn-auth-service:
-    image: social-network/sn-auth:0.0.1-SNAPSHOT
+    image: social-network/sn-auth:latest
     restart: always
     ports:
       - "9999:9999"
@@ -32,13 +32,13 @@ services:
       - sn-gateway-service
 
   sn-user-service:
-    image: social-network/sn-user-service:0.0.1-SNAPSHOT
+    image: social-network/sn-user-service:latest
     restart: always
     depends_on:
       - sn-gateway-service
 
   sn-user-query-service:
-    image: social-network/sn-user-query-service:0.0.1-SNAPSHOT
+    image: social-network/sn-user-query-service:latest
     restart: always
     depends_on:
       - sn-gateway-service

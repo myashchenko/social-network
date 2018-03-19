@@ -1,7 +1,6 @@
 package ua.social.network.filter;
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -16,7 +15,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 public class HttpMethodFilter extends ZuulFilter {
 
     private static final List<String> QUERY_METHODS = List.of("GET");
-    private static final List<String> COMMAND_METHODS = List.of("POST", "PUT", "DELETE");
+    private static final List<String> IGNORED_METHODS = List.of("HEAD", "OPTIONS");
 
     private final DiscoveryClient discoveryClient;
     private final String commandService;
@@ -44,9 +43,9 @@ public class HttpMethodFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         RequestContext context = RequestContext.getCurrentContext();
-        HttpServletRequest request = context.getRequest();
-        String requestURI = request.getRequestURI();
-        return requestURI.contains(requestPath);
+        String requestURI = context.getRequest().getRequestURI();
+        String method = context.getRequest().getMethod();
+        return !IGNORED_METHODS.contains(method) && requestURI.startsWith(requestPath);
     }
 
     @Override

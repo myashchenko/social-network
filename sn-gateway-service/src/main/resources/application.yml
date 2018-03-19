@@ -20,16 +20,16 @@ zuul:
       url: http://sn-auth-service:9999
       sensitiveHeaders: Cookie,Set-Cookie
     sn-community-service:
-      path: /api/**
+      path: /community-service/api/**
       serviceId: sn-community-service
     sn-community-query-service:
-      path: /api/**
+      path: /community-query-service/api/**
       serviceId: sn-community-query-service
     sn-user-service:
-      path: /api/**
+      path: /user-service/api/**
       serviceId: sn-user-service
     sn-user-query-service:
-      path: /api/**
+      path: /user-query-service/api/**
       serviceId: sn-user-query-service
 
 server:

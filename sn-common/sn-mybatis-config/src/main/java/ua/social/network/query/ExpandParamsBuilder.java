@@ -23,7 +23,7 @@ public class ExpandParamsBuilder {
     }
 
     public Map<String, Object> build() {
-        Map<String, Object> params = new HashMap<>();
+        var params = new HashMap<String, Object>();
 
         for (String param : this.params) {
             param = param.trim();

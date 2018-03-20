@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ public class UserPostController extends AbstractController<PostDto, PostMapper> 
 
     private static final String USER_NAME = "user_name";
 
-    @Autowired
     public UserPostController(PostMapper mapper) {
         super(mapper);
     }

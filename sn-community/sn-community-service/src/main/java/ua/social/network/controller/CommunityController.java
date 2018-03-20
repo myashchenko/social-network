@@ -1,7 +1,6 @@
 package ua.social.network.controller;
 
 import java.security.Principal;
-import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,11 +29,11 @@ public class CommunityController {
 
     @PreAuthorize("#oauth2.hasScope('server')")
     @PostMapping
-    public void createCommunity(Principal principal,
-                                @Valid @RequestBody CreateCommunityRequest createCommunityRequest) {
-        // todo use mapper
-        Community community = new Community();
+    public void createCommunity(Principal principal, @Valid @RequestBody CreateCommunityRequest createCommunityRequest) {
+
+        var community = new Community();
         community.setName(createCommunityRequest.getName());
+        community.setDescription(createCommunityRequest.getDescription());
         community.setUserId(principal.getName());
 
         communityRepository.save(community);
@@ -44,8 +43,8 @@ public class CommunityController {
     @PutMapping(value = "/{id}")
     public void modifyCommunity(Principal principal, @PathVariable("id") String id,
                                 @Valid @RequestBody ModifyCommunityRequest communityRequest) {
-        // todo use mapper
-        Optional<Community> community = communityRepository.findById(id);
+
+        var community = communityRepository.findById(id);
         if (!community.isPresent()) {
             throw new EntityNotFoundException("Community with id=%s not found", id);
         }
@@ -54,9 +53,11 @@ public class CommunityController {
         if (!community.isPresent()) {
             throw new AccessDeniedException();
         }
+
         community
                 .map(c -> {
                     c.setName(communityRequest.getName());
+                    c.setDescription(communityRequest.getDescription());
                     return c;
                 })
                 .map(communityRepository::save);

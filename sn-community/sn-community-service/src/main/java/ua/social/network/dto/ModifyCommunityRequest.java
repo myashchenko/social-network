@@ -1,8 +1,9 @@
 package ua.social.network.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author Mykola Yashchenko
@@ -12,4 +13,5 @@ import org.hibernate.validator.constraints.NotBlank;
 public class ModifyCommunityRequest {
     @NotBlank
     private String name;
+    private String description;
 }

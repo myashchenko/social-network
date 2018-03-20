@@ -44,8 +44,8 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: 'docker'
 
-    sourceCompatibility = 1.9
-    targetCompatibility = 1.9
+    sourceCompatibility = 1.10
+    targetCompatibility = 1.10
 
     repositories {
         mavenCentral()

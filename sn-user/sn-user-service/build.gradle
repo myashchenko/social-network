@@ -22,6 +22,8 @@ dependencies {
     compile("org.springframework.cloud:spring-cloud-starter-oauth2:${springCloudSecurityVersion}")
     compile("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
 
+    compile group: 'org.apache.hadoop', name: 'hadoop-hdfs', version: '3.1.0'
+
     compile("org.hsqldb:hsqldb:${hsqldbVersion}")
     compile("org.projectlombok:lombok:${lombokVersion}")
 

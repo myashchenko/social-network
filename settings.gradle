@@ -12,6 +12,7 @@ include ':sn-user:sn-user-db-schema'
 include ':sn-user:sn-user-query-service'
 include ':sn-user:sn-user-service'
 include ':sn-user:sn-auth-service'
+include ':sn-storage-service'
 
 project(':sn-gateway-service').projectDir = "$rootDir/sn-gateway-service" as File
 project(':sn-discovery-service').projectDir = "$rootDir/sn-discovery-service" as File
@@ -26,4 +27,4 @@ project(':sn-user:sn-user-db-schema').projectDir = "$rootDir/sn-user/sn-user-db-
 project(':sn-user:sn-user-service').projectDir = "$rootDir/sn-user/sn-user-service" as File
 project(':sn-user:sn-user-query-service').projectDir = "$rootDir/sn-user/sn-user-query-service" as File
 project(':sn-user:sn-auth-service').projectDir = "$rootDir/sn-user/sn-auth-service" as File
-
+project(':sn-storage-service').projectDir = "$rootDir/sn-storage-service" as File

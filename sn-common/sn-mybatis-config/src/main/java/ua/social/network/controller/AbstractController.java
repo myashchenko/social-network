@@ -28,30 +28,28 @@ public abstract class AbstractController<ENTITY, MAPPER extends Mapper<ENTITY>> 
         this.mapper = mapper;
     }
 
-    public ENTITY getEntity(String id, Map<String, Object> params) {
+    public ENTITY getEntity(final String id, final Map<String, Object> params) {
         params.put(ID, id);
-        params = getWithExpandParams(params);
-        return mapper.getSingle(params);
+        return mapper.getSingle(getWithExpandParams(params));
     }
 
-    public List<ENTITY> getEntityList(Map<String, Object> params) {
-        params = getWithExpandParams(params);
-        return mapper.getList(params);
+    public List<ENTITY> getEntityList(final Map<String, Object> params) {
+        return mapper.getList(getWithExpandParams(params));
     }
 
-    protected Map<String, String> getProperties(Object object) {
+    protected Map<String, String> getProperties(final Object object) {
         try {
             return BeanUtils.describe(object);
-        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (final IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             LOGGER.error("Can't get properties of object", e);
         }
         return Collections.emptyMap();
     }
 
-    private Map<String, Object> getWithExpandParams(Map<String, Object> params) {
+    private Map<String, Object> getWithExpandParams(final Map<String, Object> params) {
         if (params.get(EXPAND) != null) {
-            params = new HashMap<>(params);
-            Map<String, Object> expandParams = new ExpandParamsBuilder(params.get(EXPAND).toString()).build();
+            final Map<String, Object> newParams = new HashMap<>(params);
+            final Map<String, Object> expandParams = new ExpandParamsBuilder(newParams.get(EXPAND).toString()).build();
             params.putAll(expandParams);
         }
         return params;

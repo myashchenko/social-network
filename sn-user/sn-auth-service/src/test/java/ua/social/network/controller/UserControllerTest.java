@@ -1,17 +1,17 @@
 package ua.social.network.controller;
 
 import com.sun.security.auth.UserPrincipal;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import ua.social.network.AuthApplication;
-import ua.social.network.repository.UserRepository;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,11 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = AuthApplication.class)
 public class UserControllerTest {
 
-    @InjectMocks
+    @Autowired
     private UserController accountController;
-
-    @Mock
-    private UserRepository userService;
 
     private MockMvc mockMvc;
 

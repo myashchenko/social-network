@@ -1,5 +1,7 @@
 FROM openjdk:10.0.1
 
+MAINTAINER Mykola Yashchenko <vkont4@gmail.com>
+
 VOLUME /tmp
 
 ADD sn-user-service-0.0.1-SNAPSHOT.jar app.jar

@@ -9,4 +9,4 @@ matrix:
       install: . ./install-jdk.sh -F 10 -L GPL
 
 script:
-  - mvn clean test
+  - gradle check

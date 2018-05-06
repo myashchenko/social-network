@@ -21,7 +21,7 @@ import ua.social.network.service.StorageService;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/files")
+@RequestMapping(value = "/api/files")
 public class FileController {
 
     private final StorageService storageService;
@@ -37,8 +37,7 @@ public class FileController {
             throw new StorageException("Failed to store empty file %s", file.getOriginalFilename());
         }
 
-        final FileMetadata fileMetadata = new FileMetadata(file);
-        final String url = storageService.store(fileMetadata);
+        final String url = storageService.store(new FileMetadata(file));
         return new UploadFileResponse(url);
     }
 }

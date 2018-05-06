@@ -42,3 +42,9 @@ services:
     restart: always
     depends_on:
       - sn-gateway-service
+
+  sn-storage-service:
+    image: social-network/sn-storage-service:latest
+    restart: always
+    depends_on:
+      - sn-gateway-service

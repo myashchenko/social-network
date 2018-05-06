@@ -18,7 +18,10 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-undertow')
     compile('org.springframework.boot:spring-boot-starter-actuator')
 
-    compile("org.projectlombok:lombok:${lombokVersion}")
+//    compile("org.projectlombok:lombok:${lombokVersion}")
+    compileOnly         name: 'lombok-edge'
+    annotationProcessor name: 'lombok-edge'
+
     compile('commons-io:commons-io:2.5')
     compile('com.amazonaws:aws-java-sdk:1.11.323')
 

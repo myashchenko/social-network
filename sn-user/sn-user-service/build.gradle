@@ -25,7 +25,10 @@ dependencies {
     compile group: 'org.apache.hadoop', name: 'hadoop-hdfs', version: '3.1.0'
 
     compile("org.hsqldb:hsqldb:${hsqldbVersion}")
-    compile("org.projectlombok:lombok:${lombokVersion}")
+
+//    compile("org.projectlombok:lombok:${lombokVersion}")
+    compileOnly         name: 'lombok-edge'
+    annotationProcessor name: 'lombok-edge'
 
     runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
     runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"

@@ -9,6 +9,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
@@ -113,6 +114,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @Ignore
     public void shouldUploadAvatar() throws Exception {
         MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
                 "text/plain", "Fake".getBytes());

@@ -4,5 +4,8 @@ jar {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    compile("org.projectlombok:lombok:${lombokVersion}")
+//    compile("org.projectlombok:lombok:${lombokVersion}")
+
+    compileOnly         name: 'lombok-edge'
+    annotationProcessor name: 'lombok-edge'
 }

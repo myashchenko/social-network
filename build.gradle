@@ -9,6 +9,12 @@ buildscript {
         maven {
             url 'http://maven.springframework.org/release'
         }
+        ivy {
+            url 'https://projectlombok.org/'
+            layout 'pattern', {
+                artifact '/[artifact].[ext]'
+            }
+        }
     }
 
     dependencies {
@@ -36,6 +42,12 @@ subprojects {
         }
         maven {
             url 'http://maven.springframework.org/release'
+        }
+        ivy {
+            url 'https://projectlombok.org/'
+            layout 'pattern', {
+                artifact '/[artifact].[ext]'
+            }
         }
     }
 }

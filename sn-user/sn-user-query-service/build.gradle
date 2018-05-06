@@ -25,6 +25,10 @@ dependencies {
     compile("org.hsqldb:hsqldb:${hsqldbVersion}")
     compile('org.springframework:spring-jdbc')
 
+    //    compile("org.projectlombok:lombok:${lombokVersion}")
+    compileOnly         name: 'lombok-edge'
+    annotationProcessor name: 'lombok-edge'
+
     compile project(':sn-common:sn-exception-config')
     compile project(':sn-common:sn-mybatis-config')
     runtimeOnly project(':sn-user:sn-user-db-schema')

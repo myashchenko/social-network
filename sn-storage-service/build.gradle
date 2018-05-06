@@ -20,11 +20,17 @@ dependencies {
 
     compile("org.projectlombok:lombok:${lombokVersion}")
     compile('commons-io:commons-io:2.5')
+    compile('com.amazonaws:aws-java-sdk:1.11.323')
 
     runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
     runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"
     runtime "com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}"
     runtime "javax.activation:activation:${activationVersion}"
+
+    testCompile("org.springframework:spring-test:${springVersion}")
+    testCompile("org.springframework.boot:spring-boot-test:${springBootVersion}")
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testCompile("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
 }
 
 task buildDocker(type: Docker, dependsOn: build) {

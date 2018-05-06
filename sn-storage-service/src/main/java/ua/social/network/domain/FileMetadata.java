@@ -1,12 +1,23 @@
 package ua.social.network.domain;
 
-import lombok.AllArgsConstructor;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Mykola Yashchenko
  */
-@AllArgsConstructor
 public class FileMetadata {
-    private final byte[] binary;
-    private final String fileName;
+    public final InputStream inputStream;
+    public final String fileName;
+    public final String contentType;
+    public final Long contentLength;
+
+    public FileMetadata(final MultipartFile file) throws IOException {
+        inputStream = file.getInputStream();
+        fileName = file.getOriginalFilename();
+        contentType = file.getContentType();
+        contentLength = file.getSize();
+    }
 }

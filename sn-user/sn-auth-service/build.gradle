@@ -42,7 +42,7 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
-    testCompile('org.apache.httpcomponents:httpclient:4.3.6') {
+    testCompile('org.apache.httpcomponents:httpclient:4.5.4') {
         exclude(module: 'commons-logging')
     }
 }

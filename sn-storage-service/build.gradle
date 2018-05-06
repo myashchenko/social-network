@@ -22,7 +22,7 @@ dependencies {
     compileOnly         name: 'lombok-edge'
     annotationProcessor name: 'lombok-edge'
 
-    compile('commons-io:commons-io:2.5')
+    compile('commons-io:commons-io:2.6')
     compile('com.amazonaws:aws-java-sdk:1.11.323')
 
     runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"

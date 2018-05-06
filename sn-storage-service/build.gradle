@@ -18,7 +18,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-undertow')
     compile('org.springframework.boot:spring-boot-starter-actuator')
 
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard')
+    compile("org.projectlombok:lombok:${lombokVersion}")
+    compile('commons-io:commons-io:2.5')
 
     runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
     runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"

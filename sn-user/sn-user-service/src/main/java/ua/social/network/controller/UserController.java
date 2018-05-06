@@ -14,13 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import ua.social.network.dto.CreateUserRequest;
-import ua.social.network.entity.File;
 import ua.social.network.entity.Role;
 import ua.social.network.entity.User;
 import ua.social.network.exception.AccessDeniedException;
 import ua.social.network.repository.FileRepository;
 import ua.social.network.repository.UserRepository;
-import ua.social.network.service.StorageService;
 
 /**
  * @author Mykola Yashchenko
@@ -30,14 +28,12 @@ import ua.social.network.service.StorageService;
 public class UserController {
 
     private final UserRepository userRepository;
-    private final StorageService storageService;
     private final FileRepository fileRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public UserController(UserRepository userRepository, StorageService storageService, FileRepository fileRepository) {
+    public UserController(UserRepository userRepository, FileRepository fileRepository) {
         this.userRepository = userRepository;
-        this.storageService = storageService;
         this.fileRepository = fileRepository;
     }
 
@@ -57,12 +53,6 @@ public class UserController {
 
     @PostMapping("/{id}/avatar")
     public void uploadAvatar(Principal principal, @RequestParam("file") MultipartFile multipartFile) {
-        String fullPath = storageService.store(multipartFile);
-
-        File file = new File();
-        file.setUserId(principal.getName());
-        file.setFilePath(fullPath);
-
-        fileRepository.save(file);
+        // todo upload file
     }
 }

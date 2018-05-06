@@ -20,7 +20,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -31,7 +30,6 @@ import ua.social.network.entity.Role;
 import ua.social.network.entity.User;
 import ua.social.network.repository.FileRepository;
 import ua.social.network.repository.UserRepository;
-import ua.social.network.service.StorageService;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -51,27 +49,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
-
-    @Autowired
-    private UserController accountController;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private FileRepository fileRepository;
-
-    @Autowired
-    private CommonExceptionHandlerController commonExceptionHandler;
-
-    @Autowired
-    private StorageService storageService;
-
     @ClassRule
     public static TemporaryFolder temporaryFolder = new TemporaryFolder();
-
     private static Path filesPath;
-
+    @Autowired
+    private UserController accountController;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private FileRepository fileRepository;
+    @Autowired
+    private CommonExceptionHandlerController commonExceptionHandler;
     private MockMvc mockMvc;
 
     @BeforeClass
@@ -83,8 +71,6 @@ public class UserControllerTest {
     public void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(accountController)
                 .setControllerAdvice(commonExceptionHandler).build();
-
-        ReflectionTestUtils.setField(storageService, "filesRootPath", filesPath);
     }
 
     @Test

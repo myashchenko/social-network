@@ -1,6 +1,14 @@
 version: '2.1'
 
 services:
+  users-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: $USERS_DB_POSTGRES_USER
+      POSTGRES_PASSWORD: $USERS_DB_POSTGRES_PASSWORD
+      POSTGRES_DB: sn-users
+
   sn-discovery-service:
     image: social-network/sn-discovery-service:latest
     restart: always
@@ -28,6 +36,8 @@ services:
       SN_STORAGE_SERVICE_PASSWORD: $SN_STORAGE_SERVICE_PASSWORD
       SN_USER_SERVICE_PASSWORD: $SN_USER_SERVICE_PASSWORD
       SN_USER_QUERY_SERVICE_PASSWORD: $SN_USER_QUERY_SERVICE_PASSWORD
+      POSTGRES_USER: $USERS_DB_POSTGRES_USER
+      POSTGRES_PASSWORD: $USERS_DB_POSTGRES_PASSWORD
     image: social-network/sn-auth-service:latest
     restart: always
     ports:
@@ -38,6 +48,8 @@ services:
   sn-user-service:
     environment:
       SN_USER_SERVICE_PASSWORD: $SN_USER_SERVICE_PASSWORD
+      POSTGRES_USER: $USERS_DB_POSTGRES_USER
+      POSTGRES_PASSWORD: $USERS_DB_POSTGRES_PASSWORD
     image: social-network/sn-user-service:latest
     restart: always
     depends_on:
@@ -46,6 +58,8 @@ services:
   sn-user-query-service:
     environment:
       SN_USER_QUERY_SERVICE_PASSWORD: $SN_USER_QUERY_SERVICE_PASSWORD
+      POSTGRES_USER: $USERS_DB_POSTGRES_USER
+      POSTGRES_PASSWORD: $USERS_DB_POSTGRES_PASSWORD
     image: social-network/sn-user-query-service:latest
     restart: always
     depends_on:

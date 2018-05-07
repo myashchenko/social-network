@@ -30,10 +30,14 @@ dependencies {
     runtime "com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}"
     runtime "javax.activation:activation:${activationVersion}"
 
+    compile project(':sn-common:sn-exception-config')
+
     testCompile("org.springframework:spring-test:${springVersion}")
     testCompile("org.springframework.boot:spring-boot-test:${springBootVersion}")
     testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
     testCompile("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
+    testCompile('com.jayway.jsonpath:json-path:2.4.0')
 }
 
 task buildDocker(type: Docker, dependsOn: build) {

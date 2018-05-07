@@ -1,9 +1,10 @@
 package ua.social.network.service;
 
-import java.io.InputStream;
+import org.springframework.core.io.Resource;
 
 import ua.social.network.domain.FileMetadata;
-import ua.social.network.exception.FileNotFoundException;
+import ua.social.network.exception.SnException;
+import ua.social.network.exception.StorageServiceExceptionCode;
 
 /**
  * @author Mykola Yashchenko
@@ -11,7 +12,7 @@ import ua.social.network.exception.FileNotFoundException;
 public interface StorageService {
     String store(FileMetadata request);
 
-    default InputStream load(String fileName) {
-        throw new FileNotFoundException();
+    default Resource load(String fileName) {
+        throw new SnException(StorageServiceExceptionCode.FILE_NOT_FOUND);
     }
 }

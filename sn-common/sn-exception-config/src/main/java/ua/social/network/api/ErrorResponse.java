@@ -8,6 +8,6 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public class UploadFileResponse {
-    private final String url;
+public class ErrorResponse {
+    private final Error error;
 }

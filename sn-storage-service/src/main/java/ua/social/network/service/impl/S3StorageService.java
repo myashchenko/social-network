@@ -1,5 +1,7 @@
 package ua.social.network.service.impl;
 
+import java.util.UUID;
+
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
@@ -42,12 +44,14 @@ public class S3StorageService implements StorageService {
         metadata.setContentLength(fileMetadata.contentLength);
         metadata.setContentType(fileMetadata.contentType);
 
+        final String newFileName = UUID.randomUUID().toString() + "_" + fileMetadata.fileName;
+
         final PutObjectRequest request = new PutObjectRequest(
-                bucketName, fileMetadata.fileName, fileMetadata.inputStream, metadata)
+                bucketName, newFileName, fileMetadata.inputStream, metadata)
                 .withCannedAcl(CannedAccessControlList.PublicRead);
 
         amazonS3.putObject(request);
 
-        return amazonS3.getUrl(bucketName, fileMetadata.fileName).toString();
+        return amazonS3.getUrl(bucketName, newFileName).toString();
     }
 }

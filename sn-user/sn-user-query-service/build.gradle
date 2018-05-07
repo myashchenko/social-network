@@ -46,15 +46,10 @@ dependencies {
     testCompile('io.github.yashchenkon:json-verifier:1.0.0')
 }
 
-task buildDocker(type: Docker, dependsOn: build) {
-    def projectName = "social-network"
-    def jarName = jar.baseName
-    tag = "$projectName/$jarName"
-    dockerfile = file('src/main/docker/Dockerfile')
-    doFirst {
-        copy {
-            from jar
-            into stageDir
-        }
-    }
+docker {
+    name "social-network/${bootJar.baseName}"
+    tags 'latest'
+    dockerfile file('src/main/docker/Dockerfile')
+    files bootJar.archivePath
+    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }

@@ -18,7 +18,7 @@ buildscript {
     }
 
     dependencies {
-        classpath('se.transmode.gradle:gradle-docker:1.2')
+        classpath("com.palantir.gradle.docker:gradle-docker:0.19.2")
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
@@ -30,7 +30,7 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
-    apply plugin: 'docker'
+    apply plugin: 'com.palantir.docker'
 
     sourceCompatibility = 1.10
     targetCompatibility = 1.10

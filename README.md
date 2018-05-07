@@ -18,7 +18,7 @@ independently.
 
 Microservices depend on each other, so the start order should be:
 
-- sn-auth
+- sn-auth-service
 - sn-discovery-service
 - sn-gateway-service
 - other services

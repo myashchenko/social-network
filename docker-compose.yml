@@ -24,7 +24,11 @@ services:
       - sn-discovery-service
 
   sn-auth-service:
-    image: social-network/sn-auth:latest
+    environment:
+      SN_STORAGE_SERVICE_PASSWORD: $SN_STORAGE_SERVICE_PASSWORD
+      SN_USER_SERVICE_PASSWORD: $SN_USER_SERVICE_PASSWORD
+      SN_USER_QUERY_SERVICE_PASSWORD: $SN_USER_QUERY_SERVICE_PASSWORD
+    image: social-network/sn-auth-service:latest
     restart: always
     ports:
       - "9999:9999"
@@ -32,18 +36,24 @@ services:
       - sn-gateway-service
 
   sn-user-service:
+    environment:
+      SN_USER_SERVICE_PASSWORD: $SN_USER_SERVICE_PASSWORD
     image: social-network/sn-user-service:latest
     restart: always
     depends_on:
       - sn-gateway-service
 
   sn-user-query-service:
+    environment:
+      SN_USER_QUERY_SERVICE_PASSWORD: $SN_USER_QUERY_SERVICE_PASSWORD
     image: social-network/sn-user-query-service:latest
     restart: always
     depends_on:
       - sn-gateway-service
 
   sn-storage-service:
+    environment:
+      SN_STORAGE_SERVICE_PASSWORD: $SN_STORAGE_SERVICE_PASSWORD
     image: social-network/sn-storage-service:latest
     restart: always
     depends_on:

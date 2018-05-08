@@ -1,0 +1,58 @@
+version: '2.1'
+
+services:
+  users-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test123
+      POSTGRES_DB: sn-users
+
+  sn-discovery-service:
+    image: social-network/sn-discovery-service:latest
+    restart: always
+    ports:
+      - "8761:8761"
+
+  sn-gateway-service:
+    image: social-network/sn-gateway-service:latest
+    restart: always
+    ports:
+      - "8765:8765"
+    depends_on:
+      - sn-discovery-service
+
+  sn-auth-service:
+    environment:
+      SN_STORAGE_SERVICE_PASSWORD: test123
+      SN_USER_SERVICE_PASSWORD: test123
+      SN_USER_QUERY_SERVICE_PASSWORD: test123
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test123
+    image: social-network/sn-auth-service:latest
+    restart: always
+    ports:
+      - "9999:9999"
+    depends_on:
+      - sn-gateway-service
+
+  sn-user-service:
+    environment:
+      SN_USER_SERVICE_PASSWORD: test123
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test123
+    image: social-network/sn-user-service:latest
+    restart: always
+    depends_on:
+      - sn-gateway-service
+
+  sn-user-query-service:
+    environment:
+      SN_USER_QUERY_SERVICE_PASSWORD: test123
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test123
+    image: social-network/sn-user-query-service:latest
+    restart: always
+    depends_on:
+      - sn-gateway-service

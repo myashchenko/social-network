@@ -15,6 +15,10 @@ buildscript {
                 artifact '/[artifact].[ext]'
             }
         }
+        maven {
+            // docker-compose-rule is published on bintray
+            url 'https://dl.bintray.com/palantir/releases'
+        }
     }
 
     dependencies {
@@ -48,6 +52,18 @@ subprojects {
             layout 'pattern', {
                 artifact '/[artifact].[ext]'
             }
+        }
+        maven {
+            // docker-compose-rule is published on bintray
+            url 'https://dl.bintray.com/palantir/releases'
+        }
+    }
+}
+
+project('sn-integration-tests') {
+    test {
+        onlyIf {
+            project.hasProperty('integrationTests')
         }
     }
 }

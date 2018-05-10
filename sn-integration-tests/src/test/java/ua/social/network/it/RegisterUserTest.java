@@ -1,18 +1,21 @@
 package ua.social.network.it;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-import ua.social.network.extension.DockerComposeExtension;
+import ua.social.network.BaseTest;
+
+import static com.jayway.restassured.RestAssured.when;
 
 /**
  * @author Mykola Yashchenko
  */
-@ExtendWith(DockerComposeExtension.class)
-public class RegisterUserTest {
+public class RegisterUserTest extends BaseTest {
 
     @Test
     public void shouldRegisterUser() {
-
+        when()
+                .post(baseHost() + "/sn-user-service/api/users")
+                .then()
+                .statusCode(200);
     }
 }

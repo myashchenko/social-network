@@ -11,4 +11,5 @@ dependencies {
     testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
     testCompile("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
     testCompile('com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1')
+    testCompile('com.jayway.restassured:rest-assured:2.9.0')
 }

@@ -22,7 +22,6 @@ dependencies {
     compile("org.springframework.cloud:spring-cloud-starter-oauth2:${springCloudSecurityVersion}")
     compile("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
 
-    compile("org.hsqldb:hsqldb:${hsqldbVersion}")
     compile('org.springframework:spring-jdbc')
 
     //    compile("org.projectlombok:lombok:${lombokVersion}")
@@ -40,6 +39,7 @@ dependencies {
 
     testCompile project(':sn-common:sn-exception-config')
     testCompile project(':sn-common:sn-mybatis-config')
+    testCompile("org.hsqldb:hsqldb:${hsqldbVersion}")
     runtimeOnly project(':sn-user:sn-user-db-schema')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')

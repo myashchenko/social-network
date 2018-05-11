@@ -8,6 +8,10 @@ dependencies {
     runtime "com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}"
     runtime "javax.activation:activation:${activationVersion}"
 
+    //    compile("org.projectlombok:lombok:${lombokVersion}")
+    compileOnly         name: 'lombok-edge'
+    annotationProcessor name: 'lombok-edge'
+
     testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
     testCompile("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
     testCompile('com.palantir.docker.compose:docker-compose-rule-junit4:0.31.1')

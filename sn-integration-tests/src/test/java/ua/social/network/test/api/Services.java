@@ -1,4 +1,4 @@
-package ua.social.network.api;
+package ua.social.network.test.api;
 
 /**
  * @author Mykola Yashchenko

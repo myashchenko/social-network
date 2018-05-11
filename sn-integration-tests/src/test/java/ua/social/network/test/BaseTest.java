@@ -1,4 +1,4 @@
-package ua.social.network;
+package ua.social.network.test;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import com.palantir.docker.compose.connection.waiting.HealthChecks;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-import ua.social.network.api.Services;
+import ua.social.network.test.api.Services;
 
 import static org.joda.time.Duration.standardMinutes;
 

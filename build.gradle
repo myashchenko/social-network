@@ -65,5 +65,8 @@ project('sn-integration-tests') {
         onlyIf {
             project.hasProperty('integrationTests')
         }
+        
+        systemProperty 'envType', System.getProperty('envType')
+        systemProperty 'clusterHost', System.getProperty('clusterHost')
     }
 }

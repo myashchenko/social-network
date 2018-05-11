@@ -9,7 +9,7 @@ dependencies {
     runtime "javax.activation:activation:${activationVersion}"
 
     //    compile("org.projectlombok:lombok:${lombokVersion}")
-    compileOnly         name: 'lombok-edge'
+    testCompileOnly     name: 'lombok-edge'
     annotationProcessor name: 'lombok-edge'
 
     testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")

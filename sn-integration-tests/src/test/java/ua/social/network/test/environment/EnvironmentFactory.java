@@ -15,7 +15,7 @@ public class EnvironmentFactory {
 
         switch (envType) {
             case Properties.ENV_TYPE_AWS:
-                return new AWSEnvironment(baseHost);
+                return new AWSEnvironment(System.getProperty(Properties.CLUSTER_HOST));
             case Properties.ENV_TYPE_DOCKER:
                 return new DockerEnvironment();
             default:

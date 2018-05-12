@@ -62,9 +62,15 @@ subprojects {
 
 project('sn-integration-tests') {
     test {
+        println("envType          =====> " + System.getProperty('envType'))
+        println("clusterHost      =====> " + System.getProperty('clusterHost'))
+        println("integrationTests =====> " + project.hasProperty('integrationTests'))
+
         onlyIf {
             project.hasProperty('integrationTests')
         }
+
+        useJUnitPlatform()
         
         systemProperty 'envType', System.getProperty('envType')
         systemProperty 'clusterHost', System.getProperty('clusterHost')

@@ -38,12 +38,31 @@ dependencies {
     testCompile project(':sn-user:sn-user-db-schema')
     testCompile project(':sn-common:sn-jpa-config')
 
-    testCompile('org.springframework.boot:spring-boot-starter-test') {
-        exclude(module: 'commons-logging')
-    }
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.springframework.security:spring-security-test:${springVersion}")
+    testCompile('org.apache.httpcomponents:httpclient:4.5.4')
+    testCompile('io.jsonwebtoken:jjwt:0.9.0')
+}
 
-    testCompile('org.apache.httpcomponents:httpclient:4.5.4') {
-        exclude(module: 'commons-logging')
+processResources {
+    exclude "*.jks"
+
+    doLast {
+        copy {
+            from "src/main/resources/snks.jks"
+            into "$buildDir/resources/main"
+        }
+    }
+}
+
+processTestResources {
+    exclude "*.jks"
+
+    doLast {
+        copy {
+            from "src/main/resources/snks.jks"
+            into "$buildDir/resources/test"
+        }
     }
 }
 

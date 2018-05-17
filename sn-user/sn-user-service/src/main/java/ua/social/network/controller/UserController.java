@@ -3,7 +3,6 @@ package ua.social.network.controller;
 import java.security.Principal;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,19 +30,18 @@ public class UserController {
     private final FileRepository fileRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    @Autowired
-    public UserController(UserRepository userRepository, FileRepository fileRepository) {
+    public UserController(final UserRepository userRepository, final FileRepository fileRepository) {
         this.userRepository = userRepository;
         this.fileRepository = fileRepository;
     }
 
     @PostMapping
-    public void createUser(@Valid @RequestBody CreateUserRequest createUserRequest, Principal principal) {
+    public void createUser(@Valid @RequestBody final CreateUserRequest createUserRequest, final Principal principal) {
         if (principal != null) {
             throw new AccessDeniedException("Only unauthorized user can do registration");
         }
         // todo use mapper
-        User user = new User();
+        final User user = new User();
         user.setEmail(createUserRequest.getEmail());
         user.setName(createUserRequest.getName());
         user.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));

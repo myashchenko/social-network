@@ -11,4 +11,6 @@ export SN_STORAGE_SERVICE_PASSWORD=$(random_str)
 export SN_USER_SERVICE_PASSWORD=$(random_str)
 export SN_USER_QUERY_SERVICE_PASSWORD=$(random_str)
 
+export SN_KEY_STORE_PASSWORD=sn-pass-123
+
 docker-compose up

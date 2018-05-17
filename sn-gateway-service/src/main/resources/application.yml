@@ -4,7 +4,7 @@ info:
 spring:
   oauth2:
     resource:
-      userInfoUri: http://sn-auth-service:9999/uaa/user
+      userInfoUri: http://sn-auth-service:9999/uaa/users/current
 
 eureka:
   client:

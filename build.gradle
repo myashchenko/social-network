@@ -62,9 +62,11 @@ subprojects {
 
 project('sn-integration-tests') {
     test {
-        println("envType          =====> " + System.getProperty('envType'))
-        println("clusterHost      =====> " + System.getProperty('clusterHost'))
-        println("integrationTests =====> " + project.hasProperty('integrationTests'))
+        if (project.hasProperty('integrationTests')) {
+            println("envType          =====> " + System.getProperty('envType'))
+            println("clusterHost      =====> " + System.getProperty('clusterHost'))
+            println("integrationTests =====> " + project.hasProperty('integrationTests'))
+        }
 
         onlyIf {
             project.hasProperty('integrationTests')

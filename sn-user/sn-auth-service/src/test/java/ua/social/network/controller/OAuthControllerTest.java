@@ -102,7 +102,7 @@ public class OAuthControllerTest {
                     public boolean matches(final Object item) {
                         String jwt = (String) item;
                         jwt = jwt.substring(0, jwt.lastIndexOf(".") + 1);
-                        final Map<String, Object> claims = (Map<String, Object>) Jwts.parser().parse(jwt).getBody();
+                        final var claims = (Map<String, Object>) Jwts.parser().parse(jwt).getBody();
                         return claims.get("user_id").equals(user.getId());
                     }
 

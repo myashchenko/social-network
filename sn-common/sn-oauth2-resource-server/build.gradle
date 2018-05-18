@@ -1,0 +1,16 @@
+jar {
+    baseName = 'sn-oauth2-resource-server'
+}
+
+dependencies {
+    compileOnly("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compileOnly("org.springframework.cloud:spring-cloud-starter-oauth2:${springCloudSecurityVersion}")
+    compileOnly("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
+
+    compile('commons-io:commons-io:2.6')
+
+//    compile("org.projectlombok:lombok:${lombokVersion}")
+
+    compileOnly         name: 'lombok-edge'
+    annotationProcessor name: 'lombok-edge'
+}

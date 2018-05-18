@@ -33,6 +33,9 @@ dependencies {
     runtime "javax.activation:activation:${activationVersion}"
 
     compile project(':sn-common:sn-exception-config')
+    compile project(':sn-common:sn-oauth2-resource-server')
+
+    testCompile project(':sn-common:sn-oauth2-resource-server')
 
     testCompile("org.springframework:spring-test:${springVersion}")
     testCompile("org.springframework.boot:spring-boot-test:${springBootVersion}")

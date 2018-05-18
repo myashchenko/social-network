@@ -1,4 +1,4 @@
-package ua.social.network.oauth2;
+package ua.social.network.oauth2.converter;
 
 import java.util.Map;
 

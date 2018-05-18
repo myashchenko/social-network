@@ -31,6 +31,7 @@ dependencies {
     compile project(':sn-common:sn-exception-config')
     compile project(':sn-common:sn-mybatis-config')
     runtimeOnly project(':sn-user:sn-user-db-schema')
+    compile project(':sn-common:sn-oauth2-resource-server')
 
     runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
     runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"
@@ -41,6 +42,7 @@ dependencies {
     testCompile project(':sn-common:sn-mybatis-config')
     testCompile("org.hsqldb:hsqldb:${hsqldbVersion}")
     runtimeOnly project(':sn-user:sn-user-db-schema')
+    testCompile project(':sn-common:sn-oauth2-resource-server')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.github.yashchenkon:json-verifier:1.0.0')

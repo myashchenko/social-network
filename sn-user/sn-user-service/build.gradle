@@ -38,10 +38,12 @@ dependencies {
     compile project(':sn-user:sn-user-db-schema')
     compile project(':sn-common:sn-exception-config')
     compile project(':sn-common:sn-jpa-config')
+    compile project(':sn-common:sn-oauth2-resource-server')
 
     testCompile project(':sn-user:sn-user-db-schema')
     testCompile project(':sn-common:sn-exception-config')
     testCompile project(':sn-common:sn-jpa-config')
+    testCompile project(':sn-common:sn-oauth2-resource-server')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

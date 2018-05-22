@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ua.social.network.dto.PostDto;
-import ua.social.network.exception.EntityNotFoundException;
+import ua.social.network.exception.SnException;
+import ua.social.network.exception.UserQueryServiceExceptionDetails;
 import ua.social.network.query.PostMapper;
 
 /**
@@ -23,15 +24,15 @@ public class UserPostController extends AbstractController<PostDto, PostMapper> 
 
     private static final String USER_NAME = "user_name";
 
-    public UserPostController(PostMapper mapper) {
+    public UserPostController(final PostMapper mapper) {
         super(mapper);
     }
 
     @GetMapping("/{id}")
-    public PostDto get(@PathVariable("id") String id, @RequestParam Map<String, Object> requestParams) {
-        PostDto entity = getEntity(id, requestParams);
+    public PostDto get(@PathVariable("id") final String id, @RequestParam final Map<String, Object> requestParams) {
+        final PostDto entity = getEntity(id, requestParams);
         if (entity == null) {
-            throw new EntityNotFoundException("User with id %s doesn't exist", id);
+            throw new SnException(UserQueryServiceExceptionDetails.NOT_FOUND, "Post");
         }
         return entity;
     }

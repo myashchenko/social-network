@@ -10,7 +10,6 @@ import ua.social.network.dto.AddFriendRequest;
 import ua.social.network.entity.BaseEntity;
 import ua.social.network.entity.FriendRequest;
 import ua.social.network.entity.User;
-import ua.social.network.exception.AccessDeniedException;
 import ua.social.network.exception.SnException;
 import ua.social.network.exception.UserServiceExceptionDetails;
 import ua.social.network.oauth2.principal.SnPrincipal;
@@ -42,7 +41,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
                 .map(currentUser -> new FriendRequest(currentUser, newFriend))
                 .map(friendRequestRepository::save)
                 .map(BaseEntity::getId)
-                .orElseThrow(() -> new AccessDeniedException("You are friends already"));
+                .orElseThrow(() -> new SnException(UserServiceExceptionDetails.FRIEND_REQUEST_HAS_SENT_ALREADY));
     }
 
     @Override

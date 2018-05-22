@@ -3,6 +3,7 @@ package ua.social.network.controller;
 import java.security.Principal;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +15,8 @@ import lombok.AllArgsConstructor;
 import ua.social.network.dto.CreateCommunityRequest;
 import ua.social.network.dto.ModifyCommunityRequest;
 import ua.social.network.entity.Community;
-import ua.social.network.exception.AccessDeniedException;
-import ua.social.network.exception.EntityNotFoundException;
+import ua.social.network.exception.SnException;
+import ua.social.network.exception.SnExceptionDetails;
 import ua.social.network.repository.CommunityRepository;
 
 /**
@@ -46,12 +47,32 @@ public class CommunityController {
 
         var community = communityRepository.findById(id);
         if (!community.isPresent()) {
-            throw new EntityNotFoundException("Community with id=%s not found", id);
+            throw new SnException(new SnExceptionDetails() {
+                @Override
+                public String code() {
+                    return null;
+                }
+
+                @Override
+                public HttpStatus status() {
+                    return HttpStatus.NOT_FOUND;
+                }
+            });
         }
 
         community = community.filter(c -> c.getUserId().equals(principal.getName()));
         if (!community.isPresent()) {
-            throw new AccessDeniedException();
+            throw new SnException(new SnExceptionDetails() {
+                @Override
+                public String code() {
+                    return null;
+                }
+
+                @Override
+                public HttpStatus status() {
+                    return HttpStatus.NOT_FOUND;
+                }
+            });
         }
 
         community

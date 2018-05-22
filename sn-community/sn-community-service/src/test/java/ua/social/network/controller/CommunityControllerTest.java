@@ -6,6 +6,7 @@ import com.sun.security.auth.UserPrincipal;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -38,6 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Mykola Yashchenko
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CommunityServiceApplication.class)
 public class CommunityControllerTest {

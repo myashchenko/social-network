@@ -30,9 +30,6 @@
             <if test="user_id != null">
                 receiver.id = #{user_id}
             </if>
-            <if test="user_id == null and user_name != null">
-                receiver.email = #{user_name}
-            </if>
         </where>
     </select>
 

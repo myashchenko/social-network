@@ -43,8 +43,10 @@ dependencies {
     testCompile("org.hsqldb:hsqldb:${hsqldbVersion}")
     runtimeOnly project(':sn-user:sn-user-db-schema')
     testCompile project(':sn-common:sn-oauth2-resource-server')
+    testCompile project(':sn-common:sn-oauth2-resource-server-test')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.springframework.security:spring-security-test:${springVersion}")
     testCompile('io.github.yashchenkon:json-verifier:1.0.0')
 }
 

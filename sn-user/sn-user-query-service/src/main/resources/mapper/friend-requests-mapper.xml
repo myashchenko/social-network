@@ -16,7 +16,7 @@
         INNER JOIN users from_user ON from_user.id = friend_requests.from_id
         INNER JOIN users to_user ON to_user.id = friend_requests.to_id
         <where>
-            to_user.email = #{current_user}
+            to_user.id = #{current_user_id}
         </where>
     </select>
 

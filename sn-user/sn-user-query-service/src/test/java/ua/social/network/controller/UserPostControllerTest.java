@@ -13,10 +13,13 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import io.github.yashchenkon.test.JsonContentVerifier;
 import ua.social.UserQueryServiceApplication;
+import ua.social.network.oauth2.test.factory.TokenFactory;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,23 +32,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(scripts = "classpath:truncate_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UserPostControllerTest {
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    private TokenFactory tokenFactory;
+
     @Rule
     public JsonContentVerifier jsonContentVerifier = new JsonContentVerifier();
-    @Autowired
-    private UserPostController userPostController;
-    @Autowired
-    private CommonExceptionHandlerController exceptionHandlerController;
+
     private MockMvc mockMvc;
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(userPostController)
-                .setControllerAdvice(exceptionHandlerController).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .apply(springSecurity()).build();
     }
 
     @Test
     public void testGetPost() throws Exception {
-        String responseBody = mockMvc.perform(get("/users/posts/1").contentType(MediaType.APPLICATION_JSON))
+        final String responseBody = mockMvc.perform(get("/users/posts/1")
+                .with(tokenFactory.token("1", "ui"))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
@@ -54,14 +62,17 @@ public class UserPostControllerTest {
 
     @Test
     public void testGetPostWhichDoesNotExist() throws Exception {
-        mockMvc.perform(get("/users/posts/1000").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/users/posts/1000")
+                .with(tokenFactory.token("1", "ui"))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void testGetListByCurrentUser() throws Exception {
-        String responseBody = mockMvc.perform(get("/users/posts").contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal("USER-1@EMAIL.COM")))
+        final String responseBody = mockMvc.perform(get("/users/posts")
+                .with(tokenFactory.token("1", "ui"))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
@@ -70,8 +81,9 @@ public class UserPostControllerTest {
 
     @Test
     public void testGetListByUserId() throws Exception {
-        String responseBody = mockMvc.perform(get("/users/posts?user_id=2").contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal("USER-1@EMAIL.COM")))
+        final String responseBody = mockMvc.perform(get("/users/posts?user_id=2")
+                .with(tokenFactory.token("1", "ui"))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();

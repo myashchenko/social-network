@@ -12,10 +12,13 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import io.github.yashchenkon.test.JsonContentVerifier;
 import ua.social.UserQueryServiceApplication;
+import ua.social.network.oauth2.test.factory.TokenFactory;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,10 +32,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class FriendRequestControllerTest {
 
     @Autowired
-    private FriendRequestController friendRequestController;
+    private WebApplicationContext webApplicationContext;
 
     @Autowired
-    private CommonExceptionHandlerController exceptionHandlerController;
+    private TokenFactory tokenFactory;
 
     @Rule
     public JsonContentVerifier jsonContentVerifier = new JsonContentVerifier();
@@ -41,14 +44,14 @@ public class FriendRequestControllerTest {
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(friendRequestController)
-                .setControllerAdvice(exceptionHandlerController).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .apply(springSecurity()).build();
     }
 
     @Test
     public void testGetList() throws Exception {
-        String responseBody = mockMvc.perform(get("/friend_requests")
-                .principal(new UserPrincipal("USER-4@EMAIL.COM")))
+        final String responseBody = mockMvc.perform(get("/friend_requests")
+                .with(tokenFactory.token("4", "ui")))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();

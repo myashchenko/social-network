@@ -69,8 +69,8 @@
             </column>
         </createTable>
 
-        <sql>CREATE UNIQUE INDEX ui_friend_requests_from_to on friend_requests (from_id, to_id); </sql>
-        <sql>CREATE UNIQUE INDEX ui_friend_requests_to_from on friend_requests (to_id, from_id); </sql>
+        <addUniqueConstraint tableName="friend_requests" columnNames="from_id, to_id" constraintName="uc_friend_requests_from_to" />
+        <!--<addUniqueConstraint tableName="friend_requests" columnNames="to_id, from_id" constraintName="uc_friend_requests_to_from" />-->
 
         <addForeignKeyConstraint baseColumnNames="from_id" baseTableName="friend_requests"
                                  baseTableSchemaName="public" constraintName="fk_friend_requests_from_id" deferrable="false" initiallyDeferred="false"

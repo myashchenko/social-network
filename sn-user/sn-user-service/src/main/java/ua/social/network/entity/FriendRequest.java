@@ -9,6 +9,7 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.Immutable;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -22,6 +23,7 @@ import lombok.Setter;
         @UniqueConstraint(name = "uc_users_unique_to_from", columnNames = { "to_id", "from_id" })
 })
 @Immutable
+@NoArgsConstructor
 public class FriendRequest extends BaseEntity {
 
     @ManyToOne(optional = false)
@@ -31,5 +33,10 @@ public class FriendRequest extends BaseEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "to_id", nullable = false)
     private User to;
+
+    public FriendRequest(final User from, final User to) {
+        this.from = from;
+        this.to = to;
+    }
 
 }

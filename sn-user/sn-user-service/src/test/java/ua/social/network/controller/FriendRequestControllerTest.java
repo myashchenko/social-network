@@ -2,8 +2,6 @@ package ua.social.network.controller;
 
 import java.util.Optional;
 
-import com.sun.security.auth.UserPrincipal;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -18,11 +16,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
 import ua.social.network.UserServiceApplication;
 import ua.social.network.dto.AddFriendRequest;
 import ua.social.network.entity.FriendRequest;
 import ua.social.network.entity.User;
+import ua.social.network.oauth2.test.factory.TokenFactory;
 import ua.social.network.repository.FriendRequestRepository;
 import ua.social.network.repository.UserRepository;
 
@@ -30,6 +30,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,27 +46,26 @@ public class FriendRequestControllerTest {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Autowired
-    private FriendRequestController friendRequestController;
+    private UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private WebApplicationContext webApplicationContext;
 
     @Autowired
     private FriendRequestRepository friendRequestRepository;
 
     @Autowired
-    private CommonExceptionHandlerController commonExceptionHandler;
+    private TokenFactory tokenFactory;
 
     private MockMvc mockMvc;
 
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(friendRequestController)
-                .setControllerAdvice(commonExceptionHandler).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .apply(springSecurity()).build();
     }
 
     @Test
-    @Transactional
     public void shouldSendFriendRequest() throws Exception {
         String friendUUID = "2";
 
@@ -75,8 +75,8 @@ public class FriendRequestControllerTest {
         String json = MAPPER.writeValueAsString(addFriendRequest);
 
         mockMvc.perform(post("/friend_requests")
+                .with(tokenFactory.token("1", "ui"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal("USER-1@EMAIL.COM"))
                 .content(json))
                 .andExpect(status().isOk());
 
@@ -98,14 +98,14 @@ public class FriendRequestControllerTest {
 
         mockMvc.perform(post("/friend_requests")
                 .contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal("USER-1@EMAIL.COM"))
+                .with(tokenFactory.token("1", "ui"))
                 .content(json))
                 .andExpect(status().isBadRequest());
     }
 
 
     @Test
-    @Ignore("Ignore since there is no handler for DataIntegrityViolationException")
+    @Ignore("todo")
     public void shouldReturnErrorIfRequestHasAlreadySent() throws Exception {
         AddFriendRequest addFriendRequest = new AddFriendRequest();
         addFriendRequest.setUserId("4");
@@ -113,8 +113,8 @@ public class FriendRequestControllerTest {
         String json = MAPPER.writeValueAsString(addFriendRequest);
 
         mockMvc.perform(post("/friend_requests")
+                .with(tokenFactory.token("3", "ui"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal("USER-3@EMAIL.COM"))
                 .content(json))
                 .andExpect(status().isForbidden());
 
@@ -124,8 +124,8 @@ public class FriendRequestControllerTest {
         json = MAPPER.writeValueAsString(addFriendRequest);
 
         mockMvc.perform(post("/friend_requests")
+                .with(tokenFactory.token("4", "ui"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal("USER-4@EMAIL.COM"))
                 .content(json))
                 .andExpect(status().isForbidden());
     }
@@ -138,8 +138,8 @@ public class FriendRequestControllerTest {
         String json = MAPPER.writeValueAsString(addFriendRequest);
 
         mockMvc.perform(post("/friend_requests")
+                .with(tokenFactory.token("2", "ui"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal("USER-2@EMAIL.COM"))
                 .content(json))
                 .andExpect(status().isForbidden());
     }
@@ -149,8 +149,8 @@ public class FriendRequestControllerTest {
     public void shouldAcceptFriendRequest() throws Exception {
 
         mockMvc.perform(post("/friend_requests/2")
-                .contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal("USER-4@EMAIL.COM")))
+                .with(tokenFactory.token("4", "ui"))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
         Optional<FriendRequest> friendRequest = friendRequestRepository.findById("2");
@@ -167,8 +167,8 @@ public class FriendRequestControllerTest {
     public void shouldReturnErrorIfFriendRequestDoesNotExist() throws Exception {
 
         mockMvc.perform(post("/friend_requests/DOES_NOT_EXIST")
-                .contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal("USER-4@EMAIL.COM")))
+                .with(tokenFactory.token("4", "ui"))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 }

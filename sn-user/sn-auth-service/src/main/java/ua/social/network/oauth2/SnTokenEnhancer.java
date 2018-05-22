@@ -23,8 +23,7 @@ public class SnTokenEnhancer implements TokenEnhancer {
         }
 
         final SnUserDetails snUser = (SnUserDetails) authentication.getUserAuthentication().getPrincipal();
-        final Map<String, Object> additionalInfo = new HashMap<>();
-        additionalInfo.put("user_id", snUser.getUserId());
+        final Map<String, Object> additionalInfo = Map.of("user_id", snUser.getUserId());
         ((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;
     }

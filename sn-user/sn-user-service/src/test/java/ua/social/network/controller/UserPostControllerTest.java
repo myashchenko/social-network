@@ -1,31 +1,26 @@
 package ua.social.network.controller;
 
-import java.util.Optional;
-
-import com.sun.security.auth.UserPrincipal;
+import java.util.UUID;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import ua.social.network.UserServiceApplication;
 import ua.social.network.dto.CreatePostRequest;
 import ua.social.network.dto.ModifyPostRequest;
-import ua.social.network.entity.Post;
-import ua.social.network.entity.User;
-import ua.social.network.repository.UserPostRepository;
-import ua.social.network.repository.UserRepository;
+import ua.social.network.oauth2.test.factory.TokenFactory;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,53 +29,41 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Mykola Yashchenko
  */
 @RunWith(SpringRunner.class)
+@Sql(scripts = "classpath:user/users.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "classpath:truncate_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @SpringBootTest(classes = UserServiceApplication.class)
 public class UserPostControllerTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Autowired
-    private CommonExceptionHandlerController exceptionHandlerController;
+    private WebApplicationContext webApplicationContext;
 
-    @InjectMocks
-    private UserPostController userPostController;
-
-    @Mock
-    private UserRepository userRepository;
-
-    @Mock
-    private UserPostRepository userPostRepository;
+    @Autowired
+    private TokenFactory tokenFactory;
 
     private MockMvc mockMvc;
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(userPostController)
-                .setControllerAdvice(exceptionHandlerController).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
     }
 
     @Test
     public void shouldCreateNewPost() throws Exception {
-        String receiverId = "RECEIVER_ID";
-        String senderEmail = "SENDER@EMAIL.COM";
-
-        Mockito.when(userRepository.findById(Mockito.eq(receiverId))).thenReturn(Optional.of(new User()));
-        Mockito.when(userRepository.findByEmail(Mockito.eq(senderEmail))).thenReturn(Optional.of(new User()));
+        final String receiverId = "2";
 
         final CreatePostRequest post = new CreatePostRequest();
         post.setText("TEXT");
         post.setReceiverId(receiverId);
 
-        String json = MAPPER.writeValueAsString(post);
+        final String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(post("/users/posts")
+                .with(tokenFactory.token("1", "ui"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal(senderEmail)).content(json))
+                .content(json))
                 .andExpect(status().isOk());
-
-        Mockito.verify(userRepository).findById(Mockito.eq(receiverId));
-        Mockito.verify(userRepository).findByEmail(Mockito.eq(senderEmail));
-        Mockito.verify(userPostRepository).save(Mockito.any(Post.class));
     }
 
     @Test
@@ -90,7 +73,8 @@ public class UserPostControllerTest {
         post.setText("");
         post.setReceiverId("RECEIVER_ID");
 
-        mockMvc.perform(post("/users/posts"))
+        mockMvc.perform(post("/users/posts")
+                .with(tokenFactory.token("1", "ui")))
                 .andExpect(status().isBadRequest());
     }
 
@@ -101,39 +85,31 @@ public class UserPostControllerTest {
         post.setText("TEXT");
         post.setReceiverId("");
 
-        mockMvc.perform(post("/users/posts"))
+        mockMvc.perform(post("/users/posts")
+                .with(tokenFactory.token("1", "ui")))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     public void shouldFailWhenReceiverDoesNotExist() throws Exception {
-        String receiverId = "RECEIVER_ID";
-        String senderEmail = "SENDER@EMAIL.COM";
+        final String receiverId = UUID.randomUUID().toString();
 
         final CreatePostRequest post = new CreatePostRequest();
         post.setText("TEXT");
         post.setReceiverId(receiverId);
 
-        String json = MAPPER.writeValueAsString(post);
+        final String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(post("/users/posts")
+                .with(tokenFactory.token("1", "ui"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .principal(new UserPrincipal(senderEmail)).content(json))
+                .content(json))
                 .andExpect(status().isNotFound());
-
-        Mockito.verify(userRepository).findById(Mockito.eq(receiverId));
     }
 
     @Test
     public void shouldModifyPost() throws Exception {
-        String postId = "POST_ID";
-        String senderEmail = "EMAIL@EMAIL.COM";
-
-        Post postToModify = new Post();
-        User sender = new User();
-        sender.setEmail(senderEmail);
-        postToModify.setFrom(sender);
-        Mockito.when(userPostRepository.findById(Mockito.eq(postId))).thenReturn(Optional.of(postToModify));
+        final String postId = "1";
 
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("TEXT");
@@ -141,62 +117,54 @@ public class UserPostControllerTest {
         String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(put("/users/posts/" + postId)
-                .principal(new UserPrincipal(senderEmail))
+                .with(tokenFactory.token("1", "ui"))
                 .contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isOk());
-
-        Mockito.verify(userPostRepository).findById(Mockito.eq(postId));
-        Mockito.verify(userPostRepository).save(Mockito.any(Post.class));
     }
 
     @Test
     public void shouldErrorWhenTextIsEmpty() throws Exception {
-        String postId = "POST_ID";
+        final String postId = "POST_ID";
 
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("");
 
-        String json = MAPPER.writeValueAsString(post);
+        final String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(put("/users/posts/" + postId)
+                .with(tokenFactory.token("1", "ui"))
                 .contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     public void shouldErrorWhenPostDoesNotExist() throws Exception {
-        String postId = "POST_ID";
-
-        Mockito.when(userPostRepository.findById(Mockito.eq(postId))).thenReturn(Optional.empty());
+        final String postId = UUID.randomUUID().toString();
 
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("TEXT");
 
-        String json = MAPPER.writeValueAsString(post);
+        final String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(put("/users/posts/" + postId)
-                .contentType(MediaType.APPLICATION_JSON).content(json))
+                .with(tokenFactory.token("1", "ui"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void shouldErrorWhenPostSenderIsIncorrect() throws Exception {
-        String postId = "POST_ID";
-
-        Post postToModify = new Post();
-        User sender = new User();
-        sender.setEmail("EMAIL1");
-        postToModify.setFrom(sender);
-        Mockito.when(userPostRepository.findById(Mockito.eq(postId))).thenReturn(Optional.of(postToModify));
+        final String postId = "1";
 
         final ModifyPostRequest post = new ModifyPostRequest();
         post.setText("TEXT");
 
-        String json = MAPPER.writeValueAsString(post);
+        final String json = MAPPER.writeValueAsString(post);
 
         mockMvc.perform(put("/users/posts/" + postId)
-                .principal(new UserPrincipal("EMAIL2"))
+                .with(tokenFactory.token("2", "ui"))
                 .contentType(MediaType.APPLICATION_JSON).content(json))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isNotFound());
     }
 }

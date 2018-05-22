@@ -3,7 +3,8 @@ jar {
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compileOnly("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compileOnly("org.springframework.boot:spring-boot-starter-data-jpa:${springDataVersion}")
 //    compile("org.projectlombok:lombok:${lombokVersion}")
 
     compileOnly         name: 'lombok-edge'

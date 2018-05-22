@@ -1,0 +1,37 @@
+jar {
+    baseName = 'sn-oauth2-resource-server-test'
+}
+
+dependencies {
+    compileOnly("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compileOnly("org.springframework.cloud:spring-cloud-starter-oauth2:${springCloudSecurityVersion}")
+    compileOnly("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
+    compileOnly("org.springframework.security:spring-security-test:${springVersion}")
+
+//    compile("org.projectlombok:lombok:${lombokVersion}")
+
+    compileOnly         name: 'lombok-edge'
+    annotationProcessor name: 'lombok-edge'
+}
+
+processResources {
+    exclude "*.jks"
+
+    doLast {
+        copy {
+            from "src/main/resources/test-ks.jks"
+            into "$buildDir/resources/main"
+        }
+    }
+}
+
+processTestResources {
+    exclude "*.jks"
+
+    doLast {
+        copy {
+            from "src/main/resources/test-ks.jks"
+            into "$buildDir/resources/test"
+        }
+    }
+}

@@ -1,94 +1,46 @@
 package ua.social.network.controller;
 
 import java.security.Principal;
-import java.util.Optional;
 import javax.validation.Valid;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.AllArgsConstructor;
 import ua.social.network.dto.AddFriendRequest;
-import ua.social.network.entity.FriendRequest;
-import ua.social.network.entity.User;
-import ua.social.network.exception.AccessDeniedException;
-import ua.social.network.exception.EntityNotFoundException;
-import ua.social.network.repository.FriendRequestRepository;
-import ua.social.network.repository.UserRepository;
-import ua.social.network.transaction.TransactionHelper;
+import ua.social.network.oauth2.principal.SnPrincipal;
+import ua.social.network.service.FriendRequestService;
 
 /**
  * @author Mykola Yashchenko
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/friend_requests")
 public class FriendRequestController {
 
-    private final UserRepository userRepository;
-    private final FriendRequestRepository friendRequestRepository;
-    private final TransactionHelper transactionHelper;
+    private final FriendRequestService friendRequestService;
 
-    public FriendRequestController(UserRepository userRepository, FriendRequestRepository friendRequestRepository,
-                                   TransactionHelper transactionHelper) {
-        this.userRepository = userRepository;
-        this.friendRequestRepository = friendRequestRepository;
-        this.transactionHelper = transactionHelper;
-    }
-
-    //@PreAuthorize("#oauth2.hasScope('ui')")
     @PostMapping
-    public void addFriend(@Valid @RequestBody AddFriendRequest addFriendRequest, Principal principal) {
-        if (principal == null) {
-            throw new AccessDeniedException("Only authorized user can add an another user to the friend list");
-        }
-
-        transactionHelper.doInTransaction(() -> {
-            Optional<User> newFriendOpt = userRepository.findById(addFriendRequest.getUserId());
-            if (!newFriendOpt.isPresent()) {
-                throw new EntityNotFoundException("User with id %s does not exist", addFriendRequest.getUserId());
-            }
-            User newFriend = newFriendOpt.get();
-            User currentUser = userRepository.findByEmail(principal.getName()).get();
-
-            if (currentUser.friendOf(newFriend)) {
-                throw new AccessDeniedException("You are friends already");
-            }
-
-            FriendRequest friendRequest = new FriendRequest();
-            friendRequest.setTo(newFriend);
-            friendRequest.setFrom(currentUser);
-
-            friendRequestRepository.save(friendRequest);
-            return null;
-        });
+    @PreAuthorize("#oauth2.hasScope('ui')")
+    public void addFriend(@Valid @RequestBody final AddFriendRequest request, final Principal principal) {
+        friendRequestService.send(request, new SnPrincipal(principal));
     }
 
-    //@PreAuthorize("#oauth2.hasScope('ui')")
     @PostMapping("/{id}")
-    public void acceptFriendRequest(@PathVariable String id, Principal principal) {
-        if (principal == null) {
-            throw new AccessDeniedException("Only authorized user can accept a friend request");
-        }
+    @PreAuthorize("#oauth2.hasScope('ui')")
+    public void acceptFriendRequest(@PathVariable final String id, final Principal principal) {
+        friendRequestService.accept(id, new SnPrincipal(principal));
+    }
 
-        transactionHelper.doInTransaction(() -> {
-            User currentUser = userRepository.findByEmail(principal.getName()).get();
-
-            FriendRequest friendRequest = friendRequestRepository.findByIdAndTo(id, currentUser);
-
-            if (friendRequest == null) {
-                throw new EntityNotFoundException("Friend request with id = %s does not exist", id);
-            }
-
-            User to = friendRequest.getTo();
-            User from = friendRequest.getFrom();
-
-            to.addFriend(from);
-            from.addFriend(to);
-
-            friendRequestRepository.delete(friendRequest);
-            return null;
-        });
+    @DeleteMapping("/{id}")
+    @PreAuthorize("#oauth2.hasScope('ui')")
+    public void denyFriendRequest(@PathVariable final String id, final Principal principal) {
+        friendRequestService.deny(id, new SnPrincipal(principal));
     }
 }

@@ -44,8 +44,10 @@ dependencies {
     testCompile project(':sn-common:sn-exception-config')
     testCompile project(':sn-common:sn-jpa-config')
     testCompile project(':sn-common:sn-oauth2-resource-server')
+    testCompile project(':sn-common:sn-oauth2-resource-server-test')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test:${springVersion}")
 }
 
 docker {

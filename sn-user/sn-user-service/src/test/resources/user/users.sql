@@ -8,3 +8,5 @@ INSERT INTO friend_requests (id, from_id, to_id, created) VALUES ('2', '1', '4',
 
 INSERT INTO user_friends (user_id, friend_id) VALUES ('2', '4');
 INSERT INTO user_friends (user_id, friend_id) VALUES ('4', '2');
+
+INSERT INTO posts (id, created, text, from_id, to_id) VALUES ('1', TIMESTAMP '2017-04-02 13:30:14', '123', '1', '2')

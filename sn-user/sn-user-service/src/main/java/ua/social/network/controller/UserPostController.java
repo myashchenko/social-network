@@ -18,8 +18,10 @@ import ua.social.network.entity.Post;
 import ua.social.network.entity.User;
 import ua.social.network.exception.AccessDeniedException;
 import ua.social.network.exception.EntityNotFoundException;
+import ua.social.network.oauth2.principal.SnPrincipal;
 import ua.social.network.repository.UserPostRepository;
 import ua.social.network.repository.UserRepository;
+import ua.social.network.service.UserPostService;
 
 /**
  * @author Mykola Yashchenko
@@ -29,39 +31,16 @@ import ua.social.network.repository.UserRepository;
 @AllArgsConstructor
 public class UserPostController {
 
-    private final UserPostRepository userPostRepository;
-    private final UserRepository userRepository;
+    private final UserPostService userPostService;
 
     @PostMapping
-    public void create(Principal principal, @Valid @RequestBody CreatePostRequest createPostRequest) {
-        Post post = new Post();
-        post.setText(createPostRequest.getText());
-        Optional<User> receiver = userRepository.findById(createPostRequest.getReceiverId());
-        if (!receiver.isPresent()) {
-            throw new EntityNotFoundException("User with id %s does not exist", createPostRequest.getReceiverId());
-        }
-        receiver.ifPresent(post::setTo);
-        post.setFrom(userRepository.findByEmail(principal.getName()).get());
-
-        userPostRepository.save(post);
+    public void create(@Valid @RequestBody final CreatePostRequest request, final Principal principal) {
+        userPostService.create(request, new SnPrincipal(principal));
     }
 
     @PutMapping("/{id}")
-    public void modify(@PathVariable("id") String id, Principal principal,
-                       @Valid @RequestBody ModifyPostRequest modifyPostRequest) {
-        Optional<Post> postOpt = userPostRepository.findById(id);
-        if (!postOpt.isPresent()) {
-            throw new EntityNotFoundException("Post with id %s does not exist", id);
-        }
-
-        Post post = postOpt.get();
-        User sender = post.getFrom();
-        if (!sender.getEmail().equals(principal.getName())) {
-            throw new AccessDeniedException();
-        }
-
-        post.setText(modifyPostRequest.getText());
-
-        userPostRepository.save(post);
+    public void modify(@PathVariable("id") final String id, @Valid @RequestBody final ModifyPostRequest request,
+                       final Principal principal) {
+        userPostService.modify(id, request, new SnPrincipal(principal));
     }
 }

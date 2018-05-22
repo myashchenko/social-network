@@ -1,40 +1,33 @@
 package ua.social.network.controller;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 import com.sun.security.auth.UserPrincipal;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import ua.social.network.UserServiceApplication;
 import ua.social.network.dto.CreateUserRequest;
-import ua.social.network.entity.File;
 import ua.social.network.entity.Role;
 import ua.social.network.entity.User;
-import ua.social.network.repository.FileRepository;
 import ua.social.network.repository.UserRepository;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Mykola Yashchenko
  */
-@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserServiceApplication.class)
 @Sql(scripts = "classpath:user/users.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -50,46 +42,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    @ClassRule
-    public static TemporaryFolder temporaryFolder = new TemporaryFolder();
-    private static Path filesPath;
-    @Autowired
-    private UserController accountController;
+
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private FileRepository fileRepository;
-    @Autowired
-    private CommonExceptionHandlerController commonExceptionHandler;
-    private MockMvc mockMvc;
 
-    @BeforeClass
-    public static void prepareFolder() throws IOException {
-        filesPath = temporaryFolder.newFolder().toPath();
-    }
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    private MockMvc mockMvc;
 
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(accountController)
-                .setControllerAdvice(commonExceptionHandler).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
     }
 
     @Test
     public void shouldCreateNewUser() throws Exception {
 
-        CreateUserRequest user = new CreateUserRequest();
+        final var user = new CreateUserRequest();
         user.setEmail("test@test.com");
         user.setPassword("password");
         user.setName("Name Name");
 
-        String json = MAPPER.writeValueAsString(user);
+        final String json = MAPPER.writeValueAsString(user);
 
         mockMvc.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isOk());
 
-        User actualUser = userRepository.findByEmail(user.getEmail()).get();
+        final User actualUser = userRepository.findByEmail(user.getEmail()).get();
         assertThat(actualUser, notNullValue());
         assertThat(actualUser.getEmail(), equalTo(user.getEmail()));
         assertThat(actualUser.getName(), equalTo(user.getName()));
@@ -100,7 +82,7 @@ public class UserControllerTest {
     @Test
     public void shouldFailWhenUserIsNotValid() throws Exception {
 
-        final CreateUserRequest user = new CreateUserRequest();
+        final var user = new CreateUserRequest();
         user.setEmail("t");
         user.setPassword("p");
         user.setName("n");
@@ -124,8 +106,8 @@ public class UserControllerTest {
                 .principal(new UserPrincipal("USER-1")))
                 .andExpect(status().isOk());
 
-        File actualFile = fileRepository.findByFilePath(filesPath.toString() + "/test.txt");
-        assertThat(actualFile, notNullValue());
-        assertThat(actualFile.getUserId(), equalTo("USER-1"));
+//        File actualFile = fileRepository.findByFilePath(filesPath.toString() + "/test.txt");
+//        assertThat(actualFile, notNullValue());
+//        assertThat(actualFile.getUserId(), equalTo("USER-1"));
     }
 }

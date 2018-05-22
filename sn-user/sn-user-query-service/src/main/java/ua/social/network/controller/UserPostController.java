@@ -21,7 +21,7 @@ import ua.social.network.query.PostMapper;
  * @author Mykola Yashchenko
  */
 @RestController
-@RequestMapping("/users/posts")
+@RequestMapping("/posts")
 public class UserPostController extends AbstractController<PostDto, PostMapper> {
 
     private static final String USER_ID = "user_id";

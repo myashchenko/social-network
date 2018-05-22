@@ -51,7 +51,7 @@ public class UserPostControllerTest {
 
     @Test
     public void testGetPost() throws Exception {
-        final String responseBody = mockMvc.perform(get("/users/posts/1")
+        final String responseBody = mockMvc.perform(get("/posts/1")
                 .with(tokenFactory.token("1", "ui"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -62,7 +62,7 @@ public class UserPostControllerTest {
 
     @Test
     public void testGetPostWhichDoesNotExist() throws Exception {
-        mockMvc.perform(get("/users/posts/1000")
+        mockMvc.perform(get("/posts/1000")
                 .with(tokenFactory.token("1", "ui"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -70,7 +70,7 @@ public class UserPostControllerTest {
 
     @Test
     public void testGetListByCurrentUser() throws Exception {
-        final String responseBody = mockMvc.perform(get("/users/posts")
+        final String responseBody = mockMvc.perform(get("/posts")
                 .with(tokenFactory.token("1", "ui"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -81,7 +81,7 @@ public class UserPostControllerTest {
 
     @Test
     public void testGetListByUserId() throws Exception {
-        final String responseBody = mockMvc.perform(get("/users/posts?user_id=2")
+        final String responseBody = mockMvc.perform(get("/posts?user_id=2")
                 .with(tokenFactory.token("1", "ui"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

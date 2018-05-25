@@ -60,6 +60,18 @@ subprojects {
     }
 }
 
+project('sn-gateway-service') {
+    test {
+        useJUnitPlatform()
+    }
+}
+
+project('sn-storage-service') {
+    test {
+        useJUnitPlatform()
+    }
+}
+
 project('sn-integration-tests') {
     test {
         if (project.hasProperty('integrationTests')) {

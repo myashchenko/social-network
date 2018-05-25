@@ -14,31 +14,31 @@ spring:
           predicates:
             - Path=/uaa/**
         - id: sn-community-service
-          uri: http://sn-community-service
+          uri: http://localhost:8080
           predicates:
             - Path=/community-service/api/**
           filters:
             - RewritePath=/community-service/api/(?<path>.*), /$\{path}
         - id: sn-community-query-service
-          uri: http://sn-community-query-service
+          uri: http://localhost:8080
           predicates:
             - Path=/community-query-service/api/**
           filters:
             - RewritePath=/community-query-service/api/(?<path>.*), /$\{path}
         - id: sn-user-service
-          uri: http://sn-user-service
+          uri: http://localhost:8080
           predicates:
             - Path=/user-service/api/**
           filters:
             - RewritePath=/user-service/api/(?<path>.*), /$\{path}
         - id: sn-user-query-service
-          uri: http://sn-user-query-service
+          uri: http://localhost:8080
           predicates:
             - Path=/user-query-service/api/**
           filters:
             - RewritePath=/user-query-service/api/(?<path>.*), /$\{path}
         - id: sn-storage-service
-          uri: http://sn-storage-service
+          uri: http://localhost:8080
           predicates:
             - Path=/storage-service/api/**
           filters:
@@ -46,10 +46,7 @@ spring:
 
 eureka:
   client:
-    serviceUrl:
-      defaultZone: http://sn-discovery-service:8761/eureka/
-  instance:
-    preferIpAddress: true
+    enabled: false
 
 server:
   port: 8765

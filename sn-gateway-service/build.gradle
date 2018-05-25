@@ -12,19 +12,13 @@ dependencyManagement {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web') {
-        exclude module: 'spring-boot-starter-tomcat'
-    }
-    compile('org.springframework.boot:spring-boot-starter-undertow')
+    compile('org.springframework.boot:spring-boot-starter-webflux')
     compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
 
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-zuul')
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
+    compile("org.springframework.cloud:spring-cloud-starter-gateway")
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
-
-    compile('org.springframework.cloud:spring-cloud-starter-oauth2')
-    compile('org.springframework.cloud:spring-cloud-starter-security')
 
     runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
     runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"
@@ -32,6 +26,9 @@ dependencies {
     runtime "javax.activation:activation:${activationVersion}"
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testCompile("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testCompile("com.github.tomakehurst:wiremock:2.17.0")
 }
 
 docker {

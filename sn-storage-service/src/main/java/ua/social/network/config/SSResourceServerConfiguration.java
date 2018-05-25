@@ -11,10 +11,10 @@ import ua.social.network.oauth2.converter.SnAccessTokenConverter;
  * @author Mykola Yashchenko
  */
 @Configuration
-public class ResourceServerConfiguration extends ua.social.network.oauth2.config.ResourceServerConfiguration {
+public class SSResourceServerConfiguration extends ua.social.network.oauth2.config.ResourceServerConfiguration {
 
-    public ResourceServerConfiguration(final SnAccessTokenConverter accessTokenConverter,
-                                       final ResourceLoader resourceLoader) {
+    public SSResourceServerConfiguration(final SnAccessTokenConverter accessTokenConverter,
+                                         final ResourceLoader resourceLoader) {
         super(accessTokenConverter, resourceLoader);
     }
 

@@ -23,6 +23,7 @@ dependencies {
     compile("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
 
     compile('org.springframework:spring-jdbc')
+    compile("org.postgresql:postgresql:${postgresVersion}")
 
     //    compile("org.projectlombok:lombok:${lombokVersion}")
     compileOnly         name: 'lombok-edge'

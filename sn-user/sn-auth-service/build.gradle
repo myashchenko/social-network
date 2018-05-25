@@ -21,7 +21,7 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-security')
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
 
-    compile("org.hsqldb:hsqldb:${hsqldbVersion}")
+    compile("org.postgresql:postgresql:${postgresVersion}")
 
     //    compile("org.projectlombok:lombok:${lombokVersion}")
     compileOnly         name: 'lombok-edge'
@@ -42,6 +42,7 @@ dependencies {
     testCompile("org.springframework.security:spring-security-test:${springVersion}")
     testCompile('org.apache.httpcomponents:httpclient:4.5.4')
     testCompile('io.jsonwebtoken:jjwt:0.9.0')
+    testCompile("org.hsqldb:hsqldb:${hsqldbVersion}")
 }
 
 processResources {

@@ -24,7 +24,7 @@ dependencies {
 
     compile group: 'org.apache.hadoop', name: 'hadoop-hdfs', version: '3.1.0'
 
-    compile("org.hsqldb:hsqldb:${hsqldbVersion}")
+    compile("org.postgresql:postgresql:${postgresVersion}")
 
 //    compile("org.projectlombok:lombok:${lombokVersion}")
     compileOnly         name: 'lombok-edge'
@@ -46,6 +46,7 @@ dependencies {
     testCompile project(':sn-common:sn-oauth2-resource-server')
     testCompile project(':sn-common:sn-oauth2-resource-server-test')
 
+    testCompile("org.hsqldb:hsqldb:${hsqldbVersion}")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test:${springVersion}")
 }

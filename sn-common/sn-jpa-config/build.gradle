@@ -7,5 +7,5 @@ dependencies {
     compileOnly         name: 'lombok-edge'
     annotationProcessor name: 'lombok-edge'
     
-    compile("org.springframework.boot:spring-boot-starter-data-jpa:${springDataVersion}")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
 }

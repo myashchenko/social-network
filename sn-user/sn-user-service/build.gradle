@@ -48,7 +48,7 @@ dependencies {
 
     testCompile("org.hsqldb:hsqldb:${hsqldbVersion}")
     testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile("org.springframework.security:spring-security-test:${springVersion}")
+    testCompile("org.springframework.security:spring-security-test:${springSecurityTestVersion}")
 }
 
 docker {

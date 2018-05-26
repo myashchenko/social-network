@@ -1,8 +1,6 @@
 spring:
   application:
     name: sn-gateway-service
-
-spring:
   cloud:
     gateway:
       discovery:

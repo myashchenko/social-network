@@ -20,9 +20,6 @@ dependencies {
     compile("org.springframework.cloud:spring-cloud-starter-oauth2:${springCloudSecurityVersion}")
     compile("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
 
-    // todo remove
-    compile("org.springframework:spring-tx:${springVersion}")
-
 //    compile("org.projectlombok:lombok:${lombokVersion}")
     compileOnly         name: 'lombok-edge'
     annotationProcessor name: 'lombok-edge'

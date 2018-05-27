@@ -35,6 +35,8 @@ public class JpaExceptionHandlerController {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Object> handleIntegrityViolation(final DataIntegrityViolationException ex, final Locale locale) {
+        log.error(ex.getMessage(), ex);
+
         if (ex.getCause() instanceof ConstraintViolationException) {
             final Constraint constraint = Constraint.of(ex.getCause().getCause().getMessage());
             if (constraint != null) {

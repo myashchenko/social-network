@@ -8,9 +8,7 @@ dependencies {
     runtime "com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}"
     runtime "javax.activation:activation:${activationVersion}"
 
-    //    compile("org.projectlombok:lombok:${lombokVersion}")
-    testCompileOnly     name: 'lombok-edge'
-    annotationProcessor name: 'lombok-edge'
+    compile("org.projectlombok:lombok:${lombokVersion}")
 
     testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
     testCompile("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")

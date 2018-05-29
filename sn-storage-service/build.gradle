@@ -20,9 +20,7 @@ dependencies {
     compile("org.springframework.cloud:spring-cloud-starter-oauth2:${springCloudSecurityVersion}")
     compile("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
 
-//    compile("org.projectlombok:lombok:${lombokVersion}")
-    compileOnly         name: 'lombok-edge'
-    annotationProcessor name: 'lombok-edge'
+    compile("org.projectlombok:lombok:${lombokVersion}")
 
     compile('commons-io:commons-io:2.6')
     compile('com.amazonaws:aws-java-sdk:1.11.323')

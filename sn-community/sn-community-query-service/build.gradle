@@ -25,9 +25,7 @@ dependencies {
     compile("org.hsqldb:hsqldb:${hsqldbVersion}")
     compile("org.springframework:spring-jdbc")
 
-    //    compile("org.projectlombok:lombok:${lombokVersion}")
-    compileOnly         name: 'lombok-edge'
-    annotationProcessor name: 'lombok-edge'
+    compile("org.projectlombok:lombok:${lombokVersion}")
 
     runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
     runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"

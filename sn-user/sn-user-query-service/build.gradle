@@ -25,9 +25,7 @@ dependencies {
     compile('org.springframework:spring-jdbc')
     compile("org.postgresql:postgresql:${postgresVersion}")
 
-    //    compile("org.projectlombok:lombok:${lombokVersion}")
-    compileOnly         name: 'lombok-edge'
-    annotationProcessor name: 'lombok-edge'
+    compile("org.projectlombok:lombok:${lombokVersion}")
 
     compile project(':sn-common:sn-exception-config')
     compile project(':sn-common:sn-mybatis-config')

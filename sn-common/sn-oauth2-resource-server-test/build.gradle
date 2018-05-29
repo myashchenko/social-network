@@ -8,10 +8,7 @@ dependencies {
     compileOnly("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
     compileOnly("org.springframework.security:spring-security-test:${springSecurityTestVersion}")
 
-//    compile("org.projectlombok:lombok:${lombokVersion}")
-
-    compileOnly         name: 'lombok-edge'
-    annotationProcessor name: 'lombok-edge'
+    compile("org.projectlombok:lombok:${lombokVersion}")
 }
 
 processResources {

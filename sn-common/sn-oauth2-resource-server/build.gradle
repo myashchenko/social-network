@@ -10,10 +10,7 @@ dependencies {
     compile('commons-io:commons-io:2.6')
     compile('com.google.code.gson:gson:2.8.5')
 
-//    compile("org.projectlombok:lombok:${lombokVersion}")
-
-    compileOnly         name: 'lombok-edge'
-    annotationProcessor name: 'lombok-edge'
+    compile("org.projectlombok:lombok:${lombokVersion}")
 
     compile project(':sn-common:sn-exception-config')
 

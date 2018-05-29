@@ -1,5 +1,6 @@
 package ua.social.network.oauth2.test.factory;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -56,23 +59,28 @@ public class TokenFactory implements InitializingBean {
     }
 
     public RequestPostProcessor token(final String userId, final String scope) {
+        return token(userId, scope, null);
+    }
+
+    public RequestPostProcessor token(final String userId, final String scope, final String role) {
         return mockRequest -> {
-            final OAuth2AccessToken token = createAccessToken(mockRequest, userId, "test", scope);
+            final OAuth2AccessToken token = createAccessToken(mockRequest, userId, "test", scope, role);
             mockRequest.addHeader("Authorization", "Bearer " + token.getValue());
             return mockRequest;
         };
     }
 
     private OAuth2AccessToken createAccessToken(final HttpServletRequest request, final String userId,
-                                                final String clientId, final String scope) {
+                                                final String clientId, final String scope, final String role) {
         final ClientDetails client = clientDetailsService.loadClientByClientId(clientId);
 
         final OAuth2Request oAuth2Request = new OAuth2Request(Collections.emptyMap(), clientId, client.getAuthorities(),
                 true, Set.of(scope), client.getResourceIds(), null, Collections.emptySet(), Collections.emptyMap());
 
-        final User userPrincipal = new User("user", "", true, true, true, true, client.getAuthorities());
+        final Collection<GrantedAuthority> userAuthorities = role == null ? client.getAuthorities() : List.of(new SimpleGrantedAuthority(role));
+        final User userPrincipal = new User("user", "", true, true, true, true, userAuthorities);
         final UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userPrincipal, null, client.getAuthorities());
+                new UsernamePasswordAuthenticationToken(userPrincipal, null, userAuthorities);
         final OAuth2Authentication auth = new OAuth2Authentication(oAuth2Request, authenticationToken);
         final OAuth2AuthenticationDetails details = new OAuth2AuthenticationDetails(request);
         auth.setDetails(details);

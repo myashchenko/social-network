@@ -17,7 +17,7 @@ public class SnUserDetails extends org.springframework.security.core.userdetails
 
     public SnUserDetails(final User user) {
         super(user.getEmail(), user.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name())));
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole().name())));
 
         this.userId = user.getId();
     }

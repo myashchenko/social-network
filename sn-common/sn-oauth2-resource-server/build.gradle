@@ -8,9 +8,14 @@ dependencies {
     compileOnly("org.springframework.cloud:spring-cloud-starter-security:${springCloudSecurityVersion}")
 
     compile('commons-io:commons-io:2.6')
+    compile('com.google.code.gson:gson:2.8.5')
 
 //    compile("org.projectlombok:lombok:${lombokVersion}")
 
     compileOnly         name: 'lombok-edge'
     annotationProcessor name: 'lombok-edge'
+
+    compile project(':sn-common:sn-exception-config')
+
+    testCompile project(':sn-common:sn-exception-config')
 }

@@ -2,6 +2,9 @@ package ua.social.network.oauth2.config;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -18,8 +22,10 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 import ua.social.network.oauth2.converter.SnAccessTokenConverter;
+import ua.social.network.oauth2.handler.SnAccessDeniedHandler;
 
 /**
  * @author Mykola Yashchenko
@@ -44,7 +50,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(final ResourceServerSecurityConfigurer resources) throws IOException {
-        resources.tokenServices(tokenServices());
+        resources.tokenServices(tokenServices())
+                .accessDeniedHandler(new SnAccessDeniedHandler());
     }
 
     @Bean

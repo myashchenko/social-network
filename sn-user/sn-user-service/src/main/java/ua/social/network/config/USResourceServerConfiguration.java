@@ -30,6 +30,7 @@ public class USResourceServerConfiguration extends ua.social.network.oauth2.conf
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.PUT, "/roles").hasRole("SUPER_ADMIN")
                 .anyRequest().authenticated();
     }
 }

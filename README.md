@@ -29,6 +29,7 @@ There is `docker-compose.yml` file that connects all services together. To updat
 please use the following commands:
 
 ```
-gradle clean buildDocker
+./gradlew clean build
+./scripts/docker_all.sh
 docker-compose up
 ```

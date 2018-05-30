@@ -22,6 +22,7 @@ import ua.social.network.UserServiceApplication;
 import ua.social.network.dto.CreateUserRequest;
 import ua.social.network.entity.Role;
 import ua.social.network.entity.User;
+import ua.social.network.oauth2.test.factory.TokenFactory;
 import ua.social.network.repository.UserRepository;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -48,6 +49,9 @@ public class UserControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    private TokenFactory tokenFactory;
 
     private MockMvc mockMvc;
 

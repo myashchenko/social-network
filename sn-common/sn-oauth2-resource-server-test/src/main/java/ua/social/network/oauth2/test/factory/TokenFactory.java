@@ -58,6 +58,10 @@ public class TokenFactory implements InitializingBean {
         this.resourceLoader = resourceLoader;
     }
 
+    public RequestPostProcessor token(final String scope) {
+        return token(null, scope);
+    }
+
     public RequestPostProcessor token(final String userId, final String scope) {
         return token(userId, scope, null);
     }
@@ -82,10 +86,12 @@ public class TokenFactory implements InitializingBean {
         final UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userPrincipal, null, userAuthorities);
         final OAuth2Authentication auth = new OAuth2Authentication(oAuth2Request, authenticationToken);
-        final OAuth2AuthenticationDetails details = new OAuth2AuthenticationDetails(request);
-        auth.setDetails(details);
 
-        details.setDecodedDetails(Map.of("user_id", userId));
+        if (userId != null) {
+            final OAuth2AuthenticationDetails details = new OAuth2AuthenticationDetails(request);
+            auth.setDetails(details);
+            details.setDecodedDetails(Map.of("user_id", userId));
+        }
 
         return tokenServices.createAccessToken(auth);
     }
@@ -122,7 +128,9 @@ public class TokenFactory implements InitializingBean {
     private TokenEnhancer tokenEnhancer() {
         return (accessToken, authentication) -> {
             final OAuth2AuthenticationDetails oauth2Details = (OAuth2AuthenticationDetails) authentication.getDetails();
-            ((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation((Map<String, Object>) oauth2Details.getDecodedDetails());
+            if (oauth2Details != null) {
+                ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation((Map<String, Object>) oauth2Details.getDecodedDetails());
+            }
             return accessToken;
         };
     }

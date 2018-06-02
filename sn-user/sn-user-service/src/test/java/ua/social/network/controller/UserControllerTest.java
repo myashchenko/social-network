@@ -1,7 +1,5 @@
 package ua.social.network.controller;
 
-import com.sun.security.auth.UserPrincipal;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -71,6 +69,7 @@ public class UserControllerTest {
         final String json = MAPPER.writeValueAsString(user);
 
         mockMvc.perform(post("/users")
+                .with(tokenFactory.token("ui"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isOk());
@@ -94,6 +93,7 @@ public class UserControllerTest {
         String json = MAPPER.writeValueAsString(user);
 
         mockMvc.perform(post("/users")
+                .with(tokenFactory.token("ui"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isBadRequest());
@@ -106,8 +106,7 @@ public class UserControllerTest {
                 "text/plain", "Fake".getBytes());
 
         mockMvc.perform(multipart("/users/1/avatar")
-                .file(multipartFile)
-                .principal(new UserPrincipal("USER-1")))
+                .file(multipartFile))
                 .andExpect(status().isOk());
 
 //        File actualFile = fileRepository.findByFilePath(filesPath.toString() + "/test.txt");

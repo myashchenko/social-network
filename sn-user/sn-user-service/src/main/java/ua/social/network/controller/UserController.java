@@ -3,6 +3,7 @@ package ua.social.network.controller;
 import java.security.Principal;
 import javax.validation.Valid;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
+    @PreAuthorize("#oauth2.hasScope('ui')")
     public void createUser(@Valid @RequestBody final CreateUserRequest createUserRequest) {
         userService.create(createUserRequest);
     }

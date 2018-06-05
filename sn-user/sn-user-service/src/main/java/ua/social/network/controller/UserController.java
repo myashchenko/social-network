@@ -4,15 +4,17 @@ import java.security.Principal;
 import javax.validation.Valid;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import ua.social.network.dto.CreateUserRequest;
+import ua.social.network.dto.ModifyUserRequest;
+import ua.social.network.oauth2.principal.SnPrincipal;
 import ua.social.network.service.UserService;
 
 /**
@@ -31,8 +33,10 @@ public class UserController {
         userService.create(createUserRequest);
     }
 
-    @PostMapping("/{id}/avatar")
-    public void uploadAvatar(Principal principal, @RequestParam("file") MultipartFile multipartFile) {
-        // todo upload file
+    @PutMapping("/{id}")
+    @PreAuthorize("#oauth2.hasScope('ui')")
+    public void modifyUser(@PathVariable("id") final String id, final ModifyUserRequest request,
+                           final Principal principal) {
+        userService.modify(id, request, new SnPrincipal(principal));
     }
 }

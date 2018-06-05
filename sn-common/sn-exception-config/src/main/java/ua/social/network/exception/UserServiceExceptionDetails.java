@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 public enum UserServiceExceptionDetails implements SnExceptionDetails {
 
     NOT_FOUND("US-001", HttpStatus.NOT_FOUND),
-    FRIEND_REQUEST_HAS_SENT_ALREADY("US-002", HttpStatus.FORBIDDEN);
+    FRIEND_REQUEST_HAS_SENT_ALREADY("US-002", HttpStatus.FORBIDDEN),
+    CANNOT_MODIFY_USER("US-003", HttpStatus.FORBIDDEN);
 
     private final String code;
     private final HttpStatus status;

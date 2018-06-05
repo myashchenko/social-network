@@ -55,8 +55,8 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> friendOf;
 
-    @Column(name = "avatar_id")
-    private String avatarId;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private ProfilePicture avatar;
 
     public User(final String id) {
         setId(id);

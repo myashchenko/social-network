@@ -9,5 +9,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ModifyUserRequest {
-    private String avatarId;
+    private String name;
 }

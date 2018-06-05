@@ -1,0 +1,19 @@
+jar {
+    baseName = 'sn-storage'
+}
+
+dependencies {
+    compileOnly("org.springframework:spring-web:${springVersion}")
+    compileOnly("org.springframework:spring-core:${springVersion}")
+    compileOnly("org.springframework:spring-context:${springVersion}")
+    compile("org.projectlombok:lombok:${lombokVersion}")
+
+    compile('commons-io:commons-io:2.6')
+    compile('com.amazonaws:aws-java-sdk:1.11.323')
+
+    compile project(':sn-common:sn-exception-config')
+
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testCompile("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
+}

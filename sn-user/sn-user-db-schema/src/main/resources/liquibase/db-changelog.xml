@@ -6,4 +6,6 @@
 
     <include file="liquibase/schema/initial-schema.xml" />
 
+    <include file="liquibase/upgrade/1.0.0/changelog-1.0.0.xml" />
+
 </databaseChangeLog>

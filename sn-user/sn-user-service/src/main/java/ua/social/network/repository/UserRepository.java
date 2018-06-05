@@ -21,6 +21,11 @@ public interface UserRepository extends JpaRepository<User, String> {
     int updateRole(@Param("userId") String userId, @Param("roleType") Role roleType);
 
     @Modifying
-    @Query("update User u set u.avatarId = :avatarId where u.id = :userId")
-    int modify(@Param("userId") String userId, @Param("avatarId") String avatarId);
+    @Query("update User u set u.name = :name where u.id = :userId")
+    int modify(@Param("userId") String userId, @Param("name") String avatarId);
+
+    @Modifying
+    @Query(nativeQuery = true,
+            value = "update users set users.profile_picture_id = :profilePictureId where users.id = :userId")
+    int updateAvatar(@Param("userId") String userId, @Param("profilePictureId") String profilePictureId);
 }

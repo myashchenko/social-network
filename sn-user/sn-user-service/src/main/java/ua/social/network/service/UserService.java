@@ -11,6 +11,6 @@ import ua.social.network.storage.domain.FileMetadata;
  */
 public interface UserService {
     String create(CreateUserRequest request);
-    void modify(String id, ModifyUserRequest request, SnPrincipal principal);
+    void modify(ModifyUserRequest request, SnPrincipal principal);
     UpdateAvatarResponse updateAvatar(FileMetadata fileMetadata, SnPrincipal principal);
 }

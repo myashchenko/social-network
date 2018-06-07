@@ -9,7 +9,8 @@ public enum UserServiceExceptionDetails implements SnExceptionDetails {
 
     NOT_FOUND("US-001", HttpStatus.NOT_FOUND),
     FRIEND_REQUEST_HAS_SENT_ALREADY("US-002", HttpStatus.FORBIDDEN),
-    CANNOT_MODIFY_USER("US-003", HttpStatus.FORBIDDEN);
+    CANNOT_MODIFY_USER("US-003", HttpStatus.FORBIDDEN),
+    IMAGE_TYPE_IS_NOT_SUPPORTED("US-004", HttpStatus.BAD_REQUEST);
 
     private final String code;
     private final HttpStatus status;

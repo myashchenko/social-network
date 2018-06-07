@@ -27,7 +27,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @Profile("!production")
 public class FileSystemStorageService implements StorageService {
 
-    private static final String FILE_URL_PATTERN = "%s/api/files/%s";
+    private static final String FILE_URL_PATTERN = "%s/files/%s";
 
     private final Path filesRoot;
     private final String host;

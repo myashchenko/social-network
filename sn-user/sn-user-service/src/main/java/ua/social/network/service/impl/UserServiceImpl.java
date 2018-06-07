@@ -1,7 +1,6 @@
 package ua.social.network.service.impl;
 
-import java.util.Objects;
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,12 +47,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void modify(final String id, final ModifyUserRequest request, final SnPrincipal principal) {
-        if (!Objects.equals(id, principal.userId)) {
-            throw new SnException(UserServiceExceptionDetails.CANNOT_MODIFY_USER);
-        }
-
-        final int count = userRepository.modify(id, request.getName());
+    public void modify(final ModifyUserRequest request, final SnPrincipal principal) {
+        final int count = userRepository.modify(principal.userId, request.getName());
         if (count == 0) {
             throw new SnException(UserServiceExceptionDetails.NOT_FOUND, User.class.getSimpleName());
         }
@@ -62,11 +57,24 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UpdateAvatarResponse updateAvatar(final FileMetadata fileMetadata, final SnPrincipal principal) {
+        if (!isImage(StringUtils.defaultString(fileMetadata.fileName))) {
+            throw new SnException(UserServiceExceptionDetails.IMAGE_TYPE_IS_NOT_SUPPORTED);
+        }
+
         final String url = storageService.store(fileMetadata);
         final ProfilePicture profilePicture = new ProfilePicture();
         profilePicture.setUrl(url);
         profilePicture.setUser(new User(principal.userId));
         profilePictureRepository.save(profilePicture);
         return new UpdateAvatarResponse(url);
+    }
+
+    // todo extend supportable image types
+    private boolean isImage(final String filename) {
+        if (StringUtils.endsWith(filename.toLowerCase(), ".jpg")) {
+            return true;
+        }
+
+        return StringUtils.endsWith(filename.toLowerCase(), ".png");
     }
 }

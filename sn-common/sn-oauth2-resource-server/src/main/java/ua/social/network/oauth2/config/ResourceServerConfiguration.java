@@ -26,6 +26,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import ua.social.network.oauth2.converter.SnAccessTokenConverter;
 import ua.social.network.oauth2.handler.SnAccessDeniedHandler;
+import ua.social.network.oauth2.handler.SnAuthenticationEntryPoint;
 
 /**
  * @author Mykola Yashchenko
@@ -51,6 +52,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(final ResourceServerSecurityConfigurer resources) throws IOException {
         resources.tokenServices(tokenServices())
+                .authenticationEntryPoint(new SnAuthenticationEntryPoint())
                 .accessDeniedHandler(new SnAccessDeniedHandler());
     }
 

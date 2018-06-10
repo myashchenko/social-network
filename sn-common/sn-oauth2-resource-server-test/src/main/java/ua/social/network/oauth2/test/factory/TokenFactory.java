@@ -63,7 +63,7 @@ public class TokenFactory implements InitializingBean {
     }
 
     public RequestPostProcessor token(final String userId, final String scope) {
-        return token(userId, scope, null);
+        return token(userId, scope, "ROLE_USER");
     }
 
     public RequestPostProcessor token(final String userId, final String scope, final String role) {

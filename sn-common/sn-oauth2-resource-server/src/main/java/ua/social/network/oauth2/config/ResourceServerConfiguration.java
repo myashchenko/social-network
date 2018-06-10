@@ -31,11 +31,7 @@ import ua.social.network.oauth2.handler.SnAuthenticationEntryPoint;
 /**
  * @author Mykola Yashchenko
  */
-@Configuration
-@EnableResourceServer
-@EnableOAuth2Client
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+public abstract class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     private final SnAccessTokenConverter accessTokenConverter;
     private final ResourceLoader resourceLoader;

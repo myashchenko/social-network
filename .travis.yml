@@ -8,5 +8,8 @@ matrix:
     - env: JDK='OpenJDK 10'
       install: . ./install-jdk.sh -F 10 -L GPL
 
+services:
+  - docker
+
 script:
   - ./gradlew check

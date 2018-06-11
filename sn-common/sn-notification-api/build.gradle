@@ -1,0 +1,7 @@
+jar {
+    baseName = 'sn-notification-api'
+}
+
+dependencies {
+    compile("org.projectlombok:lombok:${lombokVersion}")
+}

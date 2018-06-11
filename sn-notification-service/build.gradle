@@ -1,0 +1,43 @@
+jar {
+    baseName = 'sn-notification-service'
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+
+    compile("org.projectlombok:lombok:${lombokVersion}")
+    compile("com.amazonaws:aws-java-sdk:${awsSdkVersion}")
+    compile("it.ozimov:spring-boot-email-core:0.6.3")
+    compile("it.ozimov:spring-boot-mustache-email:0.6.3")
+
+    runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
+    runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"
+    runtime "com.sun.xml.bind:jaxb-impl:${jaxbApiVersion}"
+    runtime "javax.activation:activation:${activationVersion}"
+
+    compile project(':sn-common:sn-queue')
+    compile project(':sn-common:sn-notification-api')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testCompile("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testCompile("io.github.yashchenkon:docker-compose-junit5:1.0.0")
+}
+
+docker {
+    name "social-network/${bootJar.baseName}"
+    tags 'latest'
+    dockerfile file('src/main/docker/Dockerfile')
+    files bootJar.archivePath
+    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+}

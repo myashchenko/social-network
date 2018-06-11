@@ -1,0 +1,18 @@
+jar {
+    baseName = 'sn-queue'
+}
+
+dependencies {
+    compile("org.projectlombok:lombok:${lombokVersion}")
+    compile("com.amazonaws:aws-java-sdk:${awsSdkVersion}")
+    compile('com.google.code.gson:gson:2.8.5')
+
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testCompile("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
+    testCompile("io.github.yashchenkon:docker-compose-junit5:1.0.0")
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -66,7 +66,7 @@ project('sn-gateway-service') {
     }
 }
 
-project('sn-storage-service') {
+project('sn-notification-service') {
     test {
         useJUnitPlatform()
     }

@@ -35,12 +35,6 @@ spring:
             - Path=/user-query-service/api/**
           filters:
             - RewritePath=/user-query-service/api/(?<path>.*), /$\{path}
-        - id: sn-storage-service
-          uri: http://sn-storage-service
-          predicates:
-            - Path=/storage-service/api/**
-          filters:
-            - RewritePath=/storage-service/api/(?<path>.*), /$\{path}
 
 eureka:
   client:

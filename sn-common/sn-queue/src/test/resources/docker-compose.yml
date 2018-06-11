@@ -1,0 +1,9 @@
+version: '2.1'
+
+services:
+  sqs:
+    image: graze/sqs-local
+    ports:
+      - 9324:9324
+    volumes:
+      - ./elasticmq.conf:/elasticmq.conf

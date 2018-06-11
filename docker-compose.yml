@@ -66,3 +66,18 @@ services:
     restart: always
     depends_on:
       - sn-gateway-service
+
+  sqs:
+    image: graze/sqs-local
+    ports:
+      - 9324:9324
+    volumes:
+      - ./conf/elasticmq.conf:/elasticmq.conf
+
+  sn-notification-service:
+    environment:
+      SPRING_ACTIVE_PROFILE: development
+    image: social-network/sn-notification-service:latest
+    restart: always
+    depends_on:
+      - sqs

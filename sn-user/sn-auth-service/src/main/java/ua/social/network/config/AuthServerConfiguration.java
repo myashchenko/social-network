@@ -76,11 +76,6 @@ public class AuthServerConfiguration extends AuthorizationServerConfigurerAdapte
                     .withClient("sn-user-service")
                     .secret(environment.getProperty("security.oauth2.client.sn-user-service"))
                     .authorizedGrantTypes("client_credentials", "refresh_token")
-                    .scopes("server")
-                .and()
-                    .withClient("sn-storage-service")
-                    .secret(environment.getProperty("security.oauth2.client.sn-storage-service"))
-                    .authorizedGrantTypes("client_credentials", "refresh_token")
                     .scopes("server");
         // @formatter:on
     }

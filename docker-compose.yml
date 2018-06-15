@@ -93,7 +93,7 @@ services:
   sn-message-service:
     environment:
       SPRING_ACTIVE_PROFILE: development
-    image: social-network:sn-message-service:latest
+    image: social-network/sn-message-service:latest
     restart: always
     depends_on:
       - cassandra

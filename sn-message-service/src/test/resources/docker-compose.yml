@@ -1,0 +1,18 @@
+version: '2.1'
+
+services:
+  cassandra:
+    image: cassandra:latest
+    ports:
+      - 9042:9042
+    healthcheck:
+      test: ["CMD-SHELL", "[ $$(nodetool statusgossip) = running ]"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  sqs:
+    image: graze/sqs-local
+    ports:
+      - 9324:9324
+    volumes:
+      - ./elasticmq.conf:/elasticmq.conf

@@ -45,6 +45,7 @@ services:
       - "9999:9999"
     depends_on:
       - sn-gateway-service
+      - sn-discovery-service
 
   sn-user-service:
     environment:
@@ -56,6 +57,7 @@ services:
     restart: always
     depends_on:
       - sn-gateway-service
+      - sn-discovery-service
 
   sn-user-query-service:
     environment:
@@ -66,6 +68,7 @@ services:
     restart: always
     depends_on:
       - sn-gateway-service
+      - sn-discovery-service
 
   sqs:
     image: graze/sqs-local
@@ -81,3 +84,18 @@ services:
     restart: always
     depends_on:
       - sqs
+
+  cassandra:
+    image: cassandra:latest
+    ports:
+      - "9042:9042"
+
+  sn-message-service:
+    environment:
+      SPRING_ACTIVE_PROFILE: development
+    image: social-network:sn-message-service:latest
+    restart: always
+    depends_on:
+      - cassandra
+      - sn-gateway-service
+      - sn-discovery-service

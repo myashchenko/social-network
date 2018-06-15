@@ -13,12 +13,14 @@ include ':sn-common:sn-oauth2-resource-server-test'
 include ':sn-common:sn-storage'
 include ':sn-common:sn-queue'
 include ':sn-common:sn-notification-api'
+include ':sn-common:sn-message-api'
 include ':sn-user:sn-user-db-schema'
 include ':sn-user:sn-user-query-service'
 include ':sn-user:sn-user-service'
 include ':sn-user:sn-auth-service'
 include ':sn-integration-tests'
 include ':sn-notification-service'
+include ':sn-message-service'
 
 project(':sn-gateway-service').projectDir = "$rootDir/sn-gateway-service" as File
 project(':sn-discovery-service').projectDir = "$rootDir/sn-discovery-service" as File
@@ -34,10 +36,12 @@ project(':sn-common:sn-oauth2-resource-server-test').projectDir = "$rootDir/sn-c
 project(':sn-common:sn-storage').projectDir = "$rootDir/sn-common/sn-storage" as File
 project(':sn-common:sn-queue').projectDir = "$rootDir/sn-common/sn-queue" as File
 project(':sn-common:sn-notification-api').projectDir = "$rootDir/sn-common/sn-notification-api" as File
+project(':sn-common:sn-message-api').projectDir = "$rootDir/sn-common/sn-message-api" as File
 project(':sn-user:sn-user-db-schema').projectDir = "$rootDir/sn-user/sn-user-db-schema" as File
 project(':sn-user:sn-user-service').projectDir = "$rootDir/sn-user/sn-user-service" as File
 project(':sn-user:sn-user-query-service').projectDir = "$rootDir/sn-user/sn-user-query-service" as File
 project(':sn-user:sn-auth-service').projectDir = "$rootDir/sn-user/sn-auth-service" as File
 project(':sn-integration-tests').projectDir = "$rootDir/sn-integration-tests" as File
 project(':sn-notification-service').projectDir = "$rootDir/sn-notification-service" as File
+project(':sn-message-service').projectDir = "$rootDir/sn-message-service" as File
 

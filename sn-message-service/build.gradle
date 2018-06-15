@@ -1,5 +1,5 @@
 jar {
-    baseName = 'sn-notification-service'
+    baseName = 'sn-message-service'
 }
 
 apply plugin: 'org.springframework.boot'
@@ -12,13 +12,11 @@ dependencyManagement {
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-webflux")
+    compile("org.springframework.boot:spring-boot-starter-data-cassandra-reactive")
     compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
 
     compile("org.projectlombok:lombok:${lombokVersion}")
-    compile("com.amazonaws:aws-java-sdk:${awsSdkVersion}")
-    compile("it.ozimov:spring-boot-email-core:0.6.3")
-    compile("it.ozimov:spring-boot-mustache-email:0.6.3")
 
     runtime "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
     runtime "com.sun.xml.bind:jaxb-core:${jaxbApiVersion}"
@@ -26,7 +24,7 @@ dependencies {
     runtime "javax.activation:activation:${activationVersion}"
 
     compile project(':sn-common:sn-queue')
-    compile project(':sn-common:sn-notification-api')
+    compile project(':sn-common:sn-message-api')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")

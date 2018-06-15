@@ -66,12 +66,6 @@ project('sn-gateway-service') {
     }
 }
 
-project('sn-notification-service') {
-    test {
-        useJUnitPlatform()
-    }
-}
-
 project('sn-integration-tests') {
     test {
         if (project.hasProperty('integrationTests')) {

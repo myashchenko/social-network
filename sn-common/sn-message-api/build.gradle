@@ -1,0 +1,7 @@
+jar {
+    baseName = 'sn-message-api'
+}
+
+dependencies {
+    compile("org.projectlombok:lombok:${lombokVersion}")
+}

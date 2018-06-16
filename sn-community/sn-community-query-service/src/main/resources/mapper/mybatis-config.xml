@@ -6,8 +6,8 @@
     </settings>
 
     <typeAliases>
-        <typeAlias alias="Post" type="ua.social.network.dto.PostDto"/>
-        <typeAlias alias="Community" type="ua.social.network.dto.CommunityDto"/>
+        <typeAlias alias="Post" type="ua.social.network.communityqueryservice.dto.PostDto"/>
+        <typeAlias alias="Community" type="ua.social.network.communityqueryservice.dto.CommunityDto"/>
     </typeAliases>
 
     <mappers>

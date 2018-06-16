@@ -6,9 +6,9 @@
     </settings>
 
     <typeAliases>
-        <typeAlias alias="User" type="ua.social.network.dto.UserDto"/>
-        <typeAlias alias="Post" type="ua.social.network.dto.PostDto"/>
-        <typeAlias alias="FriendRequest" type="ua.social.network.dto.FriendRequestDto"/>
+        <typeAlias alias="User" type="ua.social.network.userqueryservice.dto.UserDto"/>
+        <typeAlias alias="Post" type="ua.social.network.userqueryservice.dto.PostDto"/>
+        <typeAlias alias="FriendRequest" type="ua.social.network.userqueryservice.dto.FriendRequestDto"/>
     </typeAliases>
 
     <mappers>

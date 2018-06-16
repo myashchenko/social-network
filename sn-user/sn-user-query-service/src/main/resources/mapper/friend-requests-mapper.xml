@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ua.social.network.query.FriendRequestMapper">
+<mapper namespace="ua.social.network.userqueryservice.query.FriendRequestMapper">
 
     <sql id="coreAttributes">
       friend_requests.id AS id,

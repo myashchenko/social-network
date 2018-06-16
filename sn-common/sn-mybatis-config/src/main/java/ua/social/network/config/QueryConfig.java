@@ -13,11 +13,11 @@ import javax.sql.DataSource;
  * @author Mykola Yashchenko
  */
 @Configuration
-@MapperScan(value = "ua.social.network.query")
+@MapperScan(value = "ua.social.network")
 public class QueryConfig {
 
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(final DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setConfigLocation(new ClassPathResource("mapper/mybatis-config.xml"));

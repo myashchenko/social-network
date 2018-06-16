@@ -39,3 +39,7 @@ docker {
     files bootJar.archivePath
     buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
+
+test {
+    useJUnitPlatform()
+}

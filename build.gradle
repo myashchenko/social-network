@@ -29,12 +29,11 @@ buildscript {
 
 allprojects {
     version "0.0.1-SNAPSHOT"
-}
 
-subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
     apply plugin: 'com.palantir.docker'
+    apply plugin: 'jacoco'
 
     sourceCompatibility = 1.10
     targetCompatibility = 1.10
@@ -47,40 +46,37 @@ subprojects {
         maven {
             url 'http://maven.springframework.org/release'
         }
+        maven {
+            url "http://repo1.maven.org/maven2/" 
+        }
+        maven {
+            url 'https://dl.bintray.com/palantir/releases'
+        }
         ivy {
             url 'https://projectlombok.org/'
             layout 'pattern', {
                 artifact '/[artifact].[ext]'
             }
         }
-        maven {
-            // docker-compose-rule is published on bintray
-            url 'https://dl.bintray.com/palantir/releases'
-        }
+        jcenter()
     }
 }
 
-project('sn-gateway-service') {
-    test {
-        useJUnitPlatform()
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
+        csv.enabled false
     }
 }
 
-project('sn-integration-tests') {
-    test {
-        if (project.hasProperty('integrationTests')) {
-            println("envType          =====> " + System.getProperty('envType'))
-            println("clusterHost      =====> " + System.getProperty('clusterHost'))
-            println("integrationTests =====> " + project.hasProperty('integrationTests'))
-        }
-
-        onlyIf {
-            project.hasProperty('integrationTests')
-        }
-
-        useJUnitPlatform()
-        
-        systemProperty 'envType', System.getProperty('envType')
-        systemProperty 'clusterHost', System.getProperty('clusterHost')
-    }
+codeCoverageReport.dependsOn {
+    subprojects*.test
 }

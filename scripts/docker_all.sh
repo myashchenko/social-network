@@ -6,4 +6,5 @@
           sn-user:sn-auth-service:docker \
           sn-user:sn-user-query-service:docker \
           sn-user:sn-user-service:docker \
-          sn-notification-service:docker
+          sn-notification-service:docker \
+          sn-message-service:docker

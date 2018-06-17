@@ -10,8 +10,14 @@ social network. The purpose of this project is to show the best practices of
 complex systems development.
 
 Project uses the latest release version of Java - 10 and modern frameworks. Social Network - is a project
- built on top of microservices architecture where each service is responsible for one thing that allows to scale them
+built on top of microservices architecture where each service is responsible for one thing that allows to scale them
 independently.
+
+### Architecture
+
+Development environment:
+
+![dev env](https://raw.githubusercontent.com/yashchenkon/social-network/master/metadata/dev_architecture.png)
 
 ### Start order
 

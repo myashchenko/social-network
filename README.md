@@ -6,11 +6,11 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/db4b421c651548d48bea74ccc67d3077)](https://www.codacy.com/app/YashchenkoN/social-network?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=YashchenkoN/social-network&amp;utm_campaign=Badge_Grade)
 
 Social Network - is a project aimed to develop high-scalable, fast and easy to contribute
-social network. The purpose of this project is to try to use best practices of
+social network. The purpose of this project is to show the best practices of
 complex systems development.
 
-Project uses the latest version of Java - Java 10 and modern frameworks. Social Network - is a
-microservices project, each service is responsible for one thing that allows to scale them
+Project uses the latest release version of Java - 10 and modern frameworks. Social Network - is a project
+ built on top of microservices architecture where each service is responsible for one thing that allows to scale them
 independently.
 
 ### Start order

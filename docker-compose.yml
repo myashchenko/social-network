@@ -97,5 +97,11 @@ services:
     restart: always
     depends_on:
       - cassandra
+      - sqs
       - sn-gateway-service
       - sn-discovery-service
+    volumes:
+      - ./scripts/wait_for_it.sh:/wait_for_it.sh
+    command: >
+      bash -c "chmod +x wait_for_it.sh
+      && ./wait_for_it.sh cassandra:9042 -- java -Djava.security.egd=file:/dev/./urandom -jar /app.jar"

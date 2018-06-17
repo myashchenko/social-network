@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/YashchenkoN/social-network.svg?branch=master)](https://travis-ci.org/YashchenkoN/social-network)
 [![codebeat badge](https://codebeat.co/badges/0e01df9f-245c-4757-aac2-826753b8f480)](https://codebeat.co/projects/github-com-yashchenkon-social-network-master)
-[![Coverage Status](https://coveralls.io/repos/github/YashchenkoN/social-network/badge.svg?branch=master)](https://coveralls.io/github/YashchenkoN/social-network?branch=master)
+[![codecov](https://codecov.io/gh/YashchenkoN/social-network/branch/master/graph/badge.svg)](https://codecov.io/gh/YashchenkoN/social-network)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/db4b421c651548d48bea74ccc67d3077)](https://www.codacy.com/app/YashchenkoN/social-network?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=YashchenkoN/social-network&amp;utm_campaign=Badge_Grade)
 
 Social Network - is a project aimed to develop high-scalable, fast and easy to contribute

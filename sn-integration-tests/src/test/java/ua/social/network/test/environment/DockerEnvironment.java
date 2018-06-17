@@ -20,7 +20,7 @@ import static org.joda.time.Duration.standardMinutes;
  */
 public final class DockerEnvironment implements Environment {
 
-    private static final String LOG_DIRECTORY = "dockerLogs";
+    private static final String LOG_DIRECTORY = "build/dockerLogs";
 
     private static final DockerComposeRule DOCKER_COMPOSE_RULE = DockerComposeRule.builder()
             .files(dockerCompose())

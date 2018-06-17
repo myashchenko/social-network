@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import ua.social.network.queue.properties.SQSConfigurationProperties;
 
 /**
@@ -13,6 +14,7 @@ import ua.social.network.queue.properties.SQSConfigurationProperties;
 @Getter
 @Setter
 @Configuration
+@ToString(callSuper = true)
 @ConfigurationProperties(prefix = "service.sqs")
 public class SQSProperties extends SQSConfigurationProperties {
 }

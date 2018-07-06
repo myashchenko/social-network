@@ -31,7 +31,6 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    @PreAuthorize("#oauth2.hasScope('ui')")
     public void createUser(@Valid @RequestBody final CreateUserRequest createUserRequest) {
         userService.create(createUserRequest);
     }
